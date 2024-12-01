@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { shuffle } from 'lodash'
 import { useState } from 'react'
@@ -7,6 +7,8 @@ import PlayerSection from './PlayerSection'
 import { PlayerPhotoMap } from './utils'
 
 export default function PlayerList() {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const [fetchStart] = useState(Date.now())
 
   const { data: playersData } = useQuery({
@@ -26,7 +28,17 @@ export default function PlayerList() {
   const randomPlayers = shuffle(players)
 
   return (
-    <Box marginLeft={'10px'} marginRight={'10px'}>
+    <Box
+      sx={isDesktop ? {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, auto)',
+        columnGap: '30px',
+        width: 'fit-content',
+        margin: '0 auto'
+      } : {
+        margin: '0 10px'
+      }}
+    >
       {randomPlayers.map((player) => {
         const hasPhoto = PlayerPhotoMap[player.url_handle]
         if (!hasPhoto) {
