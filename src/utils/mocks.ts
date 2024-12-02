@@ -205,5 +205,9 @@ export function playerStatsMock() {
     movies: random(1, 10),
     ladders: random(1, 20),
     snakes: random(1, 20),
+    tiny_games: random(1, 20),
+    short_games: random(1, 20),
+    medium_games: random(1, 20),
+    long_games: random(1, 20),
   }))
 }

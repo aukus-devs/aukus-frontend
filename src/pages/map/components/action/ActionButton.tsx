@@ -44,7 +44,8 @@ export default function ActionButton({
     }
 
     if (dice === 'skip') {
-      handleNextTurn(params)
+      params.diceRoll = 0
+      onDiceRoll(params)
     } else {
       setDiceModalOpen(true)
     }

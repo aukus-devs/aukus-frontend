@@ -34,20 +34,26 @@ export default function TodaysMoves() {
           Ходы за день
         </Box>
       </Box>
-      {todaysMoves.moves.map((move, index) => (
-        <Box key={index}>
-          <MoveCard
-            move={move}
-            id={move.player_move_id}
-            player={find(
-              playersData?.players || [],
-              (player: Player) => player.id === move.player_id
-            )}
-            displayType="map"
-            onSave={refetchMoves}
-          />
-        </Box>
-      ))}
+      {todaysMoves.moves.map((move, index) => {
+        const player = find(
+          playersData?.players || [],
+          (player: Player) => player.id === move.player_id
+        )
+        if (!player) {
+          return null
+        }
+        return (
+          <Box key={index}>
+            <MoveCard
+              move={move}
+              id={move.player_move_id}
+              player={player}
+              displayType="map"
+              onSave={refetchMoves}
+            />
+          </Box>
+        )
+      })}
     </Box>
   )
 }

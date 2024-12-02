@@ -41,7 +41,7 @@ export default function EditVodModal({
     fetchStatus,
     status,
   } = useQuery({
-    queryKey: ['game_names'],
+    queryKey: ['game_names_edit_vod'],
     queryFn: () => fetchGameNames(itemTitle),
     enabled: itemTitle.length > 3,
   })

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Color } from 'utils/types'
 import DonaterRules from './DonaterRules'
 import PlayerRules from './PlayerRules'
@@ -10,28 +10,37 @@ import Countdown from './Countdown'
 
 export default function RulesContainer() {
   const { headerSize } = useScreenSize()
-  const [rulesPage, setRulesPage] = useState<'player' | 'donater'>('player')
+  // const [rulesPage, setRulesPage] = useState<'player' | 'donater'>('player')
+
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const donaterRules = location.pathname.endsWith('donater')
+
+  const handleClick = (page: 'player' | 'donater') => {
+    navigate(page)
+  }
 
   return (
     <Box display={'flex'} justifyContent="center">
       <Box width={'740px'} marginLeft={'10px'} marginRight={'10px'}>
         <Box marginBottom={'30px'}>
-          <Link to="#" onClick={() => setRulesPage('player')}>
-            <LinkSpan color={Color.blue} active={rulesPage === 'player'}>
+          <Link to="#" onClick={() => handleClick('player')}>
+            <LinkSpan color={Color.blue} active={!donaterRules}>
               Для стримеров
             </LinkSpan>
           </Link>
           <span style={{ marginLeft: '50px' }} />
-          <Link to="#" onClick={() => setRulesPage('donater')}>
-            <LinkSpan color={Color.orange} active={rulesPage === 'donater'}>
+          <Link to="#" onClick={() => handleClick('donater')}>
+            <LinkSpan color={Color.purple} active={donaterRules}>
               Для донатеров
             </LinkSpan>
           </Link>
         </Box>
         <Box fontSize={headerSize} fontWeight={700} lineHeight={1.2}>
-          {rulesPage === 'player'
-            ? 'Общие правила проведения для участников'
-            : 'Правила заказа игр'}
+          {donaterRules
+            ? 'Правила заказа игр'
+            : 'Общие правила проведения для участников'}
         </Box>
 
         <Box
@@ -47,8 +56,11 @@ export default function RulesContainer() {
         </Box>
 
         <Box marginTop={'50px'} />
-        {rulesPage === 'player' && <PlayerRules />}
-        {rulesPage === 'donater' && <DonaterRules />}
+        <Routes location={location}>
+          <Route path="/" element={<PlayerRules />} />
+          <Route path="player" element={<PlayerRules />} />
+          <Route path="donater" element={<DonaterRules />} />
+        </Routes>
       </Box>
     </Box>
   )

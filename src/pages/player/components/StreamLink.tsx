@@ -9,7 +9,7 @@ type Props = {
 
 export default function StreamLink({ player }: Props) {
   const isKick = player.kick_stream_link?.length > 0
-  const showOnline = player.is_online || isKick
+  const showOnline = player.is_online
   return (
     <Link
       to={

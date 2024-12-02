@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 type Props = {
   id: number
   move: PlayerMove
-  player?: Player
+  player: Player
   displayType?: 'map' | 'player'
   onSave?: () => void
 }

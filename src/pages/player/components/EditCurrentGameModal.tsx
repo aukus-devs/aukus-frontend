@@ -38,7 +38,7 @@ export default function EditCurrentGameModal({
     fetchStatus,
     status,
   } = useQuery({
-    queryKey: ['game_names'],
+    queryKey: ['game_names_edit_current'],
     queryFn: () => fetchGameNames(itemTitle),
     enabled: itemTitle.length > 3,
   })

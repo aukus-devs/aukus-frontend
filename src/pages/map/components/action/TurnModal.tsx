@@ -58,6 +58,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     if (player.current_game) {
       setGameName(player.current_game)
     }
+    setGameImage(null)
   }, [player.current_game])
 
   const {
@@ -67,7 +68,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     fetchStatus,
     status,
   } = useQuery({
-    queryKey: ['game_names'],
+    queryKey: ['game_names_action_modal'],
     queryFn: () => fetchGameNames(gameName),
     enabled: gameName.length > 3 && moveType !== 'movie',
   })
@@ -103,7 +104,6 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         .replace('{height}', '300')
 
       const validateImage = async (url: string) => {
-        // console.log('checking image validity')
         const isValid = await checkImageValid(url)
         setGameImage(isValid ? url : null)
       }

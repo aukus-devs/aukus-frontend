@@ -149,7 +149,10 @@ export default function PlayerContent() {
               {player.current_game && !filter && (
                 <CurrentMove
                   id={playerMoves.length + 1}
-                  title={player.current_game}
+                  title={
+                    player.current_game ||
+                    '<Для автоматического обновления привяжи PointAuc>'
+                  }
                   player={player}
                   updatedAt={player.current_game_updated_at}
                   canEdit={canEdit}
@@ -160,6 +163,7 @@ export default function PlayerContent() {
                 return (
                   <Box key={index}>
                     <MoveCard
+                      player={player}
                       id={playerMoves.length - index}
                       move={move}
                       displayType="player"

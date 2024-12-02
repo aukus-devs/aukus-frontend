@@ -45,7 +45,7 @@ const router = createBrowserRouter(
       element: <PlayerPage />,
     },
     {
-      path: '/rules',
+      path: '/rules/*',
       element: <RulesPage />,
     },
     {

@@ -32,7 +32,7 @@ export default function Leaderboard() {
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
-  const [orderBy, setOrderBy] = useState<HeaderType>('id')
+  const [orderBy, setOrderBy] = useState<HeaderType>('map_position')
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -306,6 +306,21 @@ export default function Leaderboard() {
 }
 
 export function getPlayerScore(player: PlayerStats) {
+  const shortGames = player.short_games || 0
+  const mediumGames = player.medium_games || 0
+  const longGames = player.long_games || 0
+  const tinyGames = player.tiny_games || 0
+
+  const shortGamesScore = (shortGames + tinyGames) * 1
+  const mediumGamesScore = mediumGames * 1.5
+  const longGamesScore = longGames * 2
+
   const row = Math.floor(player.map_position / 10) || 1
-  return (player.games_completed - player.games_dropped) * row
+  return (
+    (shortGamesScore +
+      mediumGamesScore +
+      longGamesScore -
+      player.games_dropped) *
+    row
+  )
 }
