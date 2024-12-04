@@ -55,7 +55,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
   const [debouncedGameName, setDebouncedGameName] = useState('')
-  const [review, setReview] = useState(() => load('item_review') || '')
+  const [review, setReview] = useState<string>(() => load('item_review', ''))
   const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
