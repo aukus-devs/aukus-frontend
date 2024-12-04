@@ -4,8 +4,13 @@ import MainMenu from 'components/MainMenu'
 import PlayerList from './components/PlayerList'
 import useScreenSize from 'src/context/useScreenSize'
 import MultistreamButton from './components/MultistreamButton'
+import PlayerListTiles from './components/PlayerListTiles'
 
-export default function PlayersPage() {
+type Params = {
+  tiled?: boolean
+}
+
+export default function PlayersPage({ tiled }: Params) {
   const { isMobile } = useScreenSize()
 
   if (isMobile) {
@@ -23,7 +28,7 @@ export default function PlayersPage() {
     <Box>
       <MainMenu currentPage="players" rightSlot={<MultistreamButton />} />
       <Box marginTop={'100px'} />
-      <PlayerList />
+      {tiled ? <PlayerListTiles /> : <PlayerList />}
       <BottomSection />
     </Box>
   )
