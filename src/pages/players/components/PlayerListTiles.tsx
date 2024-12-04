@@ -22,10 +22,14 @@ export default function PlayerListTiles() {
     return null
   }
 
+  const playersSorted = players.sort((a, b) => {
+    return b.map_position - a.map_position
+  })
+
   return (
     <Box display={'flex'} justifyContent={'center'} width={'100%'}>
       <Box display={'flex'} flexWrap={'wrap'} maxWidth={'1190px'} gap={'25px'}>
-        {players.map((player) => {
+        {playersSorted.map((player) => {
           const hasPhoto = PlayerPhotoMap[player.url_handle]
           if (!hasPhoto) {
             return null
