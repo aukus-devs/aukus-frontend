@@ -258,15 +258,7 @@ export default function Leaderboard() {
                 </TableCell>
                 <TableCell>
                   <span style={{ display: 'block', maxWidth: '285px' }}>
-                    <span
-                      style={
-                        orderBy === 'sheikh_moments'
-                          ? selectedStyle
-                          : headerStyle
-                      }
-                    >
-                      Выпало на ауке
-                    </span>
+                    Выпало на ауке
                   </span>
                 </TableCell>
               </TableRow>
