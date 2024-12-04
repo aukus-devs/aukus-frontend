@@ -60,6 +60,7 @@ export type PlayerMove = {
   item_length: ItemLength | null
   vod_link: string | null
   player_move_id: number
+  stream_title_category_duration: number | string
 }
 
 export type PlayerMoveRequest = {

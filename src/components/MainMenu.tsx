@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Box, Button } from '@mui/material'
 import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
@@ -13,6 +13,7 @@ import Clock from './Clock'
 import FloatingClock from './FloatingClock'
 import MultistreamButton from 'src/pages/players/components/MultistreamButton'
 import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
+import { useTime } from 'src/context/TimeProvider'
 
 type Props = {
   currentPage: Page
@@ -20,6 +21,9 @@ type Props = {
   rightSlot?: React.ReactNode
   leftSlot?: React.ReactNode
 }
+
+// interval of 1 hour in ms
+const refreshInterval = 1000 * 60 * 60
 
 export default function MainMenu({
   currentPage,
@@ -33,6 +37,17 @@ export default function MainMenu({
     ? getPlayerColor(currentUser.url_handle)
     : Color.blueLight
   const urlHandle = currentUser?.url_handle
+
+  const time = useTime()
+
+  useEffect(() => {
+    if (time?.loadTime) {
+      // console.log('time.loadTime', Date.now() - time.loadTime)
+      if (Date.now() - time.loadTime > refreshInterval) {
+        window.location.reload()
+      }
+    }
+  }, [time])
 
   const enableScrollRestoration = currentPage !== 'map'
 

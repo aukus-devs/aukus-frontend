@@ -1,7 +1,7 @@
 import { CalendarMonth } from '@mui/icons-material'
 import { Box, Button, Slider, SliderThumb, Tooltip } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useRef, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
@@ -9,24 +9,10 @@ import { Color, Player, PlayerMove } from 'utils/types'
 const StartDate = new Date('2024-12-01')
 StartDate.setHours(0, 0, 0, 0)
 
-const Today = new Date()
-Today.setHours(0, 0, 0, 0)
-
 const daysBetween = (date1: Date, date2: Date) => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime())
   return Math.abs(diffTime / (1000 * 60 * 60 * 24))
 }
-
-const AmountOfDays = daysBetween(StartDate, Today)
-
-const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
-  const date = new Date(StartDate)
-  date.setDate(StartDate.getDate() + value)
-  return {
-    value,
-    label: date.getDate().toString(),
-  }
-})
 
 type Props = {
   variant: 'small' | 'big'
@@ -38,9 +24,22 @@ export default function TimelapseButton({ variant }: Props) {
   const dateSliderRef = useRef<HTMLDivElement>(null)
   const moveSliderRef = useRef<HTMLDivElement>(null)
 
+  const Today = new Date()
+  Today.setHours(0, 0, 0, 0)
+  const AmountOfDays = daysBetween(StartDate, Today)
+
   const [dateDiff, setDateDiff] = useState<number>(
     daysBetween(StartDate, Today)
   )
+
+  const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
+    const date = new Date(StartDate)
+    date.setDate(StartDate.getDate() + value)
+    return {
+      value,
+      label: date.getDate().toString(),
+    }
+  })
 
   const currentDate = new Date(StartDate)
   currentDate.setDate(StartDate.getDate() + dateDiff)

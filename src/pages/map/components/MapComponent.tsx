@@ -295,12 +295,12 @@ export default function MapComponent() {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    const newPosition = getNextPlayerPosition({
-      player,
-      moves: params.steps,
-      skipLadders: params.skipLadders,
-    })
-    player.map_position = newPosition
+    // const newPosition = getNextPlayerPosition({
+    //   player,
+    //   moves: params.steps,
+    //   skipLadders: params.skipLadders,
+    // })
+    // player.map_position = newPosition
     // setMoveSteps(0)
     setMoveParams(null)
     setMakingTurn(false)
@@ -403,7 +403,7 @@ export default function MapComponent() {
             >
               <Box>
                 До конца ивента{' — '}
-                <span style={{ fontFamily: 'PT mono' }}>{timerText}</span>
+                <span className={'mono'}>{timerText}</span>
               </Box>
             </Box>
           </Box>
@@ -606,7 +606,7 @@ export default function MapComponent() {
         )}
         {timelapseEnabled && <TimelapseButton variant="big" />}
       </StaticPanel>
-      <TodaysMoves />
+      <TodaysMoves players={playersData?.players || []} />
     </Box>
   )
 }

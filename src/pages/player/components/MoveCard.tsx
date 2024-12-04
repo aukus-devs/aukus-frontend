@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material'
+import { Box, Divider, Tooltip } from '@mui/material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
@@ -7,7 +7,12 @@ import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
-import { formatDate, formatNumber, hasEditPermission } from './utils'
+import {
+  formatDate,
+  formatNumber,
+  formatSecondsToTime,
+  hasEditPermission,
+} from './utils'
 import TextRender from './TextRender'
 import { Link } from 'react-router-dom'
 
@@ -92,6 +97,8 @@ export default function MoveCard({
   if (player && displayType === 'map') {
     moveTitle = player.name
   }
+
+  const timeSpent = formatSecondsToTime(move.stream_title_category_duration)
 
   return (
     <>
@@ -181,18 +188,30 @@ export default function MoveCard({
               <Box fontSize={'24px'} marginBottom={'10px'}>
                 {move.item_title}
               </Box>
-              <Box
-                fontSize={'13px'}
-                fontWeight={400}
-                marginBottom={'20px'}
-                color={greyColor}
-              >
+              <Box fontSize={'13px'} fontWeight={400} color={greyColor}>
                 Ролл кубика:&nbsp;&nbsp;&nbsp;
                 {formatNumber(move.dice_roll)}, позиция на
                 карте:&nbsp;&nbsp;&nbsp;
-                {move.cell_to}
+                {move.cell_from} {'->'} {move.cell_to}
               </Box>
-              <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
+              {timeSpent && (
+                <Box
+                  fontSize={'13px'}
+                  fontWeight={400}
+                  marginTop={'5px'}
+                  color={greyColor}
+                >
+                  <Tooltip title="Примерное время по категории стрима">
+                    <span>Время прохождения:&nbsp;&nbsp;&nbsp;{timeSpent}</span>
+                  </Tooltip>
+                </Box>
+              )}
+              <Box
+                fontSize={'16px'}
+                fontWeight={400}
+                lineHeight={1.2}
+                marginTop={'20px'}
+              >
                 {move.item_rating}/10 — {move.item_review}
               </Box>
             </Box>

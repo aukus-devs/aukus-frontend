@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
 import OpenIcon from 'assets/open_icon.svg'
+import LinkSpan from 'src/components/LinkSpan'
 
 type Props = {
   player: Player
@@ -42,7 +43,7 @@ function OnlineButton({ player }: Props) {
       color={getPlayerColorName(player)}
     >
       <Box display="flex" alignItems={'center'} fontSize={'14px'}>
-        Сейчас на стриме: {player.stream_last_category}
+        Смотреть: {player.stream_last_category}
         <img
           src={OpenIcon}
           alt=""
@@ -70,7 +71,14 @@ function OfflineButton({ player }: Props) {
       color={'customGreyDark'}
       variant="contained"
     >
-      Стример оффлайн
+      <Box display="flex" alignItems={'center'}>
+        Стример оффлайн
+        <img
+          src={OpenIcon}
+          alt=""
+          style={{ marginLeft: '10px', width: '17px', height: '17px' }}
+        />
+      </Box>
     </Button>
   )
 }

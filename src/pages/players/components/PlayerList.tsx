@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import { useState } from 'react'
 import { fetchPlayers } from 'utils/api'
 import PlayerSection from './PlayerSection'

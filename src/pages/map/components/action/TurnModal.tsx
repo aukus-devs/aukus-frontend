@@ -22,7 +22,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { fetchGameNames } from 'utils/api'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 
@@ -36,7 +36,8 @@ import {
   Player,
 } from 'utils/types'
 import NumRating from './NumRating'
-import { isNumber } from 'lodash'
+import isNumber from 'lodash/isNumber'
+import debounce from 'lodash/debounce'
 import { checkImageValid } from '../utils'
 
 type Props = {
@@ -50,10 +51,25 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
+  const [debouncedGameName, setDebouncedGameName] = useState('')
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
+
+  const debounceGameName = useCallback(
+    debounce((value: string) => {
+      setDebouncedGameName(value)
+    }, 100),
+    []
+  )
+
+  useEffect(() => {
+    debounceGameName(gameName)
+    return () => {
+      debounceGameName.cancel()
+    }
+  }, [gameName])
 
   useEffect(() => {
     if (player.current_game) {
@@ -62,32 +78,32 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setGameImage(null)
   }, [player.current_game])
 
-  const {
-    data: gameNamesData,
-    dataUpdatedAt: updateTs,
-    refetch,
-    fetchStatus,
-    status,
-  } = useQuery({
-    queryKey: ['game_names_action_modal'],
-    queryFn: () => fetchGameNames(gameName),
-    enabled: gameName.length > 3 && moveType !== 'movie',
+  const { data: gameNamesData } = useQuery({
+    queryKey: ['game_names_action_modal', debouncedGameName],
+    queryFn: () => fetchGameNames(debouncedGameName),
+    enabled: debouncedGameName.length > 3,
+    staleTime: 1000 * 60 * 60,
   })
-
-  useEffect(() => {
-    if (
-      status !== 'pending' &&
-      fetchStatus === 'idle' &&
-      gameName.length > 3 &&
-      updateTs + 500 < Date.now()
-    ) {
-      refetch()
-    }
-  }, [gameName.length, status, fetchStatus, updateTs, refetch])
 
   let gameNameOptions: string[] = []
   if (gameName.length > 3 && gameNamesData && moveType !== 'movie') {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
+    // sort game name options by position of matching gameName
+    gameNameOptions.sort((a, b) => {
+      const lowerGameName = gameName.toLowerCase()
+      const aIndex = a.toLowerCase().indexOf(lowerGameName)
+      const bIndex = b.toLowerCase().indexOf(lowerGameName)
+
+      // Items with earlier matches come first
+      if (aIndex !== bIndex) {
+        if (aIndex === -1) return 1 // No match for 'a'
+        if (bIndex === -1) return -1 // No match for 'b'
+        return aIndex - bIndex // Compare positions
+      }
+
+      // If match positions are equal or both don't match, maintain original order
+      return 0
+    })
   }
 
   const hltbLink = `https://howlongtobeat.com/?q=${gameName}`
@@ -98,24 +114,31 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       gameNamesData.games.length > 0 &&
       gameName.length > 3
     ) {
-      const matchingUrl =
-        gameNamesData.games.find((game) => game.gameName === gameName)
-          ?.box_art_url || gameNamesData.games[0].box_art_url
+      const exactGameUrl = gameNamesData.games.find(
+        (game) => game.gameName === gameName
+      )?.box_art_url
 
-      const imageUrl = matchingUrl
-        .replace('{width}', '200')
-        .replace('{height}', '300')
+      const firstOptionUrl = gameNamesData.games.find(
+        (game) => game.gameName === gameNameOptions[0]
+      )?.box_art_url
 
-      const validateImage = async (url: string) => {
-        const isValid = await checkImageValid(url)
-        setGameImage(isValid ? url : null)
+      const matchingUrl = exactGameUrl || firstOptionUrl
+      if (matchingUrl) {
+        const imageUrl = matchingUrl
+          .replace('{width}', '200')
+          .replace('{height}', '300')
+
+        const validateImage = async (url: string) => {
+          const isValid = await checkImageValid(url)
+          setGameImage(isValid ? url : null)
+        }
+
+        validateImage(imageUrl)
       }
-
-      validateImage(imageUrl)
     } else {
       setGameImage(null) // No game data
     }
-  }, [gameNamesData?.games, gameName])
+  }, [gameNamesData?.games, gameName, gameNameOptions])
 
   const handleRatingChange = (
     _: React.SyntheticEvent,
@@ -354,11 +377,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               onChange={(_, newValue) => {
                 setGameName(newValue || '')
               }}
+              onInputChange={(_, newValue) => {
+                setGameName(newValue)
+              }}
               renderInput={(params) => (
                 <TextField
-                  onChange={(
-                    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                  ) => setGameName(event.target.value)}
                   {...params}
                   style={{
                     paddingTop: '10px',

@@ -18,6 +18,7 @@ import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
 import { SnackbarProvider } from 'notistack'
 import NotFound from './pages/NotFound'
+import { TimeProvider } from './context/TimeProvider'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
@@ -134,7 +135,9 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <SnackbarProvider>
             <UserProvider>
-              <RouterProvider router={router} />
+              <TimeProvider>
+                <RouterProvider router={router} />
+              </TimeProvider>
             </UserProvider>
           </SnackbarProvider>
         </QueryClientProvider>

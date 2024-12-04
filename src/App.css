@@ -111,6 +111,10 @@ span.MuiRating-root {
   align-self: center;
 }
 
+span.MuiRating-decimal {
+  margin-right: 5px;
+}
+
 div.Mui-focused {
   border: 2px solid #007aff;
 }
@@ -260,4 +264,8 @@ span.MuiSlider-thumb:active {
 
 div#root {
   padding-top: 15px;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
 }

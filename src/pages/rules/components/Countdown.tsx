@@ -40,9 +40,8 @@ export default function Countdown() {
 
   return (
     <span>
-      До конца ивента: <span style={{ fontFamily: 'PT mono' }}>{days}</span>{' '}
-      {daysString}{' '}
-      <span style={{ fontFamily: 'PT mono' }}>
+      До конца ивента: <span className={'mono'}>{days}</span> {daysString}{' '}
+      <span className={'mono'}>
         {hoursPadded}:{minutesPadded}:{secondsPadded}
       </span>
     </span>

@@ -43,7 +43,7 @@ export default function EditVodModal({
   } = useQuery({
     queryKey: ['game_names_edit_vod'],
     queryFn: () => fetchGameNames(itemTitle),
-    enabled: itemTitle.length > 3,
+    enabled: open && itemTitle.length > 3,
   })
 
   useEffect(() => {

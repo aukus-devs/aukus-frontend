@@ -1,4 +1,5 @@
-import { sample, random } from 'lodash'
+import sample from 'lodash/sample'
+import random from 'lodash/random'
 import { Player, PlayerMove } from './types'
 
 const playerLasqa: Player = {
@@ -164,6 +165,7 @@ export function playerMovesMock() {
       snake_from: null,
       snake_to: null,
       item_length: 'medium',
+      stream_title_category_duration: sample(['11285', 0]) as string,
       item_image:
         'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
       vod_link:

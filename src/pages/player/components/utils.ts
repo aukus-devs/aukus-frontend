@@ -51,3 +51,18 @@ export function hasEditPermission(
   }
   return false
 }
+
+export function formatSecondsToTime(seconds: number | string): string | null {
+  // Parse the input to a number in case it's a string
+  const totalSeconds =
+    typeof seconds === 'string' ? parseInt(seconds, 10) : seconds
+
+  if (isNaN(totalSeconds) || totalSeconds <= 0) {
+    return null
+  }
+
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+
+  return `${hours}ч ${minutes}м`
+}

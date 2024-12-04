@@ -50,7 +50,7 @@ export default function MapComponentMobile() {
           return <MapPosition key={index} players={players} cell={cell} />
         })}
       </Box>
-      <TodaysMoves />
+      <TodaysMoves players={players} />
     </Box>
   )
 }

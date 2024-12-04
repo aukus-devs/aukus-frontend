@@ -40,7 +40,7 @@ export default function EditCurrentGameModal({
   } = useQuery({
     queryKey: ['game_names_edit_current'],
     queryFn: () => fetchGameNames(itemTitle),
-    enabled: itemTitle.length > 3,
+    enabled: open && itemTitle.length > 3,
   })
 
   useEffect(() => {

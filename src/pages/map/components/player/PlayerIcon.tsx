@@ -96,6 +96,7 @@ export default function PlayerIcon({
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   const updateContiner = (element: HTMLDivElement) => {
     setContainer(element)
@@ -130,6 +131,7 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moveParams: MoveParams) => {
+    setIsAnimating(true)
     const moves = moveParams.steps
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
@@ -212,13 +214,16 @@ export default function PlayerIcon({
             config: { duration: animationsList[i].duration || 1000 },
           })
         }
+      },
+      onRest: () => {
         onAnimationEnd(player, moveParams)
+        setIsAnimating(false)
       },
     })
   }
 
   useEffect(() => {
-    if (isMoving && !winAnimation && moveParams) {
+    if (isMoving && !winAnimation && moveParams && !isAnimating) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
@@ -228,7 +233,7 @@ export default function PlayerIcon({
       startChainedAnimation(moveParams)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveParams, winAnimation])
+  }, [isMoving, moveParams, winAnimation, isAnimating])
 
   useEffect(() => {
     if (anchorCell) {
@@ -373,7 +378,16 @@ export default function PlayerIcon({
               src={playerIcon}
               width={'40px'}
               alt=""
-              style={{ verticalAlign: 'middle' }}
+              style={{
+                verticalAlign: 'middle',
+                // boxShadow: 'inset 0px 0px 30px 10px rgba(0, 0, 0, 0.4)',
+                // boxShadow: `0px 0px 20px 10px rgba(0, 0, 0, 0.8)`,
+                filter: 'drop-shadow(0px -1px 15px rgba(0,0,0,1.0))',
+                // boxShadow: '0px 20px 20px rgba(0, 0, 0, 0.5)',
+                // border: '5px solid white',
+                borderRadius: '5px',
+                zIndex: 20,
+              }}
             />
           )}
           <p style={{ padding: 0, margin: 0, lineHeight: 1 }}>
@@ -390,10 +404,16 @@ export default function PlayerIcon({
                 paddingLeft: '5px',
                 paddingRight: '5px',
                 borderRadius: '3px',
+                // border: '1px solid white',
+
                 display: 'flex',
                 alignItems: 'center',
                 paddingTop: '3px',
                 paddingBottom: '3px',
+                zIndex: 25,
+                position: 'relative',
+                boxShadow:
+                  '0px 6px 12px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.08)',
               }}
             >
               {player.name}

@@ -40,17 +40,15 @@ export default function BottomSectionMobile() {
           </Link>
         </Box>
         <Box fontSize={'16px'} fontWeight={700} marginTop={'27px'}>
-          GitHub
+          Зеркало (если плохо грузит)
         </Box>
         <Box marginTop={'8px'} fontSize={'14px'} fontWeight={500}>
           <Link
-            href="https://github.com/aukus-devs"
+            href="https://aukus.su/"
             rel="noopener nereferrer"
             target="_blank"
           >
-            <LinkSpan color={Color.blue}>
-              https://github.com/aukus-devs
-            </LinkSpan>
+            <LinkSpan color={Color.blue}>https://aukus.su/</LinkSpan>
           </Link>
         </Box>
       </Box>
