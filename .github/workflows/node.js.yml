@@ -2,7 +2,7 @@ name: Rollup
 
 on:
   push:
-    branches: ['prod']
+    branches: ['test']
 
 jobs:
   build_and_deploy:
@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: './dist/'
-          target: '/home/aukus/deploy/frontend/prod/deploy_build'
+          target: '/home/aukus/deploy/frontend/test/deploy_build'
 
       - name: swap build and restart nginx
         uses: appleboy/ssh-action@v1.0.3
@@ -39,41 +39,20 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command_timeout: 1m
-          script: cd "/home/aukus/deploy/frontend/prod" && rm -rf build && mkdir build && mv deploy_build/dist/* ./build/ && rm -r deploy_build/dist
+          script: cd "/home/aukus/deploy/frontend/test" && rm -rf build && mkdir build && mv deploy_build/dist/* ./build/ && rm -r deploy_build/dist
 
-      - name: Aukus prod frontend build and upload success!
+      - name: Aukus test frontend build and upload success!
         uses: rjstone/discord-webhook-notify@v1
         if: success()
         with:
           severity: info
-          details: Aukus prod frontend build and upload success!
+          details: Aukus test frontend build and upload success!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Success to telegram
-        if: success()
-        run: |
-          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-          COMMIT_TEXT=$(git log --oneline -n 1)
-          msg_text="✅Aukus prod frontend build and  upload success!%0AAuthor: $COMMIT_AUTHOR %0ACommit: $COMMIT_TEXT"
-          curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-          -d "message_thread_id=20&chat_id=-1002471795184_20&text=${msg_text}&"
-
-      - name: Aukus prod frontend build and upload failure!
+      - name: Aukus test frontend build and upload failure!
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
-          details: Aukus prod frontend build and upload failure!
+          details: Aukus test frontend build and upload failure!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-      - name: Failure to telegram
-        if: failure()
-        run: |
-          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-          COMMIT_TEXT=$(git log --oneline -n 1)
-          msg_text="⚠️Aukus prod frontend build and failure!%0AAuthor: $COMMIT_AUTHOR %0ACommit: $COMMIT_TEXT"
-          curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-          -d "message_thread_id=20&chat_id=-1002471795184_20&text=${msg_text}&"
