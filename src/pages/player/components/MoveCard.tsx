@@ -4,7 +4,13 @@ import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
-import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
+import {
+  PlayerMove,
+  Color,
+  Player,
+  getPlayerColor,
+  ItemLength,
+} from 'utils/types'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
 import {
@@ -99,6 +105,20 @@ export default function MoveCard({
   }
 
   const timeSpent = formatSecondsToTime(move.stream_title_category_duration)
+  const createdDate = new Date(move.created_at)
+  const fixedDate = new Date('2024-12-04 00:00:00+03')
+  const showTimeSpent = timeSpent && createdDate > fixedDate
+
+  const diceRollTextMap: { [k in ItemLength]: string } = {
+    medium: '15-30ч',
+    long: '30+ч',
+    short: '3-15ч',
+    tiny: '0-3ч',
+  }
+
+  const diceRollText = move.item_length
+    ? diceRollTextMap[move.item_length]
+    : null
 
   return (
     <>
@@ -194,7 +214,17 @@ export default function MoveCard({
                 карте:&nbsp;&nbsp;&nbsp;
                 {move.cell_from} {'->'} {move.cell_to}
               </Box>
-              {timeSpent && (
+              {diceRollText && (
+                <Box
+                  fontSize={'13px'}
+                  fontWeight={400}
+                  marginTop={'5px'}
+                  color={greyColor}
+                >
+                  Тип кубика: {diceRollText}
+                </Box>
+              )}
+              {showTimeSpent && (
                 <Box
                   fontSize={'13px'}
                   fontWeight={400}

@@ -118,8 +118,8 @@ const itemReviews: Array<string> = [
 
 export function playerMovesMock() {
   const dates = generateDateRange(
-    new Date('2024-11-01'),
-    new Date('2024-12-01')
+    new Date('2024-12-04'),
+    new Date('2024-12-10')
   )
   const data: PlayerMove[] = []
   let currentPosition = 0
