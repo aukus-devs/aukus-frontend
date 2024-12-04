@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Divider } from '@mui/material'
 import { useSnackbar } from 'notistack'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context'
 import { useSaveCanvasImages, useUploadCanvasImage } from '../queries'
 import { Color } from '../../../utils/types'

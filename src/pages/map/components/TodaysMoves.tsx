@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { find } from 'lodash'
+import find from 'lodash/find'
 import MoveCard from 'pages/player/components/MoveCard'
 import useScreenSize from 'src/context/useScreenSize'
 import { fetchPlayerMoves } from 'utils/api'

@@ -1,7 +1,7 @@
 import { CalendarMonth } from '@mui/icons-material'
 import { Box, Button, Slider, SliderThumb, Tooltip } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useRef, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'

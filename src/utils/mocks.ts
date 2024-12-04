@@ -1,4 +1,5 @@
-import { sample, random } from 'lodash'
+import sample from 'lodash/sample'
+import random from 'lodash/random'
 import { Player, PlayerMove } from './types'
 
 const playerLasqa: Player = {
