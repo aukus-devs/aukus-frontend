@@ -71,7 +71,14 @@ function OfflineButton({ player }: Props) {
       color={'customGreyDark'}
       variant="contained"
     >
-      Стример оффлайн
+      <Box display="flex" alignItems={'center'}>
+        Стример оффлайн
+        <img
+          src={OpenIcon}
+          alt=""
+          style={{ marginLeft: '10px', width: '17px', height: '17px' }}
+        />
+      </Box>
     </Button>
   )
 }
