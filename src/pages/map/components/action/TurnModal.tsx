@@ -22,7 +22,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { fetchGameNames } from 'utils/api'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 
@@ -39,6 +39,7 @@ import NumRating from './NumRating'
 import isNumber from 'lodash/isNumber'
 import debounce from 'lodash/debounce'
 import { checkImageValid } from '../utils'
+import useLocalStorage from 'src/context/useLocalStorage'
 
 type Props = {
   open: boolean
@@ -48,11 +49,13 @@ type Props = {
 }
 
 export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
+  const { save, load } = useLocalStorage()
+
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
   const [debouncedGameName, setDebouncedGameName] = useState('')
-  const [review, setReview] = useState('')
+  const [review, setReview] = useState(() => load('item_review') || '')
   const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
@@ -60,6 +63,13 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const debounceGameName = useCallback(
     debounce((value: string) => {
       setDebouncedGameName(value)
+    }, 100),
+    []
+  )
+
+  const saveReview = useCallback(
+    debounce((value: string) => {
+      save('item_review', value)
     }, 100),
     []
   )
@@ -156,6 +166,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReview(event.target.value)
+    saveReview(event.target.value)
   }
 
   const handleGameHoursChange = (newValue: ItemLength | null) => {
@@ -207,6 +218,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       setRatingHover(null)
       setGameName('')
       setReview('')
+      saveReview('')
       setGameHours(null)
       setMoveType(null)
     }
