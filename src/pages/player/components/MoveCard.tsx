@@ -106,7 +106,7 @@ export default function MoveCard({
 
   const timeSpent = formatSecondsToTime(move.stream_title_category_duration)
   const createdDate = new Date(move.created_at)
-  const fixedDate = new Date('2024-12-04 00:00:00+03')
+  const fixedDate = new Date('2024-12-04 18:00:00+03')
   const showTimeSpent = timeSpent && createdDate > fixedDate
 
   const diceRollTextMap: { [k in ItemLength]: string } = {
