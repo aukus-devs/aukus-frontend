@@ -14,6 +14,7 @@ import FloatingClock from './FloatingClock'
 import MultistreamButton from 'src/pages/players/components/MultistreamButton'
 import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
 import { useTime } from 'src/context/TimeProvider'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 
 type Props = {
   currentPage: Page
@@ -127,7 +128,7 @@ export default function MainMenu({
                 height={'15px'}
                 style={{ marginRight: '8px' }}
               />
-              АУКУС 2024 {currentUser && `// ${currentUser.name}`}
+              АУКУС 2024 {currentUser && `// ${playerDisplayName(currentUser)}`}
             </LinkSpan>
           </Link>
           <Box

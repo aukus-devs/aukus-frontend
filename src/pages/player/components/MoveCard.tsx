@@ -18,6 +18,7 @@ import {
   formatNumber,
   formatSecondsToTime,
   hasEditPermission,
+  playerDisplayName,
 } from './utils'
 import TextRender from './TextRender'
 import { Link } from 'react-router-dom'
@@ -101,7 +102,7 @@ export default function MoveCard({
 
   let moveTitle = `Ход — ${id}`
   if (player && displayType === 'map') {
-    moveTitle = player.name
+    moveTitle = playerDisplayName(player)
   }
 
   const timeSpent = formatSecondsToTime(move.stream_title_category_duration)
