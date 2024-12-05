@@ -3,6 +3,7 @@ import { getPlayerColor, Player } from 'src/utils/types'
 import { Link } from 'react-router-dom'
 import LinkSpan from 'src/components/LinkSpan'
 import { PlayerPhotoMap } from './utils'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 
 type Props = {
   player: Player
@@ -12,6 +13,8 @@ export default function PlayerTile({ player }: Props) {
   const photo = PlayerPhotoMap[player.url_handle]
   const playerColor = getPlayerColor(player.url_handle)
   const linkColor = 'rgba(255,255,255,0.8)'
+  const displayName = playerDisplayName(player)
+
   return (
     <Box
       width={'380px'}
@@ -33,7 +36,7 @@ export default function PlayerTile({ player }: Props) {
       </Box>
       <Box fontSize={'32px'} paddingLeft={'15px'}>
         {player.first_name}
-        <br />«{player.name}»
+        <br />«{displayName}»
       </Box>
       <Box marginTop={'10px'}>
         <Link to={`/players/${player.url_handle}`}>
