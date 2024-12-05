@@ -575,7 +575,10 @@ export default function MapComponent() {
                   left={'-193px'}
                 >
                   <Button
-                    sx={{ height: '44px' }}
+                    sx={{
+                      height: '44px',
+                      backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                    }}
                     onClick={() => save('darkMode', !darkMode)}
                   >
                     Затемнить карту
