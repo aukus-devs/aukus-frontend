@@ -269,3 +269,9 @@ div#root {
 .mono {
   font-family: 'IBM Plex Mono', monospace;
 }
+
+.player-tile-button {
+  &:hover {
+    background-color: white !important;
+  }
+}

@@ -109,8 +109,8 @@ export default function PlayerTile({ player }: Props) {
       <Box marginTop={'15px'} paddingLeft={'15px'} paddingRight={'15px'}>
         <Link to={`/players/${player.url_handle}`}>
           <Button
+            className={'player-tile-button'}
             sx={{ width: '100%' }}
-            // color={'customPaleWhite'}
             style={{
               backgroundColor: 'rgba(255,255,255,0.6)',
               color: playerColor,
