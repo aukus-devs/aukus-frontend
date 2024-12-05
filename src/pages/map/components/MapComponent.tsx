@@ -427,11 +427,12 @@ export default function MapComponent() {
           style={{
             width: '1715px',
             height: '2146px',
-            backgroundImage: "url('uploads/aukus_map_compressed.png')",
+            background: darkMode
+              ? "linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('uploads/aukus_map_compressed.png')"
+              : 'url("uploads/aukus_map_compressed.png")',
             backgroundRepeat:
               'no-repeat' /* Prevent the image from repeating */,
             backgroundPosition: 'center' /* Center the image */,
-            opacity: darkMode ? 0.6 : 1.0,
           }}
         >
           {showWinScreen && top3players.length > 2 && (
