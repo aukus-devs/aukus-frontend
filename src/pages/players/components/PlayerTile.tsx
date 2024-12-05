@@ -57,7 +57,9 @@ export default function PlayerTile({ player }: Props) {
                 target="_blank"
                 rel="noopener nereferrer"
               >
-                <LinkSpan defaultColor={linkColor}>Твич</LinkSpan>
+                <LinkSpan defaultColor={linkColor} color={'white'}>
+                  Твич
+                </LinkSpan>
               </Link>
             </Box>
           )}
@@ -67,7 +69,9 @@ export default function PlayerTile({ player }: Props) {
               target="_blank"
               rel="noopener nereferrer"
             >
-              <LinkSpan defaultColor={linkColor}>ВК Видео</LinkSpan>
+              <LinkSpan defaultColor={linkColor} color={'white'}>
+                ВК Видео
+              </LinkSpan>
             </Link>
           )}
           {player.kick_stream_link && (
@@ -76,7 +80,9 @@ export default function PlayerTile({ player }: Props) {
               target="_blank"
               rel="noopener nereferrer"
             >
-              <LinkSpan defaultColor={linkColor}>Кик</LinkSpan>
+              <LinkSpan defaultColor={linkColor} color={'white'}>
+                Кик
+              </LinkSpan>
             </Link>
           )}
           {player.telegram_link && (
@@ -85,7 +91,9 @@ export default function PlayerTile({ player }: Props) {
               target="_blank"
               rel="noopener nereferrer"
             >
-              <LinkSpan defaultColor={linkColor}>Телеграм</LinkSpan>
+              <LinkSpan defaultColor={linkColor} color={'white'}>
+                Телеграм
+              </LinkSpan>
             </Link>
           )}
           {player.donation_link && (
@@ -94,7 +102,9 @@ export default function PlayerTile({ player }: Props) {
               target="_blank"
               rel="noopener nereferrer"
             >
-              <LinkSpan defaultColor={linkColor}>Донейшен</LinkSpan>
+              <LinkSpan defaultColor={linkColor} color={'white'}>
+                Донейшен
+              </LinkSpan>
             </Link>
           )}
         </Box>
