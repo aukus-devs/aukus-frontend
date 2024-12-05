@@ -36,7 +36,9 @@ export default function PlayerTile({ player }: Props) {
         <br />«{player.name}»
       </Box>
       <Box marginTop={'10px'}>
-        <img src={photo} style={{ width: '380px', height: '234px' }} />
+        <Link to={`/players/${player.url_handle}`}>
+          <img src={photo} style={{ width: '380px', height: '234px' }} />
+        </Link>
       </Box>
       <Box
         marginTop={'15px'}
