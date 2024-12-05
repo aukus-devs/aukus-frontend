@@ -70,7 +70,7 @@ export default function MapComponent() {
 
   const [timeLeft, setTimeLeft] = useState(() => getEventTimeLeft())
 
-  const [darkMode, setDarkMode] = useState(false)
+  const darkMode = load('darkMode', false)
 
   useEffect(() => {
     const mapWidth = 1715
@@ -575,7 +575,7 @@ export default function MapComponent() {
                 >
                   <Button
                     sx={{ height: '44px' }}
-                    onClick={() => setDarkMode(!darkMode)}
+                    onClick={() => save('darkMode', !darkMode)}
                   >
                     Затемнить карту
                   </Button>
@@ -631,7 +631,7 @@ export default function MapComponent() {
               <Box position="absolute" width="200px" display="inline">
                 <Button
                   sx={{ height: '44px' }}
-                  onClick={() => setDarkMode(!darkMode)}
+                  onClick={() => save('darkMode', !darkMode)}
                 >
                   Затемнить карту
                 </Button>
