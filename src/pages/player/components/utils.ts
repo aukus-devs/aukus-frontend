@@ -68,8 +68,8 @@ export function formatSecondsToTime(seconds: number | string): string | null {
 }
 
 export function playerDisplayName(player: Player | CurrentUser) {
-  if (player.name === 'Maddyson') {
-    return 'Maddyson +1'
-  }
+  // if (player.name === 'Maddyson') {
+  //   return 'Maddyson +1'
+  // }
   return player.name
 }
