@@ -36,7 +36,7 @@ export default function PlayerTile({ player }: Props) {
         <br />«{player.name}»
       </Box>
       <Box marginTop={'10px'}>
-        <img src={photo} style={{ width: '380px' }} />
+        <img src={photo} style={{ width: '380px', height: '234px' }} />
       </Box>
       <Box
         marginTop={'15px'}
