@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-} from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
@@ -634,7 +627,10 @@ export default function MapComponent() {
               <TimelapseButton variant="big" />
               <Box position="absolute" width="200px" display="inline">
                 <Button
-                  sx={{ height: '44px' }}
+                  sx={{
+                    height: '44px',
+                    backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                  }}
                   onClick={() => save('darkMode', !darkMode)}
                 >
                   Затемнить карту
