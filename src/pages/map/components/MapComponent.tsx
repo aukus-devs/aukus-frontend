@@ -567,6 +567,19 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
+                <Box
+                  position="absolute"
+                  width="200px"
+                  display="inline"
+                  left={'-193px'}
+                >
+                  <Button
+                    sx={{ height: '44px' }}
+                    onClick={() => setDarkMode(!darkMode)}
+                  >
+                    Затемнить карту
+                  </Button>
+                </Box>
                 {/* <Box
                   position="absolute"
                   left={'-155px'}
