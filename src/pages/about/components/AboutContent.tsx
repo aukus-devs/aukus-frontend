@@ -99,6 +99,11 @@ const sponsors: Payment[] = [
     amount: 5000,
   },
   {
+    name: 'bibus_dikkus',
+    amount: 1000,
+    text: '',
+  },
+  {
     name: 'Sadistic_killer',
     amount: 1000,
     text: '',
@@ -138,6 +143,7 @@ const sponsors: Payment[] = [
     text: 'Спонсируем хорошее настроение',
     amount: 500,
   },
+  { name: 'elmanana', amount: 300, text: '' },
   {
     name: 'Tr4visTouchd0wn',
     amount: 300,
