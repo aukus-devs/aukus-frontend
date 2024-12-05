@@ -121,6 +121,19 @@ export default function MoveCard({
     ? diceRollTextMap[move.item_length]
     : null
 
+  const timeSpentMsgParts = []
+  if (timeSpent) {
+    timeSpentMsgParts.push(`пройдена за — ${timeSpent}`)
+  }
+
+  if (move.item_length && diceRollTextMap[move.item_length]) {
+    timeSpentMsgParts.push(
+      `время по HLTB — ${diceRollTextMap[move.item_length]}`
+    )
+  }
+
+  const timeSpentMsg = capitalizeFirstLetter(timeSpentMsgParts.join(', '))
+
   return (
     <>
       <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
@@ -215,17 +228,7 @@ export default function MoveCard({
                 карте:&nbsp;&nbsp;&nbsp;
                 {move.cell_from} {'->'} {move.cell_to}
               </Box>
-              {diceRollText && (
-                <Box
-                  fontSize={'13px'}
-                  fontWeight={400}
-                  marginTop={'5px'}
-                  color={greyColor}
-                >
-                  Тип кубика: {diceRollText}
-                </Box>
-              )}
-              {showTimeSpent && (
+              {timeSpentMsg && (
                 <Box
                   fontSize={'13px'}
                   fontWeight={400}
@@ -233,7 +236,7 @@ export default function MoveCard({
                   color={greyColor}
                 >
                   <Tooltip title="Примерное время по категории стрима">
-                    <span>Время прохождения:&nbsp;&nbsp;&nbsp;{timeSpent}</span>
+                    {timeSpentMsg}
                   </Tooltip>
                 </Box>
               )}
@@ -293,4 +296,11 @@ export default function MoveCard({
       />
     </>
   )
+}
+
+function capitalizeFirstLetter(sentence: string) {
+  if (!sentence || sentence.length === 0) {
+    return ''
+  }
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1)
 }
