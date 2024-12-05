@@ -236,7 +236,7 @@ export default function MoveCard({
                   color={greyColor}
                 >
                   <Tooltip title="Примерное время по категории стрима">
-                    {timeSpentMsg}
+                    <span>{timeSpentMsg}</span>
                   </Tooltip>
                 </Box>
               )}
