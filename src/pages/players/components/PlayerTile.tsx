@@ -14,13 +14,13 @@ export default function PlayerTile({ player }: Props) {
   const linkColor = 'rgba(255,255,255,0.8)'
   return (
     <Box
-      // height={'255px'}
       width={'380px'}
       style={{ backgroundColor: playerColor }}
       borderRadius={'15px'}
-      padding={'15px'}
       lineHeight={'1.2'}
       position={'relative'}
+      paddingTop={'15px'}
+      paddingBottom={'15px'}
     >
       <Box
         position={'absolute'}
@@ -31,88 +31,94 @@ export default function PlayerTile({ player }: Props) {
       >
         {player.is_online ? 'стримит' : 'оффлайн'}
       </Box>
-      <Box fontSize={'32px'}>
+      <Box fontSize={'32px'} paddingLeft={'15px'}>
         {player.first_name}
         <br />«{player.name}»
       </Box>
-      <Box display="flex" marginTop={'20px'}>
-        <Box>
-          <img src={photo} style={{ height: '100px', borderRadius: '10px' }} />
-        </Box>
-        <Box
-          fontSize={'16px'}
-          color={'rgba(255,255,255,0.8)'}
-          width={'200px'}
-          display={'flex'}
-          flexWrap={'wrap'}
-          gap={'10px'}
-          lineHeight={'1.2'}
-          alignContent={'flex-start'}
-          justifyContent={'flex-end'}
-        >
-          {player.twitch_stream_link && (
-            <Box>
-              <Link
-                to={player.twitch_stream_link}
-                target="_blank"
-                rel="noopener nereferrer"
-              >
-                <LinkSpan defaultColor={linkColor} color={'white'}>
-                  Твич
-                </LinkSpan>
-              </Link>
-            </Box>
-          )}
-          {player.vk_stream_link && (
-            <Link
-              to={player.vk_stream_link}
-              target="_blank"
-              rel="noopener nereferrer"
-            >
-              <LinkSpan defaultColor={linkColor} color={'white'}>
-                ВК Видео
-              </LinkSpan>
-            </Link>
-          )}
-          {player.kick_stream_link && (
-            <Link
-              to={player.kick_stream_link}
-              target="_blank"
-              rel="noopener nereferrer"
-            >
-              <LinkSpan defaultColor={linkColor} color={'white'}>
-                Кик
-              </LinkSpan>
-            </Link>
-          )}
-          {player.telegram_link && (
-            <Link
-              to={player.telegram_link}
-              target="_blank"
-              rel="noopener nereferrer"
-            >
-              <LinkSpan defaultColor={linkColor} color={'white'}>
-                Телеграм
-              </LinkSpan>
-            </Link>
-          )}
-          {player.donation_link && (
-            <Link
-              to={player.donation_link}
-              target="_blank"
-              rel="noopener nereferrer"
-            >
-              <LinkSpan defaultColor={linkColor} color={'white'}>
-                Донейшен
-              </LinkSpan>
-            </Link>
-          )}
-        </Box>
-      </Box>
       <Box marginTop={'10px'}>
-        <Button sx={{ width: '100%' }} color={'customGreyLight'}>
-          Страница стримера
-        </Button>
+        <img src={photo} style={{ width: '380px' }} />
+      </Box>
+      <Box
+        marginTop={'15px'}
+        paddingLeft={'25px'}
+        paddingRight={'15px'}
+        fontSize={'16px'}
+        color={'rgba(255,255,255,0.8)'}
+        lineHeight={'1.2'}
+        display={'flex'}
+        alignContent={'flex-start'}
+        // justifyContent={'flex-end'}
+        gap={'15px'}
+      >
+        {player.twitch_stream_link && (
+          <Link
+            to={player.twitch_stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <LinkSpan defaultColor={linkColor} color={'white'}>
+              Твич
+            </LinkSpan>
+          </Link>
+        )}
+        {player.vk_stream_link && (
+          <Link
+            to={player.vk_stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <LinkSpan defaultColor={linkColor} color={'white'}>
+              ВК Видео
+            </LinkSpan>
+          </Link>
+        )}
+        {player.kick_stream_link && (
+          <Link
+            to={player.kick_stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <LinkSpan defaultColor={linkColor} color={'white'}>
+              Кик
+            </LinkSpan>
+          </Link>
+        )}
+        {player.telegram_link && (
+          <Link
+            to={player.telegram_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <LinkSpan defaultColor={linkColor} color={'white'}>
+              Телеграм
+            </LinkSpan>
+          </Link>
+        )}
+        {player.donation_link && (
+          <Link
+            to={player.donation_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <LinkSpan defaultColor={linkColor} color={'white'}>
+              Донейшен
+            </LinkSpan>
+          </Link>
+        )}
+      </Box>
+      <Box marginTop={'15px'} paddingLeft={'15px'} paddingRight={'15px'}>
+        <Link to={`/players/${player.url_handle}`}>
+          <Button
+            sx={{ width: '100%' }}
+            // color={'customPaleWhite'}
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.6)',
+              color: playerColor,
+            }}
+          >
+            Страница стримера
+          </Button>
+        </Link>
       </Box>
     </Box>
   )
