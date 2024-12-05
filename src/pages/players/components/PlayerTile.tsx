@@ -56,7 +56,11 @@ export default function PlayerTile({ player }: Props) {
             target="_blank"
             rel="noopener nereferrer"
           >
-            <LinkSpan defaultColor={linkColor} color={'white'}>
+            <LinkSpan
+              defaultColor={linkColor}
+              color={'white'}
+              underlineSize="1px"
+            >
               Твич
             </LinkSpan>
           </Link>
@@ -67,7 +71,11 @@ export default function PlayerTile({ player }: Props) {
             target="_blank"
             rel="noopener nereferrer"
           >
-            <LinkSpan defaultColor={linkColor} color={'white'}>
+            <LinkSpan
+              defaultColor={linkColor}
+              color={'white'}
+              underlineSize="1px"
+            >
               ВК Видео
             </LinkSpan>
           </Link>
@@ -78,7 +86,11 @@ export default function PlayerTile({ player }: Props) {
             target="_blank"
             rel="noopener nereferrer"
           >
-            <LinkSpan defaultColor={linkColor} color={'white'}>
+            <LinkSpan
+              defaultColor={linkColor}
+              color={'white'}
+              underlineSize="1px"
+            >
               Кик
             </LinkSpan>
           </Link>
@@ -89,7 +101,11 @@ export default function PlayerTile({ player }: Props) {
             target="_blank"
             rel="noopener nereferrer"
           >
-            <LinkSpan defaultColor={linkColor} color={'white'}>
+            <LinkSpan
+              defaultColor={linkColor}
+              color={'white'}
+              underlineSize="1px"
+            >
               Телеграм
             </LinkSpan>
           </Link>
@@ -100,7 +116,11 @@ export default function PlayerTile({ player }: Props) {
             target="_blank"
             rel="noopener nereferrer"
           >
-            <LinkSpan defaultColor={linkColor} color={'white'}>
+            <LinkSpan
+              defaultColor={linkColor}
+              color={'white'}
+              underlineSize="1px"
+            >
               Донейшен
             </LinkSpan>
           </Link>
