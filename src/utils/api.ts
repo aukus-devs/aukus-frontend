@@ -205,3 +205,29 @@ export async function updateCurrentGame({
     body: JSON.stringify({ player_id, title }),
   }).then((res) => res.json())
 }
+
+type Sponsor = {
+  name: string
+  text?: string
+  type: 'big' | 'small'
+}
+
+type SponsorsResponse = {
+  dons: Sponsor[]
+}
+
+export async function fetchSponsors(): Promise<SponsorsResponse> {
+  if (MOCK_API) {
+    return Promise.resolve({
+      dons: [
+        {
+          name: 'CruxTerminatus',
+          type: 'big',
+          text: 'а я еще дам деняк на пиво (или не на пиво)',
+        },
+        { name: 'Tsessarsky', type: 'small', text: 'Спасибо за ивент!' },
+      ],
+    })
+  }
+  return fetch('/api/dons').then((res) => res.json())
+}

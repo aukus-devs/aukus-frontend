@@ -1,5 +1,7 @@
 import { Box, Button, Link, Tooltip } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import useScreenSize from 'src/context/useScreenSize'
+import { fetchSponsors } from 'src/utils/api'
 import { Color } from 'utils/types'
 
 const creators = [
@@ -66,110 +68,16 @@ const creators = [
   },
 ]
 
-type Payment = {
-  name: string
-  text: string
-  amount: number
-}
-
-const sponsors: Payment[] = [
-  {
-    name: 'CruxTerminatus',
-    amount: 500,
-    text: 'а я еще дам деняк на пиво (или не на пиво)',
-  },
-  {
-    name: 'Tsessarsky',
-    text: 'Спасибо за ивент!',
-    amount: 5000,
-  },
-  {
-    name: 'Arrivelen',
-    text: 'Я Пепега! Спасибо всем ребятам за все что вы делаете <3',
-    amount: 5000,
-  },
-  {
-    name: 'Balabama',
-    text: 'Кто прочитал это сообщение, обязан закинуть 100 рублей разрабам на бусти',
-    amount: 5000,
-  },
-  {
-    name: 'Юзя',
-    text: 'Спасибо вам всем огромное от всей души за сайт и интеграцию с поинтауком! ❤️',
-    amount: 5000,
-  },
-  {
-    name: 'bibus_dikkus',
-    amount: 1000,
-    text: '',
-  },
-  {
-    name: 'Sadistic_killer',
-    amount: 1000,
-    text: '',
-  },
-  {
-    name: '4echevica',
-    text: '',
-    amount: 1000,
-  },
-  {
-    name: 'Sppoo',
-    text: '',
-    amount: 1000,
-  },
-  {
-    name: 'Virtuoz',
-    text: 'делайте красиво',
-    amount: 1000,
-  },
-  {
-    name: 'alevser',
-    text: 'летс гооо',
-    amount: 777,
-  },
-  {
-    name: 'empartys',
-    amount: 500,
-    text: '',
-  },
-  {
-    name: 'Vagner',
-    text: '❤️',
-    amount: 500,
-  },
-  {
-    name: 'CruxTerminatus',
-    text: 'Спонсируем хорошее настроение',
-    amount: 500,
-  },
-  { name: 'elmanana', amount: 300, text: '' },
-  {
-    name: 'Tr4visTouchd0wn',
-    amount: 300,
-    text: '',
-  },
-  { name: 'Quizy', text: '', amount: 300 },
-]
-
 export default function AboutContent() {
   const { headerSize } = useScreenSize()
 
-  const groupDuplicateSponsors = (sponsors: Payment[]) => {
-    const result: Payment[] = []
-    sponsors.forEach((sponsor) => {
-      const existing = result.find((item) => item.name === sponsor.name)
-      if (existing) {
-        existing.amount += sponsor.amount
-      } else {
-        result.push({ ...sponsor })
-      }
-    })
-    return result
-  }
+  const { data: sponsorsData } = useQuery({
+    queryKey: ['sponsors'],
+    queryFn: fetchSponsors,
+    staleTime: 1000 * 60 * 5,
+  })
 
-  const grouped = groupDuplicateSponsors(sponsors)
-  const sponsorsSortedByAmount = grouped.sort((a, b) => b.amount - a.amount)
+  const sponsors = sponsorsData?.dons || []
 
   return (
     <Box display="flex" justifyContent="center">
@@ -202,13 +110,14 @@ export default function AboutContent() {
           Наши спонсоры
         </Box>
         <Box marginTop={'10px'} fontSize={'20px'}>
-          {sponsorsSortedByAmount.map((item, index) => {
-            const hasText = item.text.length > 0
-            const text = hasText && item.amount >= 5000 ? ` — ${item.text}` : ''
+          {sponsors.map((item, index) => {
+            const text = item.text || ''
+            const displayText =
+              text.length > 0 && item.type === 'big' ? ` — ${item.text}` : ''
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
                 {item.name}
-                <span style={{ color: Color.greyNew }}>{text}</span>
+                <span style={{ color: Color.greyNew }}>{displayText}</span>
               </Box>
             )
           })}
