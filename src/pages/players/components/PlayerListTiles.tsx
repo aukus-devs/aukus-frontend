@@ -28,7 +28,7 @@ export default function PlayerListTiles() {
 
   return (
     <Box display={'flex'} justifyContent={'center'} width={'100%'}>
-      <Box display={'flex'} flexWrap={'wrap'} maxWidth={'1190px'} gap={'30px'}>
+      <Box display={'flex'} flexWrap={'wrap'} maxWidth={'1200px'} gap={'30px'}>
         {playersSorted.map((player) => {
           const hasPhoto = PlayerPhotoMap[player.url_handle]
           if (!hasPhoto) {
