@@ -224,8 +224,7 @@ export default function MoveCard({
               </Box>
               <Box fontSize={'13px'} fontWeight={400} color={greyColor}>
                 Ролл кубика:&nbsp;&nbsp;&nbsp;
-                {formatNumber(move.dice_roll)}, позиция на
-                карте:&nbsp;&nbsp;&nbsp;
+                {formatNumber(move.dice_roll)}, ход на карте:&nbsp;&nbsp;&nbsp;
                 {move.cell_from} {'->'} {move.cell_to}
               </Box>
               {timeSpentMsg && (
