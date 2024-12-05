@@ -7,7 +7,7 @@ import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { Color, getPlayerColor } from 'utils/types'
+import { Color, getPlayerColor, PlayerAlias } from 'utils/types'
 import { aukus1Games } from '../data_aukus1'
 import { aukus2Games } from '../data_aukus2'
 import MoveCard from './MoveCard'
@@ -15,7 +15,7 @@ import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
 import useScreenSize from 'src/context/useScreenSize'
 import CurrentMove from './CurrentMove'
-import { hasEditPermission } from './utils'
+import { hasEditPermission, playerDisplayName } from './utils'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
@@ -97,6 +97,8 @@ export default function PlayerContent() {
     })
   }
 
+  const displayName = playerDisplayName(player)
+
   return (
     <Box>
       <PlayerCanvasBackground
@@ -108,7 +110,7 @@ export default function PlayerContent() {
           <Box marginTop={'100px'}>
             <Box textAlign={'center'}>
               <Typography fontSize="48px" fontWeight={700}>
-                {player.first_name} «{player.name}»
+                {player.first_name} «{displayName}»
               </Typography>
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />

@@ -39,6 +39,7 @@ import PlayerYellowMoving from 'assets/map/PlayerYellowMoving.gif'
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 
 const playerIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlue,
@@ -351,6 +352,8 @@ export default function PlayerIcon({
     event.stopPropagation()
   }
 
+  const displayName = playerDisplayName(player)
+
   return (
     <animated.div
       style={{
@@ -416,7 +419,7 @@ export default function PlayerIcon({
                   '0px 6px 12px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.08)',
               }}
             >
-              {player.name}
+              {displayName}
             </span>
           </p>
         </Box>

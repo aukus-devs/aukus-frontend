@@ -1,4 +1,4 @@
-import { CurrentUser } from 'src/utils/types'
+import { CurrentUser, Player } from 'src/utils/types'
 
 export function formatDate(dateString: string) {
   // Create a new Date object
@@ -65,4 +65,11 @@ export function formatSecondsToTime(seconds: number | string): string | null {
   const minutes = Math.floor((totalSeconds % 3600) / 60)
 
   return `${hours}ч ${minutes}м`
+}
+
+export function playerDisplayName(player: Player) {
+  if (player.name === 'Maddyson') {
+    return 'Maddyson +1'
+  }
+  return player.name
 }
