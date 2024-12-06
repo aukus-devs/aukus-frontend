@@ -15,6 +15,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useScreenSize from 'src/context/useScreenSize'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
@@ -258,15 +259,7 @@ export default function Leaderboard() {
                 </TableCell>
                 <TableCell>
                   <span style={{ display: 'block', maxWidth: '285px' }}>
-                    <span
-                      style={
-                        orderBy === 'sheikh_moments'
-                          ? selectedStyle
-                          : headerStyle
-                      }
-                    >
-                      Выпало на ауке
-                    </span>
+                    Выпало на ауке
                   </span>
                 </TableCell>
               </TableRow>
@@ -274,6 +267,7 @@ export default function Leaderboard() {
             <TableBody>
               {playersStatsSorted.map((playerStat, index) => {
                 const player = playersById[playerStat.id]
+                const displayName = playerDisplayName(player)
                 const playerStream =
                   player?.twitch_stream_link ||
                   player?.vk_stream_link ||
@@ -313,7 +307,7 @@ export default function Leaderboard() {
                     <TableCell>
                       <Link to={`/players/${player.url_handle}`}>
                         <LinkSpan color={getPlayerColor(player.url_handle)}>
-                          {player.name}
+                          {displayName}
                         </LinkSpan>
                       </Link>
                     </TableCell>

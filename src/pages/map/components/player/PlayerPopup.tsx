@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import LinkSpan from 'components/LinkSpan'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 import { Color, getPlayerColor, Player } from 'utils/types'
 
 type Props = {
@@ -76,7 +77,7 @@ export default function PlayerPopup({
           <Typography fontSize={'16px'} fontWeight={700}>
             <Link to={`/players/${player.url_handle}`}>
               <LinkSpan color={getPlayerColor(player.url_handle)}>
-                {player.name}
+                {playerDisplayName(player)}
               </LinkSpan>
             </Link>
           </Typography>

@@ -4,7 +4,13 @@ import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
-import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
+import {
+  PlayerMove,
+  Color,
+  Player,
+  getPlayerColor,
+  ItemLength,
+} from 'utils/types'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
 import {
@@ -12,6 +18,7 @@ import {
   formatNumber,
   formatSecondsToTime,
   hasEditPermission,
+  playerDisplayName,
 } from './utils'
 import TextRender from './TextRender'
 import { Link } from 'react-router-dom'
@@ -95,10 +102,37 @@ export default function MoveCard({
 
   let moveTitle = `Ход — ${id}`
   if (player && displayType === 'map') {
-    moveTitle = player.name
+    moveTitle = playerDisplayName(player)
   }
 
   const timeSpent = formatSecondsToTime(move.stream_title_category_duration)
+  const createdDate = new Date(move.created_at)
+  const fixedDate = new Date('2024-12-04 18:00:00+03')
+  const showTimeSpent = timeSpent && createdDate > fixedDate
+
+  const diceRollTextMap: { [k in ItemLength]: string } = {
+    medium: '15-30ч',
+    long: '30+ч',
+    short: '3-15ч',
+    tiny: '0-3ч',
+  }
+
+  const diceRollText = move.item_length
+    ? diceRollTextMap[move.item_length]
+    : null
+
+  const timeSpentMsgParts = []
+  if (timeSpent) {
+    timeSpentMsgParts.push(`пройдена за — ${timeSpent}`)
+  }
+
+  if (move.item_length && diceRollTextMap[move.item_length]) {
+    timeSpentMsgParts.push(
+      `время по HLTB — ${diceRollTextMap[move.item_length]}`
+    )
+  }
+
+  const timeSpentMsg = capitalizeFirstLetter(timeSpentMsgParts.join(', '))
 
   return (
     <>
@@ -190,11 +224,10 @@ export default function MoveCard({
               </Box>
               <Box fontSize={'13px'} fontWeight={400} color={greyColor}>
                 Ролл кубика:&nbsp;&nbsp;&nbsp;
-                {formatNumber(move.dice_roll)}, позиция на
-                карте:&nbsp;&nbsp;&nbsp;
+                {formatNumber(move.dice_roll)}, ход на карте:&nbsp;&nbsp;&nbsp;
                 {move.cell_from} {'->'} {move.cell_to}
               </Box>
-              {timeSpent && (
+              {timeSpentMsg && (
                 <Box
                   fontSize={'13px'}
                   fontWeight={400}
@@ -202,7 +235,7 @@ export default function MoveCard({
                   color={greyColor}
                 >
                   <Tooltip title="Примерное время по категории стрима">
-                    <span>Время прохождения:&nbsp;&nbsp;&nbsp;{timeSpent}</span>
+                    <span>{timeSpentMsg}</span>
                   </Tooltip>
                 </Box>
               )}
@@ -262,4 +295,11 @@ export default function MoveCard({
       />
     </>
   )
+}
+
+function capitalizeFirstLetter(sentence: string) {
+  if (!sentence || sentence.length === 0) {
+    return ''
+  }
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1)
 }

@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, Grid } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
@@ -62,6 +62,8 @@ export default function MapComponent() {
   const queryClient = useQueryClient()
 
   const [timeLeft, setTimeLeft] = useState(() => getEventTimeLeft())
+
+  const darkMode = load('darkMode', false)
 
   useEffect(() => {
     const mapWidth = 1715
@@ -418,7 +420,9 @@ export default function MapComponent() {
           style={{
             width: '1715px',
             height: '2146px',
-            backgroundImage: "url('uploads/aukus_map_compressed.png')",
+            background: darkMode
+              ? "linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('uploads/aukus_map_compressed.png')"
+              : 'url("uploads/aukus_map_compressed.png")',
             backgroundRepeat:
               'no-repeat' /* Prevent the image from repeating */,
             backgroundPosition: 'center' /* Center the image */,
@@ -557,6 +561,22 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
+                <Box
+                  position="absolute"
+                  width="200px"
+                  display="inline"
+                  left={'-193px'}
+                >
+                  <Button
+                    sx={{
+                      height: '44px',
+                      backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                    }}
+                    onClick={() => save('darkMode', !darkMode)}
+                  >
+                    Затемнить карту
+                  </Button>
+                </Box>
                 {/* <Box
                   position="absolute"
                   left={'-155px'}
@@ -596,9 +616,29 @@ export default function MapComponent() {
             </Box>
           )}
         </Box>
-        <Box display="flex" justifyContent="center" width={'100%'}>
-          {showBigTimelapse && <TimelapseButton variant="big" />}
-        </Box>
+        {showBigTimelapse && (
+          <Box textAlign="center" width="100%" position={'relative'}>
+            <Box
+              justifyContent="center"
+              width={'100%'}
+              position={'relative'}
+              display={'inline-block'}
+            >
+              <TimelapseButton variant="big" />
+              <Box position="absolute" width="200px" display="inline">
+                <Button
+                  sx={{
+                    height: '44px',
+                    backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                  }}
+                  onClick={() => save('darkMode', !darkMode)}
+                >
+                  Затемнить карту
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        )}
         {showTestButton && (
           <Box marginTop={'10px'} display="block" textAlign="center">
             <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />

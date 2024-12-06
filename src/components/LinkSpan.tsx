@@ -6,6 +6,7 @@ interface LinkSpanProps {
   defaultColor?: string
   hideUnderline?: boolean
   underlineColor?: string
+  underlineSize?: string
 }
 
 const LinkSpan = styled('span', {
@@ -13,6 +14,7 @@ const LinkSpan = styled('span', {
     prop !== 'active' &&
     prop !== 'defaultColor' &&
     prop !== 'hideUnderline' &&
+    prop !== 'underlineSize' &&
     prop !== 'underlineColor', // This prevents the `active` prop from being passed to the DOM element
 })<LinkSpanProps>(({
   color,
@@ -20,16 +22,20 @@ const LinkSpan = styled('span', {
   defaultColor = 'white',
   hideUnderline,
   underlineColor,
+  underlineSize,
 }: LinkSpanProps) => {
+  const borderSize = underlineSize || '2px'
   return {
     borderBottom: hideUnderline
       ? '0'
-      : `2px solid ${underlineColor || color || defaultColor}`,
+      : `${borderSize} solid ${underlineColor || color || defaultColor}`,
     color: active ? color : defaultColor,
     ':hover': {
       color: color || defaultColor,
       cursor: 'pointer',
-      borderBottom: hideUnderline ? '0' : `2px solid ${color || defaultColor}`,
+      borderBottom: hideUnderline
+        ? '0'
+        : `${borderSize} solid ${color || defaultColor}`,
     },
   }
 })

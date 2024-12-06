@@ -15,7 +15,7 @@ import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
 import useScreenSize from 'src/context/useScreenSize'
 import CurrentMove from './CurrentMove'
-import { hasEditPermission } from './utils'
+import { hasEditPermission, playerDisplayName } from './utils'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
@@ -97,6 +97,8 @@ export default function PlayerContent() {
     })
   }
 
+  const displayName = playerDisplayName(player)
+
   return (
     <Box>
       <PlayerCanvasBackground
@@ -108,7 +110,7 @@ export default function PlayerContent() {
           <Box marginTop={'100px'}>
             <Box textAlign={'center'}>
               <Typography fontSize="48px" fontWeight={700}>
-                {player.first_name} «{player.name}»
+                {player.first_name} «{displayName}»
               </Typography>
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />

@@ -6,6 +6,7 @@ import { PlayerPhotoMap } from './utils'
 import useScreenSize from 'src/context/useScreenSize'
 import PlayerLinks from './PlayerLinks'
 import PlayerSectionMobile from './PlayerSectionMobile'
+import { playerDisplayName } from 'src/pages/player/components/utils'
 
 type Props = {
   player: Player
@@ -19,6 +20,8 @@ export default function PlayerSection({ player }: Props) {
     return <PlayerSectionMobile player={player} />
   }
 
+  const displayName = playerDisplayName(player)
+
   return (
     <Box
       display="flex"
@@ -28,7 +31,7 @@ export default function PlayerSection({ player }: Props) {
     >
       <Box textAlign={'left'} width={'550px'}>
         <Box fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
-          {player.first_name || ''} «{player.name}»
+          {player.first_name || ''} «{displayName}»
         </Box>
         <Box
           // height={'340px'}
