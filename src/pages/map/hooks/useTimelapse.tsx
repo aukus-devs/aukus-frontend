@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { fetchPlayerMoves, fetchPlayers, PlayerMovesResponse } from 'utils/api'
-import { Player, PlayerMove } from 'utils/types'
+import { MoveParams, Player, PlayerMove } from 'utils/types'
 
 type StateOption = 'closed' | 'date_selection' | 'move_selection'
 
@@ -17,6 +17,11 @@ type TimelapseState = {
   moves: PlayerMove[]
   followMode: boolean
   setFollowMode: (mode: boolean) => void
+  playMode: boolean
+  setPlayMode: (mode: boolean) => void
+  currentAnimationId: number
+  currentAnimationMove?: PlayerMove
+  onAnimationEnd: (params: { player: Player; moveParams: MoveParams }) => void
 }
 
 const Today = new Date()
@@ -33,6 +38,11 @@ const TimelapseContext = createContext<TimelapseState>({
   moves: [],
   followMode: true,
   setFollowMode: () => {},
+  playMode: false,
+  setPlayMode: () => {},
+  currentAnimationId: 0,
+  currentAnimationMove: undefined,
+  onAnimationEnd: ({}) => {},
 })
 
 export function useTimelapse() {
@@ -52,6 +62,12 @@ export default function TimelapseProvider({
   const [currentResponse, setCurrentResponse] = useState<
     PlayerMovesResponse | undefined
   >(undefined)
+
+  // const [playMode, setPlayMode] = useState<boolean>(false)
+  const [currentAnimationId, setCurrentAnimationId] = useState<number>(0)
+  const [playState, setPlayState] = useState<
+    'off' | 'start' | 'animate' | 'finish'
+  >('off')
 
   const { save, load } = useLocalStorage()
   const followModeLoaded = load('followMode', true)
@@ -104,7 +120,7 @@ export default function TimelapseProvider({
     [playersData?.players]
   )
 
-  useEffect(() => {
+  const resetPlayers = () => {
     const editablePlayers = players.map((player) => ({
       ...player,
     }))
@@ -120,17 +136,18 @@ export default function TimelapseProvider({
       }
       setUpdatedPlayers(editablePlayers)
     }
+  }
+
+  useEffect(() => {
+    resetPlayers()
   }, [selectedMoveId, moves, players])
 
   // scroll to seleceted player move
   useEffect(() => {
-    if (!followModeLoaded) {
+    if (playState === 'off' || openState === 'closed') {
       return
     }
-    if (openState === 'closed') {
-      return
-    }
-    const move = moves[selectedMoveId - 1]
+    const move = moves[currentAnimationId]
     // console.log(move)
     if (move) {
       const cellFrom =
@@ -144,7 +161,79 @@ export default function TimelapseProvider({
         // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
-  }, [selectedMoveId, moves])
+  }, [currentAnimationId])
+
+  const togglePlayMode = (mode: boolean) => {
+    if (mode) {
+      resetPlayers()
+      setPlayState('start')
+    } else {
+      setPlayState('off')
+    }
+  }
+
+  useEffect(() => {
+    if (playState === 'start') {
+      setCurrentAnimationId(selectedMoveId - 1)
+      const nextAnimation = moves[selectedMoveId - 1]
+      const player = updatedPlayers.find(
+        (player) => player.id === nextAnimation?.player_id
+      )
+      if (player) {
+        player.map_position = nextAnimation.cell_from
+        setUpdatedPlayers([...updatedPlayers])
+        setPlayState('animate')
+      }
+    } else {
+      // setCurrentAnimationId(0)
+    }
+  }, [playState])
+
+  useEffect(() => {
+    if (openState === 'closed' && playState !== 'off') {
+      setPlayState('off')
+    }
+  }, [openState, playState])
+
+  const onAnimationEnd = ({
+    player,
+    moveParams,
+  }: {
+    player: Player
+    moveParams: MoveParams
+  }) => {
+    console.log(
+      'on animation end',
+      currentAnimationId,
+      player.name,
+      moveParams,
+      new Date().getTime()
+    )
+    if (playState === 'off') {
+      return
+    }
+
+    const updatedPlayer = updatedPlayers.find((p) => p.id === player.id)
+    const currentMove = moves[currentAnimationId]
+    if (updatedPlayer && currentMove) {
+      updatedPlayer.map_position = currentMove.cell_to
+      setUpdatedPlayers([...updatedPlayers])
+    }
+
+    console.log('flag1')
+    if (currentAnimationId + 1 >= moves.length) {
+      console.log('flag2')
+      setPlayState('off')
+      setCurrentAnimationId(0)
+      return
+    }
+    console.log('flag3')
+
+    setCurrentAnimationId(currentAnimationId + 1)
+  }
+
+  const currentAnimationMove =
+    playState === 'animate' ? moves[currentAnimationId] : undefined
 
   return (
     <TimelapseContext.Provider
@@ -159,6 +248,11 @@ export default function TimelapseProvider({
         moves,
         followMode: followModeLoaded,
         setFollowMode: updateFollowMode,
+        playMode: playState !== 'off',
+        setPlayMode: togglePlayMode,
+        currentAnimationId,
+        currentAnimationMove,
+        onAnimationEnd,
       }}
     >
       {children}

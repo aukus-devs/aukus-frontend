@@ -9,7 +9,7 @@ const playerLasqa: Player = {
   vk_stream_link: '',
   donation_link: 'https://www.donationalerts.com/r/lasqa',
   kick_stream_link: 'https://live.kickplay.ru/lasqa',
-  map_position: 81,
+  map_position: 0,
   current_game: 'Балдурс Гейт 3 Game of the year edition',
   is_online: false,
   url_handle: 'lasqa',
@@ -29,7 +29,7 @@ const playerSegall: Player = {
   vk_stream_link: 'https://live.vkplay.ru/segall',
   donation_link: 'https://www.donationalerts.com/r/segall',
   kick_stream_link: '',
-  map_position: 22,
+  map_position: 8,
   current_game: 'Соник',
   is_online: false,
   url_handle: 'segall',
@@ -64,7 +64,7 @@ const playerRoadhouse: Player = {
 
 const playerPraden: Player = {
   id: 4,
-  name: 'Praden',
+  name: 'Maddyson',
   twitch_stream_link: 'https://www.twitch.tv/roadhouse',
   vk_stream_link: 'https://live.vkplay.ru/roadhouse',
   donation_link: 'https://www.donationalerts.com/r/roadhouse',
@@ -85,8 +85,8 @@ const playerPraden: Player = {
 export const playersMock = [
   playerLasqa,
   playerSegall,
-  playerRoadhouse,
-  playerPraden,
+  // playerRoadhouse,
+  // playerPraden,
 ].sort((a, b) => {
   if (a.name > b.name) {
     return 1
@@ -124,6 +124,107 @@ export function playerMovesMock() {
   const data: PlayerMove[] = []
   let currentPosition = 0
   const itemsAmount = 5
+
+  data.push({
+    player_move_id: 1,
+    player_id: 1,
+    created_at: '2024-12-04',
+    id: 1,
+    item_title: 'Готика',
+    type: 'completed',
+    dice_roll: 3,
+    cell_to: 3,
+    cell_from: 0,
+    item_review: 'ПРОЙДЕНО: ИГРУШКА-ПРИКОЛЮХА, ЖАЛЬ ПРИШЛОСЬ РАШИТЬ ',
+    item_rating: 5,
+    stair_from: null,
+    stair_to: null,
+    snake_from: null,
+    snake_to: null,
+    item_length: 'medium',
+    stream_title_category_duration: '11285',
+    item_image:
+      'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
+    vod_link:
+      'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
+  })
+
+  data.push({
+    player_move_id: 2,
+    player_id: 2,
+    created_at: '2024-12-04',
+    id: 2,
+    item_title: 'Соник',
+    type: 'completed',
+    dice_roll: 3,
+    cell_to: 11,
+    cell_from: 8,
+    item_review:
+      'Фильм «Вася не в себе» (2023). Добрая комедия про важность таджиков с Павлом Прилучным. 5/10 ))) ',
+    item_rating: 5,
+    stair_from: null,
+    stair_to: null,
+    snake_from: null,
+    snake_to: null,
+    item_length: 'medium',
+    stream_title_category_duration: '11285',
+    item_image:
+      'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
+    vod_link:
+      'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
+  })
+
+  data.push({
+    player_move_id: 3,
+    player_id: 1,
+    created_at: '2024-12-04',
+    id: 3,
+    item_title: 'Ведьмак',
+    type: 'completed',
+    dice_roll: 8,
+    cell_to: 11,
+    cell_from: 3,
+    item_review: 'ПРОЙДЕНО: ИГРУШКА-ПРИКОЛЮХА, ЖАЛЬ ПРИШЛОСЬ РАШИТЬ ',
+    item_rating: 5,
+    stair_from: null,
+    stair_to: null,
+    snake_from: null,
+    snake_to: null,
+    item_length: 'medium',
+    stream_title_category_duration: '11285',
+    item_image:
+      'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
+    vod_link:
+      'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
+  })
+
+  // data.push({
+  //   player_move_id: 4,
+  //   player_id: 2,
+  //   created_at: '2024-12-04',
+  //   id: 4,
+  //   item_title: 'Соник',
+  //   type: 'completed',
+  //   dice_roll: 4,
+  //   cell_to: 15,
+  //   cell_from: 11,
+  //   item_review:
+  //     'Фильм «Вася не в себе» (2023). Добрая комедия про важность таджиков с Павлом Прилучным. 5/10 ))) ',
+  //   item_rating: 5,
+  //   stair_from: null,
+  //   stair_to: null,
+  //   snake_from: null,
+  //   snake_to: null,
+  //   item_length: 'medium',
+  //   stream_title_category_duration: '11285',
+  //   item_image:
+  //     'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
+  //   vod_link:
+  //     'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
+  // })
+
+  return data
+
   for (let i = 0; i < itemsAmount; i++) {
     const status: PlayerMove['type'] = sample([
       'drop',

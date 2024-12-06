@@ -293,16 +293,22 @@ export default function MapComponent() {
     setMoveParams({ steps, skipLadders: params.itemLength === 'tiny' })
   }
 
-  const handleAnimationEnd = (player: Player, params: MoveParams) => {
+  const handleAnimationEnd = ({
+    player,
+    moveParams,
+  }: {
+    player: Player
+    moveParams: MoveParams
+  }) => {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    // const newPosition = getNextPlayerPosition({
-    //   player,
-    //   moves: params.steps,
-    //   skipLadders: params.skipLadders,
-    // })
-    // player.map_position = newPosition
+    const newPosition = getNextPlayerPosition({
+      player,
+      moves: moveParams.steps,
+      skipLadders: moveParams.skipLadders,
+    })
+    player.map_position = newPosition
     // setMoveSteps(0)
     setMoveParams(null)
     setMakingTurn(false)
@@ -319,6 +325,12 @@ export default function MapComponent() {
   const showTestButton = currentPlayer && !timelapseEnabled && false
 
   const winner = top3players[0] ?? null
+
+  const playAnimationSteps = timelapseState.currentAnimationMove?.dice_roll
+  const playAnimationPlayer =
+    players.find(
+      (player) => player.id === timelapseState.currentAnimationMove?.player_id
+    ) || currentPlayer
 
   return (
     <Box
@@ -469,8 +481,8 @@ export default function MapComponent() {
               <Grid item>
                 <CellItem
                   cell={lastCell}
-                  currentPlayer={currentPlayer}
-                  moveSteps={moveParams?.steps}
+                  currentPlayer={playAnimationPlayer}
+                  moveSteps={moveParams?.steps || playAnimationSteps}
                 />
               </Grid>
               <Grid item>
@@ -491,8 +503,8 @@ export default function MapComponent() {
                   >
                     <CellItem
                       cell={cell}
-                      currentPlayer={currentPlayer}
-                      moveSteps={moveParams?.steps}
+                      currentPlayer={playAnimationPlayer}
+                      moveSteps={moveParams?.steps || playAnimationSteps}
                     />
                   </Grid>
                 ))}
@@ -534,8 +546,28 @@ export default function MapComponent() {
         </Fragment>
       ))}
 
-      {players &&
-        players.map((player) => (
+      {players.map((player) => {
+        const timelapseAnimationParams: Partial<
+          React.ComponentProps<typeof PlayerIcon>
+        > = {}
+        // console.log('timelapseState', timelapseState)
+        if (
+          timelapseState.playMode &&
+          timelapseState.currentAnimationMove?.player_id === player.id
+        ) {
+          const moveParams = {
+            steps: timelapseState.currentAnimationMove.dice_roll,
+            skipLadders:
+              timelapseState.currentAnimationMove.item_length === 'tiny',
+            cellFrom: timelapseState.currentAnimationMove.cell_from,
+          }
+          timelapseAnimationParams['moveParams'] = moveParams
+          timelapseAnimationParams['onAnimationEnd'] =
+            timelapseState.onAnimationEnd
+          timelapseAnimationParams['animationDuration'] = 500
+        }
+        console.log('map player', player.name, player.map_position)
+        return (
           <PlayerIcon
             key={player.id}
             player={player}
@@ -546,8 +578,10 @@ export default function MapComponent() {
             winAnimation={
               player.id === currentPlayer?.id ? startWinAnimation : false
             }
+            {...timelapseAnimationParams}
           />
-        ))}
+        )
+      })}
       <StaticPanel>
         <Box display="flex" justifyContent="center" width={'100%'}>
           {showActionButton && (

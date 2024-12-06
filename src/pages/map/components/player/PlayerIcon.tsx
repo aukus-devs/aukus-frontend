@@ -40,6 +40,7 @@ import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 import { playerDisplayName } from 'src/pages/player/components/utils'
+import { isUndefined } from 'util'
 
 const playerIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlue,
@@ -80,8 +81,9 @@ type Props = {
   players: Player[]
   closePopup?: boolean
   moveParams: MoveParams | null
-  onAnimationEnd: (player: Player, params: MoveParams) => void
+  onAnimationEnd: (params: { player: Player; moveParams: MoveParams }) => void
   winAnimation: boolean
+  animationDuration?: number
 }
 
 export default function PlayerIcon({
@@ -91,17 +93,25 @@ export default function PlayerIcon({
   moveParams,
   onAnimationEnd,
   winAnimation,
+  animationDuration,
 }: Props) {
   const [anchorCell, setAnchorCell] = useState<HTMLElement | null>(null)
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
-  const [isAnimating, setIsAnimating] = useState(false)
+
+  const [animationState, setAnimationState] = useState<
+    'start' | 'moving' | 'finish' | 'off'
+  >('off')
+
+  // console.log('move params', player.id, moveParams)
 
   const updateContiner = (element: HTMLDivElement) => {
     setContainer(element)
   }
+
+  // ра// console.log('current pos', player.name, player.map_position)
 
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
@@ -111,6 +121,8 @@ export default function PlayerIcon({
     player,
     playersOnSamePosition
   )
+
+  // const isAnimating = useRef(false)
 
   const isMoving = moveParams !== null || winAnimation
 
@@ -132,8 +144,17 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moveParams: MoveParams) => {
-    setIsAnimating(true)
+    console.log('Animation start', player.name, moveParams, player.map_position)
+
     const moves = moveParams.steps
+
+    if (moves === 0) {
+      onAnimationEnd({ player, moveParams })
+      setAnimationState('finish')
+      return
+    }
+    // isAnimating.current = true
+
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
 
@@ -142,19 +163,24 @@ export default function PlayerIcon({
       : laddersByCell[player.map_position + moves]
     const snake = snakesByCell[player.map_position + moves]
 
-    const animationsList: Array<{ x: number; y: number; duration?: number }> =
+    const animationsList: Array<{ x?: number; y?: number; duration?: number }> =
       []
     if (player.map_position === 0) {
+      console.log('moving to start', relativeX)
       // move to beginning of start area
-      animationsList.push({
-        x: -relativeX,
-        y: -relativeY,
-        duration: Math.abs(relativeX / 100) * 800,
-      })
+      if (relativeX !== 0) {
+        animationsList.push({
+          x: -relativeX,
+          // y: -relativeY,
+          duration: animationDuration || Math.abs(relativeX / 100) * 800,
+        })
+      }
       // move to start cell
-      animationsList.push({ x: -relativeX - moveOffset, y: -relativeY })
+      animationsList.push({ x: -relativeX - moveOffset })
     }
 
+    let currentX = animationsList[animationsList.length - 1]?.x || 0
+    let currentY = animationsList[animationsList.length - 1]?.y || 0
     for (let i = 0; i < Math.abs(moves); i++) {
       const nextCell = backward
         ? getMapCellById(player.map_position - i - 1)
@@ -165,23 +191,23 @@ export default function PlayerIcon({
         continue
       }
 
-      let nextX = animationsList[animationsList.length - 1]?.x || 0
-      let nextY = animationsList[animationsList.length - 1]?.y || 0
+      console.log('next x', currentX, nextCell.direction)
 
       // console.log({ nextCell, currentLocation, position: player.mapPosition });
       switch (nextCell.direction) {
         case 'right':
-          nextX += moveOffset
+          currentX += moveOffset
+          animationsList.push({ x: currentX })
           break
         case 'left':
-          nextX -= moveOffset
+          currentX -= moveOffset
+          animationsList.push({ x: currentX })
           break
         case 'up':
-          nextY -= moveOffset
+          currentY -= moveOffset
+          animationsList.push({ y: currentY })
           break
       }
-
-      animationsList.push({ x: nextX, y: nextY })
     }
 
     if (ladder) {
@@ -204,46 +230,101 @@ export default function PlayerIcon({
       animationsList.push(calculateAnimation(player.map_position, snake.cellTo))
     }
 
-    // console.log({ animationsList })
+    console.log('animations list', animationsList, player.name)
+
+    // const animationConfig = {
+    //   easing: (t: number) => t,
+    //   duration: 1000,
+    //   // velocity: 1,
+    // }
+
+    // api.stop()
+    api.set({ x: 0, y: 0 })
 
     api.start({
       from: { x: 0, y: 0 },
       to: async (next) => {
         for (let i = 0; i < animationsList.length; i++) {
+          const nextAnimation = animationsList[i]
+
+          console.log('animation start', animationsList[i])
           await next({
-            ...animationsList[i],
-            config: { duration: animationsList[i].duration || 1000 },
+            x: nextAnimation.x,
+            y: nextAnimation.y,
+            config: {
+              // ...animationConfig,
+              duration: animationDuration || animationsList[i].duration || 1000,
+            },
           })
         }
       },
       onRest: () => {
-        onAnimationEnd(player, moveParams)
-        setIsAnimating(false)
+        // isAnimating.current = false
+        onAnimationEnd({ player, moveParams })
+        setAnimationState('finish')
+        // api.stop()
       },
     })
   }
 
   useEffect(() => {
-    if (isMoving && !winAnimation && moveParams && !isAnimating) {
+    if (
+      animationState === 'start' &&
+      !winAnimation &&
+      moveParams
+      // && !isAnimating.current
+    ) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
           behavior: 'smooth',
         })
       }
+      setAnimationState('moving')
       startChainedAnimation(moveParams)
     }
+    console.log('is moving before stop', isMoving)
+    if (!isMoving) {
+      console.log('flag stop')
+      api.stop()
+      setAnimationState('off')
+      // api.set({ x: 0, y: 0 })
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveParams, winAnimation, isAnimating])
+  }, [animationState, moveParams, winAnimation])
 
   useEffect(() => {
     if (anchorCell) {
-      api.start({
-        from: { x: 0, y: 0, scale: 1 },
-        to: { x: 0, y: 0, scale: 1 },
-      })
+      console.log(
+        'Updating Spring API',
+        player.name,
+        player.map_position,
+        anchorCell,
+        animationState
+      )
+      if (animationState !== 'finish' && animationState !== 'moving') {
+        api.set({ x: 0, y: 0 })
+        api.start({
+          from: { x: 0, y: 0, scale: 1 },
+          to: { x: 0, y: 0, scale: 1 },
+        })
+      }
+      const targetCellId =
+        moveParams?.cellFrom === 0
+          ? 'map-cell-start'
+          : `map-cell-${player.map_position}`
+
+      if (
+        isMoving &&
+        moveParams?.cellFrom !== undefined &&
+        anchorCell.id === targetCellId &&
+        animationState !== 'moving'
+      ) {
+        setAnimationState('start')
+      }
     }
-  }, [anchorCell, api, player.map_position])
+  }, [anchorCell, api, player.map_position, isMoving, moveParams])
 
   const startWinAnimation = () => {
     if (!anchorCell) {
@@ -273,7 +354,7 @@ export default function PlayerIcon({
       from: { x: 0, y: 0 },
       to: async (next) => {
         await next({ x: deltaX, y: deltaY, scale: 1.5 })
-        onAnimationEnd(player, { steps: 1, skipLadders: false })
+        onAnimationEnd({ player, moveParams: { steps: 1, skipLadders: false } })
       },
       config: { duration: 5000 },
     })
@@ -286,7 +367,7 @@ export default function PlayerIcon({
   }, [winAnimation])
 
   useEffect(() => {
-    // console.log("updating map position to", player.mapPosition);
+    console.log('updating map position to', player.map_position, player.name)
 
     const cellId =
       player.map_position > 0
@@ -296,15 +377,24 @@ export default function PlayerIcon({
     const findCell = document.getElementById(cellId)
     if (findCell) {
       setAnchorCell(findCell)
+      if (isMoving && moveParams?.cellFrom === undefined) {
+        setAnimationState('start')
+      }
+      if (animationState === 'finish') {
+        setAnimationState('off')
+      }
     } else {
       const interval = setInterval(() => {
         const findCell = document.getElementById(cellId)
         setAnchorCell(findCell)
+        // if (isMoving) {
+        //   setAnimationState('start')
+        // }
         clearInterval(interval)
       }, 50)
       return () => clearInterval(interval)
     }
-  }, [player.map_position, isMoving])
+  }, [player.map_position, isMoving, moveParams])
 
   // console.log({ player, cell });
   if (!anchorCell) {

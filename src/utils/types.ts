@@ -94,6 +94,7 @@ export type NextTurnParams = {
 export type MoveParams = {
   steps: number
   skipLadders: boolean
+  cellFrom?: number
 }
 
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
