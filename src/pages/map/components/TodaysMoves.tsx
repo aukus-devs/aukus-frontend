@@ -21,6 +21,7 @@ export default function TodaysMoves({ players }: Props) {
     queryKey: ['todaysMoves', limit],
     queryFn: () => fetchPlayerMoves({ limit }),
     refetchInterval: 1000 * 60,
+    placeholderData: (prevData, prevQuery) => prevData,
   })
 
   if (!todaysMoves) {
