@@ -276,6 +276,20 @@ export default function Leaderboard() {
                 const scoreDetails = getScoreDetails(playerStat)
                 const shortGames =
                   scoreDetails.tinyGames + scoreDetails.shortGames
+
+                let currentGameText = player.current_game
+                if (!currentGameText) {
+                  if (player.auction_timer_started_at) {
+                    const startDate = new Date(player.auction_timer_started_at)
+                    const now = new Date()
+                    const diff = now.getTime() - startDate.getTime()
+                    const minutes = Math.floor(diff / 60000)
+                    currentGameText = `Аук идет ${minutes} мин`
+                  } else {
+                    currentGameText = '<Ожидание аука>'
+                  }
+                }
+
                 return (
                   <TableRow
                     key={index}
@@ -367,7 +381,7 @@ export default function Leaderboard() {
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {player?.current_game || '<Ожидание аука>'}
+                            {currentGameText}
                           </LinkSpan>
                         </Link>
                       </Tooltip>

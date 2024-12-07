@@ -30,7 +30,7 @@ const playerSegall: Player = {
   donation_link: 'https://www.donationalerts.com/r/segall',
   kick_stream_link: '',
   map_position: 22,
-  current_game: 'Соник',
+  current_game: '',
   is_online: false,
   url_handle: 'segall',
   stream_last_category: 'Just Chatting',
@@ -40,6 +40,7 @@ const playerSegall: Player = {
   current_game_updated_at: '2024-10-11 12:14:15',
   current_game_image:
     'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
+  auction_timer_started_at: 'Sat, 07 Dec 2024 19:25:04 GMT',
 }
 
 const playerRoadhouse: Player = {
