@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material'
-import ArrowBlue from 'assets/map/arrow_blue.png'
-import ArrowGreen from 'assets/map/arrow_green.png'
-import ArrowYellow from 'assets/map/arrow_yellow.png'
-import Sign from 'assets/map/sign.png'
+import ArrowBlue from 'assets/map/optimized/arrow_blue.webp'
+import ArrowGreen from 'assets/map/optimized/arrow_green.webp'
+import ArrowYellow from 'assets/map/optimized/arrow_yellow.webp'
+import Sign from 'assets/map/optimized/sign.webp'
 import { Player } from 'utils/types'
 import { cellSize, MapCell } from '../types'
 
