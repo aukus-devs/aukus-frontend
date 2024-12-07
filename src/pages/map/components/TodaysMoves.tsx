@@ -1,7 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import find from 'lodash/find'
 import MoveCard from 'pages/player/components/MoveCard'
+import { useState } from 'react'
 import useScreenSize from 'src/context/useScreenSize'
 import { fetchPlayerMoves } from 'utils/api'
 import { Player } from 'utils/types'
@@ -14,14 +15,20 @@ export default function TodaysMoves({ players }: Props) {
   const { headerSize } = useScreenSize()
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
 
+  const [limit, setLimit] = useState(10)
+
   const { data: todaysMoves, refetch: refetchMoves } = useQuery({
-    queryKey: ['todaysMoves'],
-    queryFn: () => fetchPlayerMoves({ limit: 10 }),
+    queryKey: ['todaysMoves', limit],
+    queryFn: () => fetchPlayerMoves({ limit }),
     refetchInterval: 1000 * 60,
   })
 
   if (!todaysMoves) {
     return null
+  }
+
+  const increaseLimit = () => {
+    setLimit(limit + 10)
   }
 
   return (
@@ -48,6 +55,9 @@ export default function TodaysMoves({ players }: Props) {
           </Box>
         )
       })}
+      <Box display={'flex'} justifyContent={'center'}>
+        <Button onClick={increaseLimit}>Показать еще</Button>
+      </Box>
     </Box>
   )
 }
