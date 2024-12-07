@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid, Tooltip } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
@@ -320,6 +320,10 @@ export default function MapComponent() {
 
   const winner = top3players[0] ?? null
 
+  const totalOnline = players.reduce((acc, player) => {
+    return acc + (player.online_count || 0)
+  }, 0)
+
   return (
     <Box
       style={{
@@ -428,6 +432,26 @@ export default function MapComponent() {
             backgroundPosition: 'center' /* Center the image */,
           }}
         >
+          <Box
+            position={'absolute'}
+            left={'620px'}
+            top={'690px'}
+            // style={{ backgroundColor: 'brown' }}
+            fontSize={'14px'}
+            // border={'1px solid grey'}
+            textAlign={'center'}
+            display={'none'}
+            zIndex={20}
+            lineHeight={1.2}
+          >
+            <Tooltip title="Суммарно на всех стримах">
+              <span>
+                {totalOnline}
+                <br />
+                зрителей
+              </span>
+            </Tooltip>
+          </Box>
           {showWinScreen && top3players.length > 2 && (
             <>
               <PlayerWinnerIcon
@@ -577,32 +601,6 @@ export default function MapComponent() {
                     Затемнить карту
                   </Button>
                 </Box>
-                {/* <Box
-                  position="absolute"
-                  left={'-155px'}
-                  width="fit-content"
-                  display="inline"
-                  style={{
-                    background: Color.blue,
-                    borderRadius: '10px',
-                    paddingLeft: '16px',
-                    paddingRight: '16px',
-                    height: '44px',
-                  }}
-                >
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={showArrows}
-                          onChange={(val) => setShowArrows(val.target.checked)}
-                          color="customWhite"
-                        />
-                      }
-                      label="Стрелки"
-                    />
-                  </FormGroup>
-                </Box> */}
                 <ActionButton
                   handleNextTurn={handleNextTurn}
                   player={currentPlayer}

@@ -15,6 +15,7 @@ export type Player = {
   stream_last_category: string
   first_name: string
   last_name: string
+  online_count?: number
 }
 
 export type PlayerStats = {
