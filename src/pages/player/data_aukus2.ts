@@ -484,7 +484,7 @@ const LasqaGames: PreviousGame[] = [
     title: 'Кузя Жукодром',
     rating: '',
     review: '',
-    status: 'drop',
+    status: 'completed',
   },
 ]
 
