@@ -120,7 +120,7 @@ export default function MoveCard({
 
   const timeSpentMsgParts = []
   if (timeSpent) {
-    timeSpentMsgParts.push(`пройдена за — ${timeSpent}`)
+    timeSpentMsgParts.push(`играл — ${timeSpent}`)
   }
 
   if (move.item_length && diceRollTextMap[move.item_length]) {
