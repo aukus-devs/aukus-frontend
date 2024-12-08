@@ -435,22 +435,33 @@ export default function MapComponent() {
           <Box
             position={'absolute'}
             left={'620px'}
-            top={'690px'}
+            top={'675px'}
             // style={{ backgroundColor: 'brown' }}
             fontSize={'14px'}
             // border={'1px solid grey'}
             textAlign={'center'}
-            display={'none'}
+            width={'120px'}
+            height={'60px'}
+            // display={'none'}
             zIndex={20}
             lineHeight={1.2}
+            style={{
+              background: 'url("static/map_banner.png")',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              backgroundSize: 'contain',
+              color: 'black',
+            }}
           >
-            <Tooltip title="Суммарно на всех стримах">
-              <span>
-                {totalOnline}
-                <br />
-                зрителей
-              </span>
-            </Tooltip>
+            <Box marginTop={'15px'}>
+              <Tooltip title="Суммарно на всех стримах">
+                <span>
+                  {totalOnline}
+                  <br />
+                  зрителей
+                </span>
+              </Tooltip>
+            </Box>
           </Box>
           {showWinScreen && top3players.length > 2 && (
             <>
