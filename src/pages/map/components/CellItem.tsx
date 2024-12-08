@@ -3,16 +3,22 @@ import ArrowBlue from 'assets/map/arrow_blue.png'
 import ArrowGreen from 'assets/map/arrow_green.png'
 import ArrowYellow from 'assets/map/arrow_yellow.png'
 import Sign from 'assets/map/sign.png'
-import { Player } from 'utils/types'
+import { Color, Player } from 'utils/types'
 import { cellSize, MapCell } from '../types'
 
 type Props = {
   cell: MapCell
   currentPlayer?: Player
   moveSteps?: number
+  darkMode?: boolean
 }
 
-export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
+export default function CellItem({
+  cell,
+  currentPlayer,
+  moveSteps,
+  darkMode,
+}: Props) {
   let label = `${cell.id}`
   if (cell.id === 0) {
     label = 'Старт'
@@ -44,6 +50,22 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
   const { style: arrowStyle, arrowImage } = getArrowStyle(cell)
   const labelLeft = cell.id === 101 ? '55px' : '17px'
   const labelTop = cell.id === 101 ? '7px' : '0px'
+
+  const darkRed = '#b32922'
+  const darkGreen = '#248b3e'
+
+  let moveNumberColor = darkMode ? Color.green : darkGreen
+  if (relativeLocation && relativeLocation < 0) {
+    moveNumberColor = darkMode ? Color.red : darkRed
+  }
+
+  // let relativeNumbersColor =
+  //   relativeLocation && relativeLocation > 0 ? '#546e7a' : '#5d4037'
+
+  // if (darkMode) {
+  //   relativeNumbersColor =
+  //     relativeLocation === '#546e7a' ? '#546e7a' : '#5d4037'
+  // }
 
   return (
     <div
@@ -82,11 +104,7 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
       </Box>
       {relativeLocation && (
         <Box textAlign={'center'}>
-          <Typography
-            variant="h3"
-            fontWeight={100}
-            color={relativeLocation > 0 ? '#546e7a' : '#5d4037'}
-          >
+          <Typography variant="h3" fontWeight={100} color={moveNumberColor}>
             {Math.abs(relativeLocation)}
           </Typography>
         </Box>
