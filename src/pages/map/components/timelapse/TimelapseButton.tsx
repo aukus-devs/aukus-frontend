@@ -107,8 +107,44 @@ export default function TimelapseButton({ variant }: Props) {
       sliderWidth = `${50 * AmountOfDays}px`
     }
 
+    const currentMove = timelapseState.currentAnimationMove
+    const showCurrentTurn = timelapseState.playMode && currentMove
+
+    let turnText = ''
+    if (showCurrentTurn) {
+      const movePlayer = timelapseState.players.find(
+        (player) => player.id === currentMove.player_id
+      )
+
+      if (movePlayer) {
+        turnText = turnDescription(movePlayer, currentMove)
+      }
+    }
+
     return (
       <Box width={'100%'} onClick={stopPropagation}>
+        {turnText && (
+          <Box width={'100%'} display="flex" justifyContent={'center'}>
+            <Box
+              style={{
+                backgroundColor: Color.blue,
+                color: 'white',
+                height: '44px',
+                borderRadius: '10px',
+                fontSize: '15px',
+                fontWeight: 600,
+                marginBottom: '10px',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                paddingLeft: '10px',
+                alignItems: 'center',
+                width: '590px',
+              }}
+            >
+              {turnText}
+            </Box>
+          </Box>
+        )}
         <Box width={'100%'} display="flex" justifyContent={'center'}>
           <Box
             style={{
@@ -148,20 +184,18 @@ export default function TimelapseButton({ variant }: Props) {
           </Box>
         </Box>
         <Box textAlign="center">
-          <Tooltip title={'Следовать камерой за ходами'}>
+          <Tooltip title={'Проиграть ходы за день'}>
             <Button
               onClick={() =>
-                timelapseState.setFollowMode(!timelapseState.followMode)
+                timelapseState.setPlayMode(!timelapseState.playMode)
               }
               sx={{
-                backgroundColor: timelapseState.followMode
-                  ? Color.blue
-                  : 'black',
+                backgroundColor: timelapseState.playMode ? Color.blue : 'black',
                 marginRight: '10px',
                 width: '163px',
               }}
             >
-              {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
+              {timelapseState.playMode ? 'Стоп' : 'Проиграть ходы'}
             </Button>
           </Tooltip>
           <Button

@@ -9,7 +9,7 @@ const playerLasqa: Player = {
   vk_stream_link: '',
   donation_link: 'https://www.donationalerts.com/r/lasqa',
   kick_stream_link: 'https://live.kickplay.ru/lasqa',
-  map_position: 81,
+  map_position: 0,
   current_game: 'Балдурс Гейт 3 Game of the year edition',
   is_online: false,
   url_handle: 'lasqa',
@@ -29,7 +29,8 @@ const playerSegall: Player = {
   vk_stream_link: 'https://live.vkplay.ru/segall',
   donation_link: 'https://www.donationalerts.com/r/segall',
   kick_stream_link: '',
-  map_position: 22,
+  current_game: '',
+  map_position: 8,
   current_game: '',
   is_online: false,
   url_handle: 'segall',
@@ -65,7 +66,7 @@ const playerRoadhouse: Player = {
 
 const playerPraden: Player = {
   id: 4,
-  name: 'Praden',
+  name: 'Maddyson',
   twitch_stream_link: 'https://www.twitch.tv/roadhouse',
   vk_stream_link: 'https://live.vkplay.ru/roadhouse',
   donation_link: 'https://www.donationalerts.com/r/roadhouse',
@@ -86,8 +87,8 @@ const playerPraden: Player = {
 export const playersMock = [
   playerLasqa,
   playerSegall,
-  playerRoadhouse,
-  playerPraden,
+  // playerRoadhouse,
+  // playerPraden,
 ].sort((a, b) => {
   if (a.name > b.name) {
     return 1
@@ -182,8 +183,8 @@ export function playerMovesMock() {
     id: 3,
     item_title: 'Ведьмак',
     type: 'completed',
-    dice_roll: 1,
-    cell_to: 25,
+    dice_roll: 8,
+    cell_to: 11,
     cell_from: 3,
     item_review: 'ПРОЙДЕНО: ИГРУШКА-ПРИКОЛЮХА, ЖАЛЬ ПРИШЛОСЬ РАШИТЬ ',
     item_rating: 5,
