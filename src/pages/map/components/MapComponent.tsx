@@ -444,35 +444,37 @@ export default function MapComponent() {
             backgroundPosition: 'center' /* Center the image */,
           }}
         >
-          <Box
-            position={'absolute'}
-            left={'620px'}
-            top={'675px'}
-            // style={{ backgroundColor: 'brown' }}
-            fontSize={'14px'}
-            // border={'1px solid grey'}
-            textAlign={'center'}
-            width={'120px'}
-            height={'60px'}
-            // display={'none'}
-            zIndex={20}
-            lineHeight={1.2}
-            style={{
-              background: 'url("static/map_banner.png")',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              backgroundSize: 'contain',
-              color: 'black',
-            }}
-          >
-            <Box marginTop={'15px'}>
-              <Tooltip title="Суммарно на всех стримах">
-                <span>
-                  {totalOnline}
-                  <br />
-                  зрителей
-                </span>
-              </Tooltip>
+          <Box position="relative">
+            <Box
+              position={'absolute'}
+              left={'620px'}
+              top={'470px'}
+              // style={{ backgroundColor: 'brown' }}
+              fontSize={'14px'}
+              // border={'1px solid grey'}
+              textAlign={'center'}
+              width={'120px'}
+              height={'60px'}
+              // display={'none'}
+              zIndex={20}
+              lineHeight={1.2}
+              style={{
+                background: 'url("static/map_banner.png")',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: 'contain',
+                color: 'black',
+              }}
+            >
+              <Box marginTop={'15px'}>
+                <Tooltip title="Суммарно на всех стримах">
+                  <span>
+                    {totalOnline}
+                    <br />
+                    зрителей
+                  </span>
+                </Tooltip>
+              </Box>
             </Box>
           </Box>
           {showWinScreen && top3players.length > 2 && (
