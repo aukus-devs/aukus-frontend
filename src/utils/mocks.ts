@@ -31,7 +31,6 @@ const playerSegall: Player = {
   kick_stream_link: '',
   current_game: '',
   map_position: 8,
-  current_game: '',
   is_online: false,
   url_handle: 'segall',
   stream_last_category: 'Just Chatting',

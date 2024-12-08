@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import useLocalStorage from 'src/context/useLocalStorage'
 import { fetchPlayerMoves, fetchPlayers, PlayerMovesResponse } from 'utils/api'
 import { MoveParams, Player, PlayerMove } from 'utils/types'
 
@@ -15,8 +14,6 @@ type TimelapseState = {
   setSelectedMoveId: (moveId: number) => void
   players: Player[]
   moves: PlayerMove[]
-  followMode: boolean
-  setFollowMode: (mode: boolean) => void
   playMode: boolean
   setPlayMode: (mode: boolean) => void
   currentAnimationId: number
@@ -36,8 +33,6 @@ const TimelapseContext = createContext<TimelapseState>({
   setSelectedMoveId: () => {},
   players: [],
   moves: [],
-  followMode: true,
-  setFollowMode: () => {},
   playMode: false,
   setPlayMode: () => {},
   currentAnimationId: 0,
@@ -58,7 +53,6 @@ export default function TimelapseProvider({
   const [selectedDate, setSelectedDate] = useState<string>(TodayString)
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
-  const [followMode, setFollowMode] = useState<boolean>(true)
   const [currentResponse, setCurrentResponse] = useState<
     PlayerMovesResponse | undefined
   >(undefined)
@@ -68,13 +62,6 @@ export default function TimelapseProvider({
   const [playState, setPlayState] = useState<
     'off' | 'start' | 'animate' | 'finish'
   >('off')
-
-  const { save, load } = useLocalStorage()
-  const followModeLoaded = load('followMode', true)
-  const updateFollowMode = (mode: boolean) => {
-    save('followMode', mode)
-    setFollowMode(mode)
-  }
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
@@ -246,8 +233,6 @@ export default function TimelapseProvider({
         setSelectedMoveId,
         players: updatedPlayers,
         moves,
-        followMode: followModeLoaded,
-        setFollowMode: updateFollowMode,
         playMode: playState !== 'off',
         setPlayMode: togglePlayMode,
         currentAnimationId,
