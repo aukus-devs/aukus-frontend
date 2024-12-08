@@ -144,7 +144,7 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moveParams: MoveParams) => {
-    console.log('Animation start', player.name, moveParams, player.map_position)
+    // console.log('Animation start', player.name, moveParams, player.map_position)
 
     const moves = moveParams.steps
 
@@ -166,7 +166,7 @@ export default function PlayerIcon({
     const animationsList: Array<{ x?: number; y?: number; duration?: number }> =
       []
     if (player.map_position === 0) {
-      console.log('moving to start', relativeX)
+      // console.log('moving to start', relativeX)
       // move to beginning of start area
       if (relativeX !== 0) {
         animationsList.push({
@@ -191,7 +191,7 @@ export default function PlayerIcon({
         continue
       }
 
-      console.log('next x', currentX, nextCell.direction)
+      // console.log('next x', currentX, nextCell.direction)
 
       // console.log({ nextCell, currentLocation, position: player.mapPosition });
       switch (nextCell.direction) {
@@ -247,7 +247,7 @@ export default function PlayerIcon({
         for (let i = 0; i < animationsList.length; i++) {
           const nextAnimation = animationsList[i]
 
-          console.log('animation start', animationsList[i])
+          // console.log('animation start', animationsList[i])
           await next({
             x: nextAnimation.x,
             y: nextAnimation.y,
@@ -276,16 +276,16 @@ export default function PlayerIcon({
     ) {
       if (anchorCell) {
         window.scrollTo({
-          top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
+          top: anchorCell.offsetTop - window.innerHeight / 2 + 100,
           behavior: 'smooth',
         })
       }
       setAnimationState('moving')
       startChainedAnimation(moveParams)
     }
-    console.log('is moving before stop', isMoving)
+    // console.log('is moving before stop', isMoving)
     if (!isMoving) {
-      console.log('flag stop')
+      // console.log('flag stop')
       api.stop()
       setAnimationState('off')
       // api.set({ x: 0, y: 0 })
@@ -296,13 +296,13 @@ export default function PlayerIcon({
 
   useEffect(() => {
     if (anchorCell) {
-      console.log(
-        'Updating Spring API',
-        player.name,
-        player.map_position,
-        anchorCell,
-        animationState
-      )
+      // console.log(
+      //   'Updating Spring API',
+      //   player.name,
+      //   player.map_position,
+      //   anchorCell,
+      //   animationState
+      // )
       if (animationState !== 'finish' && animationState !== 'moving') {
         api.set({ x: 0, y: 0 })
         api.start({
@@ -367,7 +367,7 @@ export default function PlayerIcon({
   }, [winAnimation])
 
   useEffect(() => {
-    console.log('updating map position to', player.map_position, player.name)
+    // console.log('updating map position to', player.map_position, player.name)
 
     const cellId =
       player.map_position > 0

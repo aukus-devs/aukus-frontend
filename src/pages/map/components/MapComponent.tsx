@@ -601,7 +601,7 @@ export default function MapComponent() {
             timelapseState.onAnimationEnd
           timelapseAnimationParams['animationDuration'] = 500
         }
-        console.log('map player', player.name, player.map_position)
+        // console.log('map player', player.name, player.map_position)
         return (
           <PlayerIcon
             key={player.id}

@@ -130,25 +130,32 @@ export default function TimelapseProvider({
   }, [selectedMoveId, moves, players])
 
   // scroll to seleceted player move
-  useEffect(() => {
-    if (playState === 'off' || openState === 'closed') {
-      return
-    }
-    const move = moves[currentAnimationId]
-    // console.log(move)
-    if (move) {
-      const cellFrom =
-        move.cell_to > 0 ? `map-cell-${move.cell_to}` : 'map-cell-start'
-      const element = document.getElementById(cellFrom)
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop - window.innerHeight / 2 + 200,
-          behavior: 'smooth',
-        })
-        // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }
-    }
-  }, [currentAnimationId])
+  // useEffect(() => {
+  //   if (playState === 'off' || openState === 'closed') {
+  //     return
+  //   }
+  //   const move = moves[currentAnimationId]
+  //   // console.log(move)
+  //   if (move) {
+  //     const cellFrom =
+  //       move.cell_to > 0 ? `map-cell-${move.cell_to}` : 'map-cell-start'
+  //     const element = document.getElementById(cellFrom)
+  //     if (element) {
+  //       console.log(
+  //         'scrolling',
+  //         element.offsetTop,
+  //         window.innerHeight,
+  //         element.offsetTop - window.innerHeight / 2 + 400
+  //       )
+  //       window.scrollTo({
+  //         // top: element.offsetTop - window.innerHeight / 2,
+  //         top: 0,
+  //         behavior: 'smooth',
+  //       })
+  //       // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  //     }
+  //   }
+  // }, [currentAnimationId])
 
   const togglePlayMode = (mode: boolean) => {
     if (mode) {
@@ -189,13 +196,13 @@ export default function TimelapseProvider({
     player: Player
     moveParams: MoveParams
   }) => {
-    console.log(
-      'on animation end',
-      currentAnimationId,
-      player.name,
-      moveParams,
-      new Date().getTime()
-    )
+    // console.log(
+    //   'on animation end',
+    //   currentAnimationId,
+    //   player.name,
+    //   moveParams,
+    //   new Date().getTime()
+    // )
     if (playState === 'off') {
       return
     }
@@ -207,14 +214,14 @@ export default function TimelapseProvider({
       setUpdatedPlayers([...updatedPlayers])
     }
 
-    console.log('flag1')
+    // console.log('flag1')
     if (currentAnimationId + 1 >= moves.length) {
-      console.log('flag2')
+      // console.log('flag2')
       setPlayState('off')
       setCurrentAnimationId(0)
       return
     }
-    console.log('flag3')
+    // console.log('flag3')
 
     setCurrentAnimationId(currentAnimationId + 1)
   }
