@@ -221,6 +221,11 @@ export async function fetchSponsors(): Promise<SponsorsResponse> {
     return Promise.resolve({
       dons: [
         {
+          name: 'Юзя',
+          type: 'big',
+          text: 'а я еще дам деняк на пиво (или не на пиво)',
+        },
+        {
           name: 'CruxTerminatus',
           type: 'big',
           text: 'а я еще дам деняк на пиво (или не на пиво)',

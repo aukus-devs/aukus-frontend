@@ -1,8 +1,11 @@
-import { Box, Button, Link, Tooltip } from '@mui/material'
+import { Box, Button, Tooltip } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import useScreenSize from 'src/context/useScreenSize'
 import { fetchSponsors } from 'src/utils/api'
 import { Color } from 'utils/types'
+import FlashIcon from 'assets/icons/flash.svg?react'
+import LinkSpan from 'src/components/LinkSpan'
+import { Link } from 'react-router-dom'
 
 const creators = [
   {
@@ -96,7 +99,7 @@ export default function AboutContent() {
         </Box>
         <Box marginTop={'50px'}>
           <Link
-            href="https://boosty.to/aukus"
+            to="https://boosty.to/aukus"
             rel="noopener nereferrer"
             target="_blank"
           >
@@ -113,11 +116,35 @@ export default function AboutContent() {
           {sponsors.map((item, index) => {
             const text = item.text || ''
             const displayText =
-              text.length > 0 && item.type === 'big' ? ` — ${item.text}` : ''
+              text.length > 0 && item.type === 'big' ? `— ${item.text}` : ''
+
+            if (item.name.toLowerCase() === 'юзя') {
+              return (
+                <Box
+                  marginTop={'20px'}
+                  key={index}
+                  color={'white'}
+                  display={'flex'}
+                  alignItems={'center'}
+                >
+                  <FlashIcon />
+                  <Link to="/players/uselessmouth">
+                    <LinkSpan color={Color.blue}>{item.name}</LinkSpan>
+                  </Link>
+                  <span style={{ color: Color.greyNew }}>
+                    &nbsp;
+                    {displayText}
+                  </span>
+                </Box>
+              )
+            }
+
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
                 {item.name}
-                <span style={{ color: Color.greyNew }}>{displayText}</span>
+                <span style={{ color: Color.greyNew }}>
+                  &nbsp;{displayText}
+                </span>
               </Box>
             )
           })}
