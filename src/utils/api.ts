@@ -223,7 +223,7 @@ export async function fetchSponsors(): Promise<SponsorsResponse> {
         {
           name: 'Юзя',
           type: 'big',
-          text: 'а я еще дам деняк на пиво (или не на пиво)',
+          text: 'Спасибо вам всем огромное от всей души за сайт и интеграцию с поинтауком! Спасибо вам огромное за сайт',
         },
         {
           name: 'CruxTerminatus',

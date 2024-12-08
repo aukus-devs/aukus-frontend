@@ -124,13 +124,18 @@ export default function AboutContent() {
                   marginTop={'20px'}
                   key={index}
                   color={'white'}
-                  display={'flex'}
-                  alignItems={'center'}
+                  display={'block'}
+                  // alignItems={'center'}
                 >
-                  <FlashIcon />
-                  <Link to="/players/uselessmouth">
-                    <LinkSpan color={Color.blue}>{item.name}</LinkSpan>
-                  </Link>
+                  <span
+                    style={{ display: 'inline-flex', alignItems: 'baseline' }}
+                  >
+                    <FlashIcon style={{ alignSelf: 'center' }} />
+                    <Link to="/players/uselessmouth">
+                      <LinkSpan color={Color.blue}>{item.name}</LinkSpan>
+                    </Link>
+                  </span>
+
                   <span style={{ color: Color.greyNew }}>
                     &nbsp;
                     {displayText}
