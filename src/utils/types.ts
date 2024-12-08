@@ -17,6 +17,7 @@ export type Player = {
   last_name: string
   online_count?: number
   auction_timer_started_at?: string
+  current_game_duration?: number
 }
 
 export type PlayerStats = {

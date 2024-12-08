@@ -277,7 +277,17 @@ export default function Leaderboard() {
                 const shortGames =
                   scoreDetails.tinyGames + scoreDetails.shortGames
 
+                let duration = ''
+                if (player.current_game_duration) {
+                  const minutes = Math.floor(player.current_game_duration / 60)
+                  duration = `${minutes} мин`
+                }
+
                 let currentGameText = player.current_game
+                if (duration && player.current_game) {
+                  currentGameText = `${player.current_game} - играет ${duration}`
+                }
+
                 if (!currentGameText) {
                   if (player.auction_timer_started_at) {
                     const startDate = new Date(player.auction_timer_started_at)
