@@ -32,7 +32,7 @@ export default function TodaysMoves({ players }: Props) {
     setLimit(limit + 10)
   }
 
-  const showMoreButton = todaysMoves.moves.length < todaysMoves.moves.length
+  const hideMoreButton = todaysMoves.moves.length < limit
 
   return (
     <Box>
@@ -84,7 +84,7 @@ export default function TodaysMoves({ players }: Props) {
           </Box>
         )
       })}
-      {showMoreButton && (
+      {!hideMoreButton && (
         <Box display={'flex'} justifyContent={'center'}>
           <Button onClick={increaseLimit}>Показать еще</Button>
         </Box>
