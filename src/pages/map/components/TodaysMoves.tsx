@@ -32,6 +32,8 @@ export default function TodaysMoves({ players }: Props) {
     setLimit(limit + 10)
   }
 
+  const showMoreButton = todaysMoves.moves.length < todaysMoves.moves.length
+
   return (
     <Box>
       <Box marginTop={'20px'} textAlign={'center'} marginBottom={'50px'}>
@@ -56,9 +58,11 @@ export default function TodaysMoves({ players }: Props) {
           </Box>
         )
       })}
-      <Box display={'flex'} justifyContent={'center'}>
-        <Button onClick={increaseLimit}>Показать еще</Button>
-      </Box>
+      {showMoreButton && (
+        <Box display={'flex'} justifyContent={'center'}>
+          <Button onClick={increaseLimit}>Показать еще</Button>
+        </Box>
+      )}
     </Box>
   )
 }
