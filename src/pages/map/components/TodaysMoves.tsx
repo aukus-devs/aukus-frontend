@@ -46,8 +46,34 @@ export default function TodaysMoves({ players }: Props) {
         if (!player) {
           return null
         }
+        let showDate = false
+        const currentDay = new Date(move.created_at)
+        const prevMove = todaysMoves.moves[index - 1]
+        console.log('prev move', prevMove)
+        if (prevMove) {
+          const prevDay = new Date(prevMove.created_at)
+          if (
+            prevDay.getDate() !== currentDay.getDate() ||
+            prevDay.getMonth() !== currentDay.getMonth() ||
+            prevDay.getFullYear() !== currentDay.getFullYear()
+          ) {
+            showDate = true
+          }
+        }
+
         return (
           <Box key={index}>
+            {showDate && (
+              <Box
+                marginTop={'40px'}
+                marginBottom={'50px'}
+                textAlign={'center'}
+                fontSize={'48px'}
+                lineHeight={1.2}
+              >
+                {formatDayMonth(currentDay)}
+              </Box>
+            )}
             <MoveCard
               move={move}
               id={move.player_move_id}
@@ -65,4 +91,11 @@ export default function TodaysMoves({ players }: Props) {
       )}
     </Box>
   )
+}
+
+function formatDayMonth(date: Date) {
+  return date.toLocaleString('ru', {
+    day: 'numeric',
+    month: 'long',
+  })
 }
