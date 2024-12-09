@@ -15,7 +15,10 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useScreenSize from 'src/context/useScreenSize'
-import { playerDisplayName } from 'src/pages/player/components/utils'
+import {
+  formatSecondsToTime,
+  playerDisplayName,
+} from 'src/pages/player/components/utils'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
@@ -279,13 +282,7 @@ export default function Leaderboard() {
 
                 let duration = ''
                 if (player.current_game_duration) {
-                  const hours = Math.floor(
-                    player.current_game_duration / 60 / 60
-                  )
-                  const minutes = Math.floor(
-                    (player.current_game_duration - hours * 60 * 60) / 60
-                  )
-                  duration = `${hours}ч${minutes}м`
+                  duration = formatSecondsToTime(player.current_game_duration)
                 }
 
                 let currentGameText = player.current_game
