@@ -28,6 +28,26 @@ export default function BottomSectionMobile() {
           </Link>
         </Box>
         <Box fontSize={'16px'} fontWeight={700} marginTop={'27px'}>
+          Уведомления
+        </Box>
+        <Box marginTop={'8px'} fontSize={'14px'} fontWeight={500}>
+          <Link
+            href="https://t.me/aukus3"
+            rel="noopener nereferrer"
+            target="_blank"
+          >
+            <LinkSpan color={Color.blue}>Телеграм</LinkSpan>
+          </Link>
+          <Link
+            href="https://discord.com/channels/1279797299827970048/1314899044434444299"
+            rel="noopener nereferrer"
+            target="_blank"
+            style={{ marginLeft: '20px' }}
+          >
+            <LinkSpan color={Color.blue}>Дискорд</LinkSpan>
+          </Link>
+        </Box>
+        <Box fontSize={'16px'} fontWeight={700} marginTop={'27px'}>
           Контакты
         </Box>
         <Box marginTop={'8px'} fontSize={'14px'} fontWeight={500}>
