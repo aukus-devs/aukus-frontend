@@ -47,11 +47,10 @@ export default function TodaysMoves({ players }: Props) {
           return null
         }
         let showDate = false
-        const currentDay = new Date(move.created_at)
+        const currentDay = convertDateToMSK(move.created_at)
         const prevMove = todaysMoves.moves[index - 1]
-        console.log('prev move', prevMove)
         if (prevMove) {
-          const prevDay = new Date(prevMove.created_at)
+          const prevDay = convertDateToMSK(prevMove.created_at)
           if (
             prevDay.getDate() !== currentDay.getDate() ||
             prevDay.getMonth() !== currentDay.getMonth() ||
@@ -98,4 +97,12 @@ function formatDayMonth(date: Date) {
     day: 'numeric',
     month: 'long',
   })
+}
+
+function convertDateToMSK(date: string) {
+  return new Date(
+    new Date(date).toLocaleString('en-US', {
+      timeZone: 'Europe/Moscow',
+    })
+  )
 }
