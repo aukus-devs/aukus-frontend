@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import LinkSpan from 'src/components/LinkSpan'
-import { formatDate } from './utils'
+import { formatDate, formatSecondsToTime } from './utils'
 import { useState } from 'react'
 import EditCurrentGameModal from './EditCurrentGameModal'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -43,6 +43,12 @@ export default function CurrentMove({
   let gameImage = player.current_game_image
   if (gameImage) {
     gameImage = gameImage.replace('{width}', '200').replace('{height}', '300')
+  }
+
+  let durationText = null
+  if (player.current_game_duration) {
+    durationText = formatSecondsToTime(player.current_game_duration)
+    durationText = `Играет: ${durationText}`
   }
 
   const playerColor = getPlayerColor(player.url_handle)
@@ -108,7 +114,10 @@ export default function CurrentMove({
                 />
               )}
             </Box>
-            <Box fontSize={'24px'}>{title}</Box>
+            <Box>
+              <Box fontSize={'24px'}>{title}</Box>
+              {durationText && <Box marginTop={'10px'}>{durationText}</Box>}
+            </Box>
           </Box>
           {canEdit && (
             <Box fontWeight={400} textAlign={'end'}>

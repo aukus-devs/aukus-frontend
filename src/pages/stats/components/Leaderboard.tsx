@@ -280,7 +280,7 @@ export default function Leaderboard() {
                 const shortGames =
                   scoreDetails.tinyGames + scoreDetails.shortGames
 
-                let duration = ''
+                let duration = null
                 if (player.current_game_duration) {
                   duration = formatSecondsToTime(player.current_game_duration)
                 }
