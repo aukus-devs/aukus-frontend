@@ -48,7 +48,7 @@ export default function CurrentMove({
   let durationText = null
   if (player.current_game_duration) {
     durationText = formatSecondsToTime(player.current_game_duration)
-    durationText = `Играет: ${durationText}`
+    durationText = `Играет ${durationText}`
   }
 
   const playerColor = getPlayerColor(player.url_handle)
