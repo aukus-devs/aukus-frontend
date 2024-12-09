@@ -279,8 +279,13 @@ export default function Leaderboard() {
 
                 let duration = ''
                 if (player.current_game_duration) {
-                  const minutes = Math.floor(player.current_game_duration / 60)
-                  duration = `${minutes} мин`
+                  const hours = Math.floor(
+                    player.current_game_duration / 60 / 60
+                  )
+                  const minutes = Math.floor(
+                    (player.current_game_duration - hours * 60 * 60) / 60
+                  )
+                  duration = `${hours}ч${minutes}м`
                 }
 
                 let currentGameText = player.current_game
