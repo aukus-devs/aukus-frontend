@@ -116,7 +116,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     })
   }
 
-  let formattedGameName = gameName.replace(/\s\(\d{4}\)$/, "").trim()
+  let formattedGameName = gameName?.replace(/\s\(\d{4}\)$/, "").trim()
   const hltbLink = `https://howlongtobeat.com/?q=${formattedGameName}`
 
   useEffect(() => {

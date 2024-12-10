@@ -285,13 +285,9 @@ export default function Leaderboard() {
                   duration = formatSecondsToTime(player.current_game_duration)
                 }
 
-                let currentGameText = player.current_game
-                if (player.current_game) {
-                  currentGameText = player.current_game.replace(/\s\(\d{4}\)$/, "").trim()
-                }
-                if (duration && player.current_game) {
-                  let formattedCurrentGame = player.current_game.replace(/\s\(\d{4}\)$/, "").trim()
-                  currentGameText = `${formattedCurrentGame} ~ ${duration}`
+                let currentGameText = player.current_game?.replace(/\s\(\d{4}\)$/, "").trim()
+                if (duration && currentGameText) {
+                  currentGameText = `${currentGameText} ~ ${duration}`
                 }
 
                 if (!currentGameText) {
