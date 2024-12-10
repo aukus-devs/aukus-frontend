@@ -349,6 +349,7 @@ export default function Leaderboard() {
                             Длинные игры: {scoreDetails.longGames} x{' '}
                             {scoreDetails.longGamesMultiplier} <br />
                             Дропы: {scoreDetails.drops} <br />
+                            Шейх-дропы: {scoreDetails.shekhs} <br />
                             Ряд: {scoreDetails.row} <br />
                             Очки:{' ('}
                             {shortGames * scoreDetails.shortGamesMultiplier}
@@ -360,6 +361,8 @@ export default function Leaderboard() {
                               scoreDetails.longGamesMultiplier}
                             {' - '}
                             {scoreDetails.drops}
+                            {' - '}
+                            {scoreDetails.shekhs}
                             {') x '}
                             {scoreDetails.row}
                           </span>
@@ -374,7 +377,7 @@ export default function Leaderboard() {
                     <TableCell>{playerStat.movies}</TableCell>
                     <TableCell>{playerStat.sheikh_moments}</TableCell>
                     <TableCell>
-                      <Tooltip 
+                      <Tooltip
                         title={
                           <span>
                             {currentGameText} <br />
@@ -429,7 +432,8 @@ export function getPlayerScore(player: PlayerStats) {
       tinyGamesScore +
       mediumGamesScore +
       longGamesScore -
-      details.drops) *
+      details.drops -
+      details.shekhs) *
     details.row
   )
 }
@@ -439,10 +443,6 @@ function getScoreDetails(stats: PlayerStats) {
   const mediumGames = stats.medium_games || 0
   const longGames = stats.long_games || 0
   const tinyGames = stats.tiny_games || 0
-
-  const shortGamesScore = (shortGames + tinyGames) * 1
-  const mediumGamesScore = mediumGames * 1.5
-  const longGamesScore = longGames * 2
 
   const row = Math.ceil(stats.map_position / 10)
 
@@ -457,5 +457,6 @@ function getScoreDetails(stats: PlayerStats) {
     longGames,
     longGamesMultiplier: 2,
     drops: stats.games_dropped,
+    shekhs: stats.sheikh_moments,
   }
 }
