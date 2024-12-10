@@ -8,16 +8,18 @@ import {
   Tooltip,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
-import deckBackground from 'assets/deck-background.png'
+import DiceBackground from 'assets/deck-background.png'
+import DiceBackgroundSpecial from 'assets/dice-background-special1.png'
 
 import DiceBox from '@mapcar/dice-box'
-import { DiceOption } from 'utils/types'
+import { DiceOption, Player } from 'utils/types'
 
 type Props = {
   open: boolean
   dice: DiceOption
   onTurnFinish: () => void
   onDiceRoll: (diceRoll: number) => void
+  player: Player
 }
 
 const DiceBoxContainerId = 'dice-box'
@@ -50,6 +52,7 @@ const diceChangeMaps: { [k: string]: { [k: string]: DiceOption } } = {
 }
 
 export default function DiceModal({
+  player,
   open,
   dice: maxDice,
   onTurnFinish,
@@ -162,6 +165,9 @@ export default function DiceModal({
   const useDarkText = isBright(diceColor)
   const canTestThrow = diceStatus === 'idle'
 
+  const diceBackground =
+    player.name === 'UselessMouth' ? DiceBackgroundSpecial : DiceBackground
+
   return (
     <Dialog open={open} keepMounted maxWidth="md">
       <DialogTitle
@@ -234,7 +240,7 @@ export default function DiceModal({
               borderRadius: '10px',
               padding: '5px',
               boxSizing: 'border-box',
-              backgroundImage: `url(${deckBackground})`,
+              backgroundImage: `url(${diceBackground})`,
               cursor: canTestThrow ? 'pointer' : 'default',
             }}
             ref={containerRef}

@@ -94,6 +94,7 @@ export default function ActionButton({
         dice={dice === 'skip' ? '1d6' : dice}
         onTurnFinish={handleTurnFinish}
         onDiceRoll={handleDiceRoll}
+        player={player}
       />
     </Box>
   )
