@@ -286,8 +286,12 @@ export default function Leaderboard() {
                 }
 
                 let currentGameText = player.current_game
+                if (player.current_game) {
+                  currentGameText = player.current_game.replace(/\(.+\)/, "").trim()
+                }
                 if (duration && player.current_game) {
-                  currentGameText = `${player.current_game} - играет ${duration}`
+                  let formattedCurrentGame = player.current_game.replace(/\(.+\)/, "").trim()
+                  currentGameText = `${formattedCurrentGame} ~ ${duration}`
                 }
 
                 if (!currentGameText) {
