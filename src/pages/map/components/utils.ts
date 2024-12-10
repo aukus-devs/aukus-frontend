@@ -106,3 +106,18 @@ export async function checkImageValid(url: string) {
   }
   return true
 }
+
+export function convertDateToMSK(date: string | Date) {
+  const dateObj = typeof date === 'string' ? new Date(date) : date
+  return new Date(
+    dateObj.toLocaleString('en-US', {
+      timeZone: 'Europe/Moscow',
+    })
+  )
+}
+
+export function getTimeDiffSeconds(date1: string | Date, date2: string | Date) {
+  const date1msk = convertDateToMSK(date1)
+  const date2msk = convertDateToMSK(date2)
+  return (date1msk.getTime() - date2msk.getTime()) / 1000
+}

@@ -87,7 +87,7 @@ const playerPraden: Player = {
 export const playersMock = [
   playerLasqa,
   playerSegall,
-  // playerRoadhouse,
+  playerRoadhouse,
   // playerPraden,
 ].sort((a, b) => {
   if (a.name > b.name) {

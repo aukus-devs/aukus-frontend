@@ -1,10 +1,11 @@
-import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const targetDate = new Date('2024-12-25T20:00:00+03:00')
 
-export function getEventTimeLeft() {
-  return Math.max(targetDate.getTime() - new Date().getTime(), 0)
+export function getEventSecondsLeft() {
+  return Math.floor(
+    Math.max(targetDate.getTime() - new Date().getTime(), 0) / 1000
+  )
 }
 
 export default function Countdown() {
@@ -14,7 +15,7 @@ export default function Countdown() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const difference = getEventTimeLeft()
+      const difference = getEventSecondsLeft()
       setTimeDiff(difference) // Ensure it doesn't go negative
     }, 1000)
 
@@ -22,10 +23,10 @@ export default function Countdown() {
   }, [targetDate])
 
   // Calculate days, hours, minutes, and seconds from the difference
-  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24)
-  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60)
-  const seconds = Math.floor((timeDiff / 1000) % 60)
+  const days = Math.floor(timeDiff / (60 * 60 * 24))
+  const hours = Math.floor((timeDiff / (60 * 60)) % 24)
+  const minutes = Math.floor((timeDiff / 60) % 60)
+  const seconds = Math.floor(timeDiff % 60)
 
   const hoursPadded = hours.toString().padStart(2, '0')
   const minutesPadded = minutes.toString().padStart(2, '0')

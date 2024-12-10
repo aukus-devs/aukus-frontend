@@ -6,6 +6,7 @@ import { useState } from 'react'
 import useScreenSize from 'src/context/useScreenSize'
 import { fetchPlayerMoves } from 'utils/api'
 import { Player } from 'utils/types'
+import { convertDateToMSK } from './utils'
 
 type Props = {
   players: Player[]
@@ -97,12 +98,4 @@ function formatDayMonth(date: Date) {
     day: 'numeric',
     month: 'long',
   })
-}
-
-function convertDateToMSK(date: string) {
-  return new Date(
-    new Date(date).toLocaleString('en-US', {
-      timeZone: 'Europe/Moscow',
-    })
-  )
 }

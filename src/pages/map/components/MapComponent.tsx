@@ -5,7 +5,12 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
-import { createPlayerMove, fetchPlayers, fetchStats } from 'utils/api'
+import {
+  createPlayerMove,
+  fetchPlayerMoves,
+  fetchPlayers,
+  fetchStats,
+} from 'utils/api'
 import CrownIcon from 'assets/icons/crown.svg?react'
 import {
   Color,
@@ -26,6 +31,8 @@ import TesterButton from './TesterButton'
 import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
+  convertDateToMSK,
+  getTimeDiffSeconds,
   ladders,
   laddersByCell,
   lastCell,
@@ -40,7 +47,9 @@ import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
 import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'
-import { getEventTimeLeft } from 'src/pages/rules/components/Countdown'
+import { getEventSecondsLeft } from 'src/pages/rules/components/Countdown'
+
+const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
@@ -61,7 +70,10 @@ export default function MapComponent() {
 
   const queryClient = useQueryClient()
 
-  const [timeLeft, setTimeLeft] = useState(() => getEventTimeLeft())
+  const [finalCountdown, setFinalCountdown] = useState(() =>
+    getEventSecondsLeft()
+  )
+  const [winnerCountdown, setWinnerCountdown] = useState(WINNER_COUNTDOWN_START)
 
   const darkMode = load('darkMode', false)
 
@@ -105,6 +117,8 @@ export default function MapComponent() {
     enabled: !makingTurn,
   })
 
+  const playersLoaded = playersData && playersData?.players.length > 0
+
   let players = playersData?.players || []
   if (timelapseEnabled) {
     players = timelapseState.players
@@ -117,60 +131,112 @@ export default function MapComponent() {
         )
       : null
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const difference = getEventTimeLeft()
-      setTimeLeft(difference)
-    }, 1000)
-
-    return () => clearInterval(interval) // Cleanup interval on component unmount
-  }, [])
-
-  const deadlineReached = timeLeft <= 0
-  const showCountdown = timeLeft <= 1000 * 60 * 60 * 24
-
-  const timerText = formatSeconds(timeLeft)
-
   const winnerFound =
     !timelapseEnabled &&
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
 
-  const { data: playerStats } = useQuery({
+  let topPlayers: Player[] = []
+  let winner: Player | null = null
+  if (winnerFound) {
+    topPlayers.push(playerWithMaxPosition)
+    winner = playerWithMaxPosition
+  }
+
+  const deadlineReached = finalCountdown <= 0 || winnerCountdown <= 0
+
+  const { data: playerStats, isLoading: statsLoading } = useQuery({
     queryKey: ['playersStats'],
     queryFn: fetchStats,
     staleTime: 1000 * 60 * 1,
-    enabled: !!(winnerFound || deadlineReached),
+    enabled: deadlineReached,
   })
   const playersStats = playerStats?.players || []
 
-  let top3players: Player[] = []
-  // const top3players: Player[] = players.slice(0, 3)
-  if (winnerFound && playersStats.length > 2) {
-    top3players.push(playerWithMaxPosition)
-    const statsByScore = playersStats
-      .filter((player) => player.id !== playerWithMaxPosition.id)
-      .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
+  const { data: winnerMoves, isLoading: movesLoading } = useQuery({
+    queryKey: ['winnerMoves', winner?.id],
+    queryFn: () => {
+      if (winner) {
+        return fetchPlayerMoves({ id: winner.id })
+      }
+      return null
+    },
+    staleTime: 1000 * 60 * 1,
+    enabled: !!winner,
+  })
 
-    const top2players = statsByScore
-      .slice(0, 2) // Get the top 3 player stats
-      .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
-      .filter((player): player is Player => !!player) // Filter out any undefined results
+  let lastWinnerMove = null
 
-    top3players = [playerWithMaxPosition, ...top2players]
+  // console.log('winnerMoves', winnerMoves)
+
+  if (winnerMoves && winnerMoves.moves.length > 0) {
+    lastWinnerMove = winnerMoves.moves[0]
   }
 
-  if (deadlineReached && playersStats.length > 2) {
-    const statsByScore = playersStats.sort(
-      (a, b) => getPlayerScore(b) - getPlayerScore(a)
-    )
-    top3players = statsByScore
+  let showCountdown = false
+  let timerText = ''
+  if (playersLoaded) {
+    if (winner) {
+      if (winnerCountdown < WINNER_COUNTDOWN_START) {
+        const smallerCoundown = Math.min(winnerCountdown, finalCountdown)
+        showCountdown = true
+        timerText = formatSeconds(smallerCoundown)
+      }
+    } else if (finalCountdown <= 60 * 60 * 24) {
+      showCountdown = true
+      timerText = formatSeconds(finalCountdown)
+    }
+  }
+
+  // console.log('timerText', timerText)
+
+  useEffect(() => {
+    const getSecondsLeftSinceLastMove = () => {
+      // console.log('last move', lastWinnerMove)
+      if (!lastWinnerMove) {
+        return null
+      }
+
+      const timePassed = getTimeDiffSeconds(
+        new Date(),
+        lastWinnerMove.created_at
+      )
+      // console.log('time passed', formatSeconds(timePassed))
+      return WINNER_COUNTDOWN_START - timePassed
+    }
+
+    const interval = setInterval(() => {
+      const timeLeftWinner = getSecondsLeftSinceLastMove()
+      const difference = getEventSecondsLeft()
+      if (timeLeftWinner) {
+        setWinnerCountdown(timeLeftWinner)
+      }
+      // console.log('update distance', timeLeftWinner, difference)
+      setFinalCountdown(difference)
+    }, 1000)
+
+    return () => clearInterval(interval) // Cleanup interval on component unmount
+  }, [lastWinnerMove])
+
+  if (playersStats.length > 0) {
+    const statsByScore = playersStats
+      .filter((player) => {
+        if (winner) {
+          return player.id !== winner.id
+        }
+        return true
+      })
+      .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
+
+    const top3players = statsByScore
       .slice(0, 3) // Get the top 3 player stats
       .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
       .filter((player): player is Player => !!player) // Filter out any undefined results
+
+    topPlayers.push(...top3players)
   }
 
-  const showWinScreen = top3players.length > 0
+  const showWinScreen = deadlineReached && topPlayers.length > 0
 
   useEffect(() => {
     if (showWinScreen && !fireworksRef.current?.isRunning) {
@@ -316,15 +382,17 @@ export default function MapComponent() {
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
+  // console.log('winner', winner, topPlayers)
   const animating = startWinAnimation || moveParams !== null
 
-  const stopActions = showWinScreen || animating
+  const currentPlayerWinner =
+    currentPlayer && winner && currentPlayer.id === winner.id
+
+  const stopActions = showWinScreen || animating || currentPlayerWinner
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
   const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
 
   const showTestButton = currentPlayer && !timelapseEnabled && false
-
-  const winner = top3players[0] ?? null
 
   const totalOnline = players.reduce((acc, player) => {
     return acc + (player.online_count || 0)
@@ -360,13 +428,13 @@ export default function MapComponent() {
         }}
       />
 
-      {showWinScreen && winner && (
+      {showWinScreen && (
         <Box display={'flex'} justifyContent={'center'}>
           <Box
             fontSize={'20px'}
             textAlign={'center'}
             style={{
-              backgroundColor: getPlayerColor(winner.url_handle),
+              backgroundColor: getPlayerColor(topPlayers[0].url_handle),
               borderRadius: '10px',
               zIndex: 10,
               position: 'relative',
@@ -388,8 +456,8 @@ export default function MapComponent() {
               />
               <Box>
                 Можете выдыхать, ивент закончен{' — '}
-                <Link to={`/players/${winner.url_handle}`}>
-                  <LinkSpan color={'white'}>{winner.name}</LinkSpan>{' '}
+                <Link to={`/players/${topPlayers[0].url_handle}`}>
+                  <LinkSpan color={'white'}>{topPlayers[0].name}</LinkSpan>{' '}
                 </Link>
                 победил!
               </Box>
@@ -477,21 +545,29 @@ export default function MapComponent() {
               </Box>
             </Box>
           </Box>
-          {showWinScreen && top3players.length > 2 && (
+          {winner && !showWinScreen && (
+            <PlayerWinnerIcon
+              player={winner}
+              position={1}
+              isMoving
+              closePopup={closePopups}
+            />
+          )}
+          {showWinScreen && topPlayers.length > 2 && (
             <>
               <PlayerWinnerIcon
-                player={top3players[0]}
+                player={topPlayers[0]}
                 position={1}
                 isMoving
                 closePopup={closePopups}
               />
               <PlayerWinnerIcon
-                player={top3players[1]}
+                player={topPlayers[1]}
                 position={2}
                 closePopup={closePopups}
               />
               <PlayerWinnerIcon
-                player={top3players[2]}
+                player={topPlayers[2]}
                 position={3}
                 closePopup={closePopups}
               />
@@ -733,13 +809,17 @@ function getMoveSteps(player: Player, moves: number) {
 }
 
 function formatSeconds(timeDiff: number) {
-  const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24)
-  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60)
-  const seconds = Math.floor((timeDiff / 1000) % 60)
+  const hours = Math.floor((timeDiff / (60 * 60)) % 24)
+  const minutes = Math.floor((timeDiff / 60) % 60)
+  const seconds = Math.floor(timeDiff % 60)
+  const days = Math.floor(timeDiff / (60 * 60 * 24))
 
   const hoursPadded = hours.toString().padStart(2, '0')
   const minutesPadded = minutes.toString().padStart(2, '0')
   const secondsPadded = seconds.toString().padStart(2, '0')
 
+  if (days > 0) {
+    return `${days}д ${hoursPadded}:${minutesPadded}:${secondsPadded}`
+  }
   return `${hoursPadded}:${minutesPadded}:${secondsPadded}`
 }
