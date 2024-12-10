@@ -64,7 +64,7 @@ export default function DiceModal({
   >('idle')
 
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
-  const [diceColor, setDiceColor] = useState<string>(getRandomHexColor())
+  const [diceColor, setDiceColor] = useState<string>(getRandomHexColor(player))
 
   const [currentDice, setCurrentDice] = useState<DiceOption>(maxDice)
 
@@ -151,7 +151,7 @@ export default function DiceModal({
       diceBox.roll(currentDice).then((result: Array<DiceRoll>) => {
         setDiceRoll(result.map((diceRoll) => diceRoll.value))
       })
-      const newColor = getRandomHexColor()
+      const newColor = getRandomHexColor(player)
       setDiceColor(newColor)
       diceBox.config.themeColor = newColor
     }
@@ -269,7 +269,11 @@ export default function DiceModal({
   )
 }
 
-function getRandomHexColor(): string {
+function getRandomHexColor(player: Player): string {
+  if (player.name === 'UselessMouth') {
+    return '#fffff0'
+  }
+
   // Helper function to convert a number to a two-digit hex string
   const toHex = (n: number): string => n.toString(16).padStart(2, '0')
 
