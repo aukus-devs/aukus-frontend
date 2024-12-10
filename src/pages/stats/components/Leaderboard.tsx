@@ -378,7 +378,7 @@ export default function Leaderboard() {
                     <TableCell>{playerStat.movies}</TableCell>
                     <TableCell>{playerStat.sheikh_moments}</TableCell>
                     <TableCell>
-                      <Tooltip title={currentGameText + ' Категория стрима: ' + player.stream_last_category}>
+                      <Tooltip title={currentGameText + ', категория стрима: ' + player.stream_last_category}>
                         <Link
                           to={playerStream}
                           rel="noopener noreferrer"
