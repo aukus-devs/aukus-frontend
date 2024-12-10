@@ -116,7 +116,8 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     })
   }
 
-  const hltbLink = `https://howlongtobeat.com/?q=${gameName}`
+  let formattedGameName = gameName.replace(/\(.+\)/, "").trim()
+  const hltbLink = `https://howlongtobeat.com/?q=${formattedGameName}`
 
   useEffect(() => {
     if (
