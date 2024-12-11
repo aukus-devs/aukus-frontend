@@ -22,6 +22,9 @@ import PlayerPurple from 'assets/map/PlayerPurple.webp'
 import PlayerYellow from 'assets/map/PlayerYellow.webp'
 import PlayerBiege from 'assets/map/PlayerBiege.webp'
 
+import PlayerPurple2 from 'assets/map/PlayerPurple2.webp'
+import PlayerPurpleMoving2 from 'assets/map/PlayerPurpleMoving2.gif'
+
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
 import PlayerPinkMoving from 'assets/map/PlayerPinkMoving.gif'
@@ -49,7 +52,7 @@ const playerIcons: { [key in PlayerUrl]: string } = {
   predan: PlayerBrown,
   browjey: PlayerOrange,
   uselessmouth: PlayerPink,
-  roadhouse: PlayerPurple,
+  roadhouse: PlayerPurple2,
   melharucos: PlayerBlueLight,
   maddyson: PlayerYellow,
   vovapain: PlayerRed,
@@ -66,7 +69,7 @@ const playerMovingIcons: { [key in PlayerUrl]: string } = {
   predan: PlayerBrownMoving,
   browjey: PlayerOrangeMoving,
   uselessmouth: PlayerPinkMoving,
-  roadhouse: PlayerPurpleMoving,
+  roadhouse: PlayerPurpleMoving2,
   melharucos: PlayerBlueLightMoving,
   maddyson: PlayerYellowMoving,
   vovapain: PlayerRedMoving,
