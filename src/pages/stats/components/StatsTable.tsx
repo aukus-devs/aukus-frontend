@@ -196,7 +196,7 @@ export default function StatsTable(props: Props) {
                           : headerStyle
                       }
                     >
-                      Пройдено по лестницам
+                      Буст лестниц
                     </span>
                   </Tooltip>
                 </TableCell>
@@ -218,7 +218,7 @@ export default function StatsTable(props: Props) {
                           : headerStyle
                       }
                     >
-                      Упал по змейкам
+                      Падение по змейкам
                     </span>
                   </Tooltip>
                 </TableCell>
