@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Button } from '@mui/material'
 import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
@@ -10,11 +10,11 @@ import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
-import FloatingClock from './FloatingClock'
 import MultistreamButton from 'src/pages/players/components/MultistreamButton'
 import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
 import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
+import useLocalStorage from 'src/context/useLocalStorage'
 
 type Props = {
   currentPage: Page
@@ -38,6 +38,25 @@ export default function MainMenu({
     ? getPlayerColor(currentUser.url_handle)
     : Color.blueLight
   const urlHandle = currentUser?.url_handle
+
+  const { save, load } = useLocalStorage()
+
+  const [snowState, setSnowState] = React.useState<'off' | 'small' | 'big'>(
+    load('snowLevel', 'off')
+  )
+
+  const cycleSnow = () => {
+    if (snowState === 'off') {
+      save('snowLevel', 'small')
+      setSnowState('small')
+    } else if (snowState === 'small') {
+      save('snowLevel', 'big')
+      setSnowState('big')
+    } else {
+      save('snowLevel', 'off')
+      setSnowState('off')
+    }
+  }
 
   const time = useTime()
 
@@ -95,42 +114,45 @@ export default function MainMenu({
         position="relative"
         zIndex={20}
       >
-        <Box position="relative" width="fit-content">
-          <Box
-            fontWeight={600}
-            position="absolute"
-            display="inline"
-            marginRight={'15px'}
-            top={'1px'}
-            left={'-325px'}
-            width={'max-content'}
-            style={{
-              lineHeight: '1.2',
-            }}
-            color={'#656565'}
-          >
-            {/* До конца ивента: 24 дня 20 часов */}
-          </Box>
-          <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
-            <LinkSpan
-              color={playerColor}
-              style={{
-                fontWeight: 600,
-                paddingBottom: 0,
-                lineHeight: '1.2',
-                display: 'inline-flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <SnowflakeIcon
-                width={'15px'}
-                height={'15px'}
-                style={{ marginRight: '8px' }}
+        <Box position="relative" width="fit-content" style={{ height: '24px' }}>
+          <span style={{ display: 'inline-flex' }}>
+            {snowState !== 'off' && (
+              <snow-effect
+                color="white"
+                flakes={snowState === 'small' ? 50 : 150}
+                speed={1}
               />
-              АУКУС 2024 {currentUser && `// ${playerDisplayName(currentUser)}`}
-            </LinkSpan>
-          </Link>
+            )}
+
+            <SnowflakeIcon
+              width={'15px'}
+              height={'15px'}
+              style={{
+                marginRight: '8px',
+                alignSelf: 'center',
+                cursor: 'pointer',
+              }}
+              onClick={cycleSnow}
+            />
+
+            <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
+              <LinkSpan
+                color={playerColor}
+                style={{
+                  fontWeight: 600,
+                  paddingBottom: 0,
+                  lineHeight: '1.2',
+                  display: 'inline-flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                АУКУС 2024{' '}
+                {currentUser && `// ${playerDisplayName(currentUser)}`}
+              </LinkSpan>
+            </Link>
+          </span>
+
           <Box
             fontWeight={600}
             position="absolute"
@@ -138,7 +160,7 @@ export default function MainMenu({
             marginLeft={'15px'}
             top={'1px'}
             style={{
-              lineHeight: '1.2',
+              lineHeight: '23px',
               width: 'max-content',
             }}
             color={Color.greyText}

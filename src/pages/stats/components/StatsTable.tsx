@@ -223,14 +223,16 @@ export default function StatsTable(props: Props) {
                   </Tooltip>
                 </TableCell>
                 <TableCell>
-                  <span
-                    onClick={() => onHeaderClick('total_moves')}
-                    style={
-                      orderBy === 'total_moves' ? selectedStyle : headerStyle
-                    }
-                  >
-                    Всего ходов
-                  </span>
+                  <Tooltip title="Без учета реролов">
+                    <span
+                      onClick={() => onHeaderClick('total_moves')}
+                      style={
+                        orderBy === 'total_moves' ? selectedStyle : headerStyle
+                      }
+                    >
+                      Всего ходов
+                    </span>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -238,6 +240,11 @@ export default function StatsTable(props: Props) {
               {playersStatsSorted.map((playerStat, index) => {
                 const player = playersById[playerStat.id]
                 const displayName = playerDisplayName(player)
+                const totalMoves =
+                  playerStat.games_completed +
+                  playerStat.games_dropped +
+                  playerStat.movies +
+                  playerStat.sheikh_moments
 
                 return (
                   <TableRow
@@ -262,7 +269,7 @@ export default function StatsTable(props: Props) {
                     <TableCell>{playerStat.ladders_moves_sum}</TableCell>
                     <TableCell>{playerStat.snakes}</TableCell>
                     <TableCell>{playerStat.snakes_moves_sum}</TableCell>
-                    <TableCell>{playerStat.total_moves}</TableCell>
+                    <TableCell>{totalMoves}</TableCell>
                   </TableRow>
                 )
               })}
