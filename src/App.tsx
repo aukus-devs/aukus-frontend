@@ -126,26 +126,19 @@ const makeCustomColors = (colors: { [key: string]: string }) => {
   return transformedColors
 }
 
-darkTheme = createTheme(darkTheme, {
-  palette: makeCustomColors(Color),
-})
-
 function App() {
   const queryClient = new QueryClient()
   return (
     <React.StrictMode>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <QueryClientProvider client={queryClient}>
-          <SnackbarProvider>
-            <UserProvider>
-              <TimeProvider>
-                <RouterProvider router={router} />
-              </TimeProvider>
-            </UserProvider>
-          </SnackbarProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <SnackbarProvider>
+          <UserProvider>
+            <TimeProvider>
+              <RouterProvider router={router} />
+            </TimeProvider>
+          </UserProvider>
+        </SnackbarProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   )
 }

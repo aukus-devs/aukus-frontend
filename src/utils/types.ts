@@ -37,6 +37,8 @@ export type PlayerStats = {
   long_games: number
   average_dice_roll: number
   average_move: number
+  ladders_moves_sum: number
+  snakes_moves_sum: number
 }
 
 export type MoveType = 'completed' | 'drop' | 'sheikh' | 'reroll' | 'movie'

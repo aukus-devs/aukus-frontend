@@ -5,6 +5,7 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
+import TreeAnimation from 'assets/map/tree2.gif'
 import {
   createPlayerMove,
   fetchPlayerMoves,
@@ -31,7 +32,6 @@ import TesterButton from './TesterButton'
 import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
-  convertDateToMSK,
   getTimeDiffSeconds,
   ladders,
   laddersByCell,
@@ -514,6 +514,16 @@ export default function MapComponent() {
           }}
         >
           <Box position="relative">
+            <Box position={'absolute'} left={'419px'} top={'222px'}>
+              <img
+                src={TreeAnimation}
+                style={{
+                  filter: darkMode ? 'brightness(0.6)' : 'none',
+                }}
+              />
+            </Box>
+          </Box>
+          <Box position="relative">
             <Box
               position={'absolute'}
               left={'620px'}
@@ -718,7 +728,9 @@ export default function MapComponent() {
                   <Button
                     sx={{
                       height: '44px',
-                      backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                      backgroundColor: darkMode
+                        ? 'primary.dark'
+                        : 'primary.main',
                     }}
                     onClick={() => save('darkMode', !darkMode)}
                   >
