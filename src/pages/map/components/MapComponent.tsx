@@ -288,7 +288,7 @@ export default function MapComponent() {
 
     const skipLadders = params.itemLength === 'tiny'
 
-    const newPosition = getNextPlayerPosition({
+    const nextPosition = getNextPlayerPosition({
       player: currentPlayer,
       moves: diceRoll,
       skipLadders,
@@ -306,11 +306,11 @@ export default function MapComponent() {
     makeMove.mutate({
       player_id: currentPlayer.id,
       dice_roll: diceRoll,
-      move_to: newPosition,
-      stair_from: params.stairFrom,
-      stair_to: params.stairTo,
-      snake_from: params.snakeFrom,
-      snake_to: params.snakeTo,
+      move_to: nextPosition.position,
+      stair_from: nextPosition.stairsFrom,
+      stair_to: nextPosition.stairsTo,
+      snake_from: nextPosition.snakeFrom,
+      snake_to: nextPosition.snakeTo,
       type: params.type,
       item_title: params.itemTitle,
       item_length: params.itemLength,
@@ -375,7 +375,7 @@ export default function MapComponent() {
       moves: moveParams.steps,
       skipLadders: moveParams.skipLadders,
     })
-    player.map_position = newPosition
+    player.map_position = newPosition.position
     // setMoveSteps(0)
     setMoveParams(null)
     setMakingTurn(false)
@@ -787,12 +787,32 @@ function getNextPlayerPosition({ player, moves, skipLadders }: PositionParams) {
   const snake = snakesByCell[newPosition]
 
   if (ladder && !skipLadders) {
-    return ladder.cellTo
+    return {
+      position: ladder.cellTo,
+      stairsFrom: ladder.cellFrom,
+      stairsTo: ladder.cellTo,
+      snakeFrom: null,
+      snakeTo: null,
+    }
   }
   if (snake) {
-    return snake.cellTo
+    return {
+      position: snake.cellTo,
+      stairsFrom: null,
+      stairsTo: null,
+      snakeFrom: snake.cellFrom,
+      snakeTo: snake.cellTo,
+    }
   }
-  return Math.min(102, newPosition)
+
+  const finalPosition = Math.min(102, newPosition)
+  return {
+    position: finalPosition,
+    stairsFrom: null,
+    stairsTo: null,
+    snakeFrom: null,
+    snakeTo: null,
+  }
 }
 
 function getMoveSteps(player: Player, moves: number) {
