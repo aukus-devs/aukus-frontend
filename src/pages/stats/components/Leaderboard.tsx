@@ -203,14 +203,18 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span style={{ display: 'block', width: '40px' }}>
-                    <span
-                      onClick={() => onHeaderClick('score')}
-                      style={orderBy === 'score' ? selectedStyle : headerStyle}
-                    >
-                      Очки
+                  <Tooltip title="Наведи на очки чтобы увидеть подорбный расчет">
+                    <span style={{ display: 'block', width: '40px' }}>
+                      <span
+                        onClick={() => onHeaderClick('score')}
+                        style={
+                          orderBy === 'score' ? selectedStyle : headerStyle
+                        }
+                      >
+                        Очки
+                      </span>
                     </span>
-                  </span>
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
                   <span style={{ display: 'block', width: '80px' }}>
@@ -263,22 +267,24 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span style={{ display: 'block', width: '54px' }}>
-                    <span
-                      onClick={() => onHeaderClick('sheikh_moments')}
-                      style={
-                        orderBy === 'sheikh_moments'
-                          ? selectedStyle
-                          : headerStyle
-                      }
-                    >
-                      Шейхи
+                  <Tooltip title="Сработавшие шейх-моменты">
+                    <span style={{ display: 'block', width: '54px' }}>
+                      <span
+                        onClick={() => onHeaderClick('sheikh_moments')}
+                        style={
+                          orderBy === 'sheikh_moments'
+                            ? selectedStyle
+                            : headerStyle
+                        }
+                      >
+                        Шейхи
+                      </span>
                     </span>
-                  </span>
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
                   <span style={{ display: 'block', maxWidth: '285px' }}>
-                    Выпало на ауке
+                    Сейчас
                   </span>
                 </TableCell>
               </TableRow>
