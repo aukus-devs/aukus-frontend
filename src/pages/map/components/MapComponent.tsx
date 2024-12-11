@@ -31,7 +31,6 @@ import TesterButton from './TesterButton'
 import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
-  convertDateToMSK,
   getTimeDiffSeconds,
   ladders,
   laddersByCell,
@@ -718,7 +717,9 @@ export default function MapComponent() {
                   <Button
                     sx={{
                       height: '44px',
-                      backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
+                      backgroundColor: darkMode
+                        ? 'primary.dark'
+                        : 'primary.main',
                     }}
                     onClick={() => save('darkMode', !darkMode)}
                   >
