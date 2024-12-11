@@ -174,21 +174,26 @@ export default function Leaderboard() {
           >
             <TableHead>
               <TableRow>
-                <TableCell onClick={() => onHeaderClick('id')}>
-                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>
+                <TableCell>
+                  <span
+                    onClick={() => onHeaderClick('id')}
+                    style={orderBy === 'id' ? selectedStyle : headerStyle}
+                  >
                     Место
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('name')}>
+                <TableCell>
                   <span
+                    onClick={() => onHeaderClick('name')}
                     style={orderBy === 'name' ? selectedStyle : headerStyle}
                   >
                     Участник
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('map_position')}>
+                <TableCell>
                   <span style={{ width: '69px', display: 'block' }}>
                     <span
+                      onClick={() => onHeaderClick('map_position')}
                       style={
                         orderBy === 'map_position' ? selectedStyle : headerStyle
                       }
@@ -197,18 +202,20 @@ export default function Leaderboard() {
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('score')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '40px' }}>
                     <span
+                      onClick={() => onHeaderClick('score')}
                       style={orderBy === 'score' ? selectedStyle : headerStyle}
                     >
                       Очки
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('games_completed')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '80px' }}>
                     <span
+                      onClick={() => onHeaderClick('games_completed')}
                       style={
                         orderBy === 'games_completed'
                           ? selectedStyle
@@ -219,9 +226,10 @@ export default function Leaderboard() {
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('games_dropped')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '53px' }}>
                     <span
+                      onClick={() => onHeaderClick('games_dropped')}
                       style={
                         orderBy === 'games_dropped'
                           ? selectedStyle
@@ -232,9 +240,10 @@ export default function Leaderboard() {
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('rerolls')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '61px' }}>
                     <span
+                      onClick={() => onHeaderClick('rerolls')}
                       style={
                         orderBy === 'rerolls' ? selectedStyle : headerStyle
                       }
@@ -243,18 +252,20 @@ export default function Leaderboard() {
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('movies')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '66px' }}>
                     <span
+                      onClick={() => onHeaderClick('movies')}
                       style={orderBy === 'movies' ? selectedStyle : headerStyle}
                     >
                       Фильмы
                     </span>
                   </span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('sheikh_moments')}>
+                <TableCell>
                   <span style={{ display: 'block', width: '54px' }}>
                     <span
+                      onClick={() => onHeaderClick('sheikh_moments')}
                       style={
                         orderBy === 'sheikh_moments'
                           ? selectedStyle
