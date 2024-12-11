@@ -155,7 +155,7 @@ export default function StatsTable(props: Props) {
                   </Tooltip>
                 </TableCell>
                 <TableCell>
-                  <Tooltip title="Средняя длина хода в любую сторону">
+                  <Tooltip title="Средняя длина хода в любую сторону, без учета лестниц и змеек">
                     <span
                       onClick={() => onHeaderClick('move_average')}
                       style={
