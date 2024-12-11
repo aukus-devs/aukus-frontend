@@ -5,6 +5,7 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
+import TreeAnimation from 'assets/map/tree2.gif'
 import {
   createPlayerMove,
   fetchPlayerMoves,
@@ -512,6 +513,16 @@ export default function MapComponent() {
             backgroundPosition: 'center' /* Center the image */,
           }}
         >
+          <Box position="relative">
+            <Box position={'absolute'} left={'419px'} top={'222px'}>
+              <img
+                src={TreeAnimation}
+                style={{
+                  filter: darkMode ? 'brightness(0.6)' : 'none',
+                }}
+              />
+            </Box>
+          </Box>
           <Box position="relative">
             <Box
               position={'absolute'}
