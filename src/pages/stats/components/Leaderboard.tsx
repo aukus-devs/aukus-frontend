@@ -419,6 +419,9 @@ export default function Leaderboard() {
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
+                              color: player?.is_online
+                                ? 'white'
+                                : Color.greyText,
                             }}
                           >
                             {currentGameText}
