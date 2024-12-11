@@ -314,5 +314,7 @@ export function playerStatsMock() {
     short_games: random(1, 20),
     medium_games: random(1, 20),
     long_games: random(1, 20),
+    average_dice_roll: random(1, 6),
+    average_move: random(1, 10),
   }))
 }

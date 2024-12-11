@@ -31,10 +31,12 @@ export type PlayerStats = {
   movies: number
   ladders: number
   snakes: number
-  tiny_games?: number
-  short_games?: number
-  medium_games?: number
-  long_games?: number
+  tiny_games: number
+  short_games: number
+  medium_games: number
+  long_games: number
+  average_dice_roll: number
+  average_move: number
 }
 
 export type MoveType = 'completed' | 'drop' | 'sheikh' | 'reroll' | 'movie'
