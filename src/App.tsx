@@ -69,63 +69,6 @@ const router = createBrowserRouter(
   { basename: '/' }
 )
 
-let darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: Color.blue,
-    },
-    secondary: {
-      main: '#007AFF',
-    },
-    info: {
-      main: Color.greyLight,
-    },
-    text: {
-      primary: '#fff',
-      secondary: '#a6d4fa',
-    },
-    background: {
-      default: '#0c0c0c',
-    },
-  },
-  typography: {
-    fontFamily: '"Golos Text", sans-serif',
-    fontWeightRegular: 600,
-  },
-  components: {
-    MuiButton: {
-      defaultProps: {
-        variant: 'contained',
-        color: 'primary',
-        disableElevation: true,
-        disableRipple: true,
-      },
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          fontWeight: 600,
-        },
-      },
-    },
-  },
-})
-
-const makeCustomColors = (colors: { [key: string]: string }) => {
-  const transformedColors: { [key: string]: PaletteColor } = {}
-
-  Object.entries(colors).forEach(([key, value]) => {
-    const customKey = `custom${key.charAt(0).toUpperCase()}${key.slice(1)}`
-
-    transformedColors[customKey] = darkTheme.palette.augmentColor({
-      color: { main: value },
-      name: customKey,
-    })
-  })
-
-  return transformedColors
-}
-
 function App() {
   const queryClient = new QueryClient()
   return (
