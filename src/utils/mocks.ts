@@ -316,5 +316,7 @@ export function playerStatsMock() {
     long_games: random(1, 20),
     average_dice_roll: random(1, 6),
     average_move: random(1, 10),
+    ladders_moves_sum: random(1, 100),
+    snakes_moves_sum: random(1, 100),
   }))
 }

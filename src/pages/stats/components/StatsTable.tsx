@@ -23,7 +23,9 @@ type HeaderType =
   | 'dice_average'
   | 'move_average'
   | 'stairs'
+  | 'stairs_moves_sum'
   | 'snakes'
+  | 'snakes_moves_sum'
   | 'total_moves'
 
 type Props = {}
@@ -80,8 +82,18 @@ export default function StatsTable(props: Props) {
     if (orderBy === 'stairs') {
       return order === 'asc' ? a.ladders - b.ladders : b.ladders - a.ladders
     }
+    if (orderBy === 'stairs_moves_sum') {
+      return order === 'asc'
+        ? a.ladders_moves_sum - b.ladders_moves_sum
+        : b.ladders_moves_sum - a.ladders_moves_sum
+    }
     if (orderBy === 'snakes') {
       return order === 'asc' ? a.snakes - b.snakes : b.snakes - a.snakes
+    }
+    if (orderBy === 'snakes_moves_sum') {
+      return order === 'asc'
+        ? a.snakes_moves_sum - b.snakes_moves_sum
+        : b.snakes_moves_sum - a.snakes_moves_sum
     }
     if (orderBy === 'total_moves') {
       return order === 'asc'
@@ -119,7 +131,7 @@ export default function StatsTable(props: Props) {
         fontWeight={700}
         lineHeight={1}
       >
-        Статистика игроков
+        Статистика ходов
       </Box>
       <Box
         marginLeft={4}
@@ -175,12 +187,40 @@ export default function StatsTable(props: Props) {
                   </span>
                 </TableCell>
                 <TableCell>
+                  <Tooltip title="Количество клеток скипнутых по лестницам">
+                    <span
+                      onClick={() => onHeaderClick('stairs_moves_sum')}
+                      style={
+                        orderBy === 'stairs_moves_sum'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Пройдено по лестницам
+                    </span>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
                   <span
                     onClick={() => onHeaderClick('snakes')}
                     style={orderBy === 'snakes' ? selectedStyle : headerStyle}
                   >
                     Змейки
                   </span>
+                </TableCell>
+                <TableCell>
+                  <Tooltip title="Количество клеток скипнутых по змейкам">
+                    <span
+                      onClick={() => onHeaderClick('snakes_moves_sum')}
+                      style={
+                        orderBy === 'snakes_moves_sum'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Упал по змейкам
+                    </span>
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
                   <span
@@ -219,7 +259,9 @@ export default function StatsTable(props: Props) {
                     <TableCell>{playerStat.average_dice_roll}</TableCell>
                     <TableCell>{playerStat.average_move}</TableCell>
                     <TableCell>{playerStat.ladders}</TableCell>
+                    <TableCell>{playerStat.ladders_moves_sum}</TableCell>
                     <TableCell>{playerStat.snakes}</TableCell>
+                    <TableCell>{playerStat.snakes_moves_sum}</TableCell>
                     <TableCell>{playerStat.total_moves}</TableCell>
                   </TableRow>
                 )
