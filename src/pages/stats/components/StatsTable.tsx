@@ -209,7 +209,7 @@ export default function StatsTable(props: Props) {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Tooltip title="Количество клеток скипнутых по змейкам">
+                  <Tooltip title="Количество клеток которые пролетел по змейкам">
                     <span
                       onClick={() => onHeaderClick('snakes_moves_sum')}
                       style={
