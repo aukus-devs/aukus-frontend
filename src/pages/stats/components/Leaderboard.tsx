@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useLocalStorage from 'src/context/useLocalStorage'
 import useScreenSize from 'src/context/useScreenSize'
 import {
   formatSecondsToTime,
@@ -34,10 +35,13 @@ type HeaderType =
   | 'sheikh_moments'
 
 export default function Leaderboard() {
+  const { save, load } = useLocalStorage()
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
-  const [orderBy, setOrderBy] = useState<HeaderType>('map_position')
+  const [orderBy, setOrderBy] = useState<HeaderType>(
+    load('leaderboardOrderBy', 'map_position')
+  )
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -145,6 +149,7 @@ export default function Leaderboard() {
       setOrder(order === 'asc' ? 'desc' : 'asc')
     } else {
       setOrderBy(header)
+      save('leaderboardOrderBy', header)
       setOrder('desc')
     }
   }
@@ -285,7 +290,9 @@ export default function Leaderboard() {
                   duration = formatSecondsToTime(player.current_game_duration)
                 }
 
-                let currentGameText = player.current_game?.replace(/\s\(\d{4}\)$/, "").trim()
+                let currentGameText = player.current_game
+                  ?.replace(/\s\(\d{4}\)$/, '')
+                  .trim()
                 if (duration && currentGameText) {
                   currentGameText = `${currentGameText} ~ ${duration}`
                 }
