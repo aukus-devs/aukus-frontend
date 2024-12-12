@@ -128,7 +128,11 @@ export default function AboutContent() {
                   // alignItems={'center'}
                 >
                   <span
-                    style={{ display: 'inline-flex', alignItems: 'baseline' }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'baseline',
+                      color: Color.blue,
+                    }}
                   >
                     <FlashIcon style={{ alignSelf: 'center' }} />
                     <Link to="/players/uselessmouth">
