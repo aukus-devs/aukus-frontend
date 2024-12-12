@@ -41,7 +41,6 @@ export default function Closing({ players, sponsors }: Props) {
     from: { transform: 'translateY(75%)' },
     to: { transform: 'translateY(-30%)' },
     config: { duration: 10000 }, // Adjust speed here (in ms)
-    // loop: true,
   })
 
   return (
