@@ -10,7 +10,7 @@ export function getEventSecondsLeft() {
 
 export default function Countdown() {
   const [timeDiff, setTimeDiff] = useState<number>(
-    targetDate.getTime() - new Date().getTime()
+    (targetDate.getTime() - new Date().getTime()) / 1000
   )
 
   useEffect(() => {
