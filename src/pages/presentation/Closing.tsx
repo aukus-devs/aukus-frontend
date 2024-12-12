@@ -79,8 +79,12 @@ export default function Closing({ players, sponsors }: Props) {
               ))}
             </Box>
           ))}
+          <Box marginTop="50px" fontSize="24px">
+            Основано на идеях
+          </Box>
+          <Box fontSize="24px"> Богдана «Lasqa» Вавилова</Box>
           <Box marginTop="50px" fontSize="32px">
-            AUKUS 2024 © Lasqa
+            AUKUS 2024
           </Box>
           <Box marginTop="50px">
             <img src={CinemaImage} alt="cinema" style={{ width: '100%' }} />
