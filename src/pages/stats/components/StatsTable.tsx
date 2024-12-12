@@ -16,7 +16,7 @@ import LinkSpan from 'src/components/LinkSpan'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import { fetchPlayers, fetchStats } from 'src/utils/api'
-import { Color, getPlayerColor, Player } from 'src/utils/types'
+import { Color, getPlayerColor, Player, PlayerStats } from 'src/utils/types'
 
 type HeaderType =
   | 'name'
@@ -97,8 +97,8 @@ export default function StatsTable(props: Props) {
     }
     if (orderBy === 'total_moves') {
       return order === 'asc'
-        ? a.total_moves - b.total_moves
-        : b.total_moves - a.total_moves
+        ? getTotalMoves(a) - getTotalMoves(b)
+        : getTotalMoves(b) - getTotalMoves(a)
     }
     return 0
   })
@@ -240,11 +240,6 @@ export default function StatsTable(props: Props) {
               {playersStatsSorted.map((playerStat, index) => {
                 const player = playersById[playerStat.id]
                 const displayName = playerDisplayName(player)
-                const totalMoves =
-                  playerStat.games_completed +
-                  playerStat.games_dropped +
-                  playerStat.movies +
-                  playerStat.sheikh_moments
 
                 return (
                   <TableRow
@@ -269,7 +264,7 @@ export default function StatsTable(props: Props) {
                     <TableCell>{playerStat.ladders_moves_sum}</TableCell>
                     <TableCell>{playerStat.snakes}</TableCell>
                     <TableCell>{playerStat.snakes_moves_sum}</TableCell>
-                    <TableCell>{totalMoves}</TableCell>
+                    <TableCell>{getTotalMoves(playerStat)}</TableCell>
                   </TableRow>
                 )
               })}
@@ -278,5 +273,14 @@ export default function StatsTable(props: Props) {
         </TableContainer>
       </Box>
     </Box>
+  )
+}
+
+function getTotalMoves(stat: PlayerStats) {
+  return (
+    stat.games_completed +
+    stat.games_dropped +
+    stat.movies +
+    stat.sheikh_moments
   )
 }
