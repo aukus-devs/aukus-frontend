@@ -4,6 +4,7 @@ import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import SnowflakeIcon from 'assets/snowflake.svg?react'
+import SpecialBackground from 'assets/button-special.png'
 import { TWallpaper } from '@twallpaper/react'
 import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
@@ -193,6 +194,19 @@ export default function MainMenu({
                   {leftSlot}
                 </Box>
               )}
+
+              <Link to="/presentation" style={{ marginRight: 10 }}>
+                <Button
+                  color={currentPage === 'about' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                  style={{
+                    backgroundImage: `url(${SpecialBackground})`,
+                  }}
+                >
+                  Итоги
+                </Button>
+              </Link>
+
               <Link to="/" style={{ marginRight: 10 }}>
                 <Button
                   color={currentPage === 'map' ? 'primary' : 'info'}
