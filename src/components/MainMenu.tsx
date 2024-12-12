@@ -42,7 +42,7 @@ export default function MainMenu({
   const { save, load } = useLocalStorage()
 
   const [snowState, setSnowState] = React.useState<'off' | 'small' | 'big'>(
-    load('snowLevel', 'off')
+    load('snowLevel', 'small')
   )
 
   const cycleSnow = () => {
