@@ -17,7 +17,7 @@ const PagesList: PageType[] = [
   'browjey',
   'keliq_q',
   'krabick',
-  'predan',
+  'praden',
   'segall',
   'melharucos',
   'maddyson',
