@@ -7,7 +7,7 @@ import FlashIcon from 'assets/icons/flash.svg?react'
 import LinkSpan from 'src/components/LinkSpan'
 import { Link } from 'react-router-dom'
 
-const creators = [
+export const Creators = [
   {
     name: 'lepayy',
     text: 'Дизайн интерфейсов',
@@ -162,7 +162,7 @@ export default function AboutContent() {
           Команда разработки сайта
         </Box>
         <Box marginTop={'10px'} fontSize={'20px'}>
-          {creators.map((item, index) => {
+          {Creators.map((item, index) => {
             return (
               <Box key={index} marginTop={'20px'}>
                 <Tooltip title={item.tooltip} key={index}>

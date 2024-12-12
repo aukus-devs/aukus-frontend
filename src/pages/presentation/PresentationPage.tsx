@@ -6,7 +6,7 @@ import Opening from './Opening'
 import Closing from './Closing'
 import PlayerPresentation from './PlayerPresentation'
 import { useQuery } from '@tanstack/react-query'
-import { fetchPlayers } from 'src/utils/api'
+import { fetchPlayers, fetchSponsors } from 'src/utils/api'
 
 type PageType = PlayerUrl | 'start' | 'end'
 
@@ -29,7 +29,7 @@ const PagesList: PageType[] = [
 ]
 
 export default function PresentationPage() {
-  const [pageIdx, setPageIdx] = useState<number>(0)
+  const [pageIdx, setPageIdx] = useState<number>(PagesList.length - 1)
 
   const handleBack = () => {
     if (pageIdx > 0) {
@@ -44,11 +44,22 @@ export default function PresentationPage() {
   }
 
   const { data: playersData } = useQuery({
-    queryKey: ['players'],
+    queryKey: ['playersCredits'],
     queryFn: () => fetchPlayers(),
-    staleTime: 1000 * 60 * 1,
+    staleTime: 1000 * 60 * 60 * 3,
   })
   const players = playersData?.players
+
+  const { data: sponsorsData } = useQuery({
+    queryKey: ['sponsorsCredits'],
+    queryFn: () => fetchSponsors(),
+    staleTime: 1000 * 60 * 60 * 3,
+  })
+  const sponsors = sponsorsData?.dons
+
+  if (!players || !sponsors) {
+    return null
+  }
 
   const page = PagesList[pageIdx]
 
@@ -57,7 +68,7 @@ export default function PresentationPage() {
       return <Opening />
     }
     if (page === 'end') {
-      return <Closing />
+      return <Closing players={players} sponsors={sponsors} />
     }
     const player = players?.find((p) => p.url_handle === page)
     if (!player) {
