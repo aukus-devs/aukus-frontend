@@ -22,7 +22,7 @@ export default function Closing({ players, sponsors }: Props) {
     if (creditsRef.current) {
       const creditsHeight = creditsRef.current.scrollHeight // Total height of the credits
       setStartPosition(window.innerHeight - 150) // Start entirely off-screen
-      setEndPosition(-creditsHeight + 200) // End fully above the screen
+      setEndPosition(-creditsHeight - 0) // End fully above the screen
     }
   }, [])
 
@@ -53,8 +53,8 @@ export default function Closing({ players, sponsors }: Props) {
 
   const styles = useSpring({
     from: { transform: `translateY(${startPosition}px)` },
-    to: { transform: `translateY(-${endPosition}px)` },
-    config: { duration: 30000 }, // Adjust speed here (in ms)
+    to: { transform: `translateY(${endPosition}px)` },
+    config: { duration: 50000 }, // Adjust speed here (in ms)
   })
 
   return (
