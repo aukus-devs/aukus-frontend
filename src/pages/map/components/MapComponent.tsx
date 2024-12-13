@@ -560,7 +560,7 @@ export default function MapComponent() {
               style={{
                 position: 'absolute',
                 left: '-30px',
-                top: '-140px',
+                top: '-130px',
                 width: '300px',
                 height: '500px',
                 zIndex: 20,
