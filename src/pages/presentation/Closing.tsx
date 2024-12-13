@@ -21,8 +21,13 @@ export default function Closing({ players, sponsors }: Props) {
   useEffect(() => {
     if (creditsRef.current) {
       const creditsHeight = creditsRef.current.scrollHeight // Total height of the credits
-      setStartPosition(window.innerHeight - 150) // Start entirely off-screen
-      setEndPosition(-creditsHeight - 0) // End fully above the screen
+      const marginTop = 120
+      const viewportHeight = window.innerHeight - 140
+
+      console.log('Credits height:', creditsHeight)
+      console.log('Viewport height:', window.innerHeight)
+      setStartPosition(viewportHeight + marginTop) // Start entirely off-screen
+      setEndPosition(-creditsHeight + 600) // End fully above the screen
     }
   }, [])
 
@@ -55,6 +60,9 @@ export default function Closing({ players, sponsors }: Props) {
     from: { transform: `translateY(${startPosition}px)` },
     to: { transform: `translateY(${endPosition}px)` },
     config: { duration: 50000 }, // Adjust speed here (in ms)
+    onRest: () => {
+      console.log('Credits animation finished, endPos', endPosition)
+    },
   })
 
   return (
@@ -77,6 +85,7 @@ export default function Closing({ players, sponsors }: Props) {
             position: 'absolute',
             width: '100%',
             color: creditsRef.current ? ' white' : 'transparent',
+            // border: '1px solid white',
           }}
         >
           {credits.map((credit, index) => (
@@ -97,12 +106,12 @@ export default function Closing({ players, sponsors }: Props) {
             </Box>
           ))}
           <Box fontSize="36px">Основано на идеях</Box>
-          <Box fontSize="36px"> Богдана «Lasqa» Вавилова</Box>
+          <Box fontSize="36px">Богдана «Lasqa» Вавилова</Box>
           <Box marginTop="150px" fontSize="32px">
-            AUKUS 2024
+            АУКУС 2024
           </Box>
           <Box marginTop="50px">
-            <img src={CinemaImage} alt="cinema" style={{ width: '100%' }} />
+            <img src={CinemaImage} alt="cinema" style={{ height: '420px' }} />
           </Box>
         </animated.div>
       </Box>
