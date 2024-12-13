@@ -40,14 +40,14 @@ export default function Closing({ players, sponsors }: Props) {
   const styles = useSpring({
     from: { transform: 'translateY(75%)' },
     to: { transform: 'translateY(-30%)' },
-    config: { duration: 10000 }, // Adjust speed here (in ms)
+    config: { duration: 30000 }, // Adjust speed here (in ms)
   })
 
   return (
     <Box marginTop="120px">
       <Box
         position="relative"
-        width="500px"
+        width="700px"
         height="85vh"
         overflow="hidden"
         display="flex"
@@ -64,25 +64,29 @@ export default function Closing({ players, sponsors }: Props) {
             position: 'absolute',
             width: '100%',
             marginTop: '-100px',
+            // border: '1px solid white',
           }}
         >
           {credits.map((credit, index) => (
-            <Box margin="10px 0" key={index} color="white">
-              <Box fontSize="24px" textAlign="center">
+            <Box marginBottom="150px" key={index} color="white">
+              <Box fontSize="36px" textAlign="center">
                 {credit.title}
               </Box>
               {credit.content.map((content, index) => (
-                <Box key={index} textAlign="center">
+                <Box
+                  fontSize="24px"
+                  key={index}
+                  textAlign="center"
+                  marginTop="20px"
+                >
                   {content}
                 </Box>
               ))}
             </Box>
           ))}
-          <Box marginTop="50px" fontSize="24px">
-            Основано на идеях
-          </Box>
-          <Box fontSize="24px"> Богдана «Lasqa» Вавилова</Box>
-          <Box marginTop="50px" fontSize="32px">
+          <Box fontSize="35px">Основано на идеях</Box>
+          <Box fontSize="36px"> Богдана «Lasqa» Вавилова</Box>
+          <Box marginTop="150px" fontSize="32px">
             AUKUS 2024
           </Box>
           <Box marginTop="50px">
