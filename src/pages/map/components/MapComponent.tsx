@@ -6,6 +6,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import TreeAnimation from 'assets/map/tree2.gif'
+import TgaImage from 'assets/map/tga.png'
 import {
   createPlayerMove,
   fetchPlayerMoves,
@@ -555,6 +556,21 @@ export default function MapComponent() {
                 </Tooltip>
               </Box>
             </Box>
+            <Box
+              style={{
+                position: 'absolute',
+                left: '50px',
+                top: '130px',
+                width: '200px',
+                height: '200px',
+                zIndex: 20,
+                backgroundImage: `url(${TgaImage})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: 'contain',
+                // backgroundColor: 'red',
+              }}
+            />
           </Box>
           {winner && !showWinScreen && (
             <PlayerWinnerIcon
