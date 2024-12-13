@@ -559,14 +559,14 @@ export default function MapComponent() {
             <Box
               style={{
                 position: 'absolute',
-                left: '50px',
-                top: '130px',
-                width: '200px',
-                height: '200px',
+                left: '-30px',
+                top: '-140px',
+                width: '300px',
+                height: '500px',
                 zIndex: 20,
                 backgroundImage: `url(${TgaImage})`,
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
+                // backgroundPosition: 'center',
                 backgroundSize: 'contain',
                 // backgroundColor: 'red',
               }}
