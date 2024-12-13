@@ -96,7 +96,7 @@ export default function Closing({ players, sponsors }: Props) {
               ))}
             </Box>
           ))}
-          <Box fontSize="35px">Основано на идеях</Box>
+          <Box fontSize="36px">Основано на идеях</Box>
           <Box fontSize="36px"> Богдана «Lasqa» Вавилова</Box>
           <Box marginTop="150px" fontSize="32px">
             AUKUS 2024
