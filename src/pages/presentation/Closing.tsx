@@ -5,6 +5,7 @@ import { Player } from 'src/utils/types'
 import CinemaImage from 'assets/cinema.png'
 import { playerDisplayName } from '../player/components/utils'
 import { Creators } from '../about/components/AboutContent'
+import { useEffect, useRef, useState } from 'react'
 
 type Props = {
   players: Player[]
@@ -12,6 +13,19 @@ type Props = {
 }
 
 export default function Closing({ players, sponsors }: Props) {
+  const creditsRef = useRef<HTMLDivElement>(null)
+  const [startPosition, setStartPosition] = useState(0)
+  const [endPosition, setEndPosition] = useState(0)
+  // const [creditsHeight, setCreditsHeight] = useState(0)
+
+  useEffect(() => {
+    if (creditsRef.current) {
+      const creditsHeight = creditsRef.current.scrollHeight // Total height of the credits
+      setStartPosition(window.innerHeight - 150) // Start entirely off-screen
+      setEndPosition(-creditsHeight + 200) // End fully above the screen
+    }
+  }, [])
+
   const playersContent = players.map(
     (player) => `${player.first_name} «${playerDisplayName(player)}»`
   )
@@ -38,23 +52,22 @@ export default function Closing({ players, sponsors }: Props) {
   ]
 
   const styles = useSpring({
-    from: { transform: 'translateY(75%)' },
-    to: { transform: 'translateY(-30%)' },
+    from: { transform: `translateY(${startPosition}px)` },
+    to: { transform: `translateY(-${endPosition}px)` },
     config: { duration: 30000 }, // Adjust speed here (in ms)
   })
 
   return (
-    <Box marginTop="120px">
+    <Box marginTop="120px" width="100%">
       <Box
         position="relative"
-        width="700px"
-        height="85vh"
+        width="100%"
+        height={`${window.innerHeight - 140}px`}
         overflow="hidden"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
+        // style={{ backgroundColor: 'red' }}
       >
         <animated.div
+          ref={creditsRef}
           className="credits"
           style={{
             ...styles,
@@ -63,12 +76,11 @@ export default function Closing({ players, sponsors }: Props) {
             alignItems: 'center',
             position: 'absolute',
             width: '100%',
-            marginTop: '-100px',
-            // border: '1px solid white',
+            color: creditsRef.current ? ' white' : 'transparent',
           }}
         >
           {credits.map((credit, index) => (
-            <Box marginBottom="150px" key={index} color="white">
+            <Box marginBottom="150px" key={index}>
               <Box fontSize="36px" textAlign="center">
                 {credit.title}
               </Box>
