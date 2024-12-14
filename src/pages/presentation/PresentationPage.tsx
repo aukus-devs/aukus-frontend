@@ -7,6 +7,7 @@ import Closing from './Closing'
 import PlayerPresentation from './PlayerPresentation'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPlayers, fetchSponsors } from 'src/utils/api'
+import { resetScroll } from './utils'
 
 type PageType = PlayerUrl | 'start' | 'end'
 
@@ -34,12 +35,14 @@ export default function PresentationPage() {
   const handleBack = () => {
     if (pageIdx > 0) {
       setPageIdx(pageIdx - 1)
+      resetScroll()
     }
   }
 
   const handleNext = () => {
     if (pageIdx < PagesList.length - 1) {
       setPageIdx(pageIdx + 1)
+      resetScroll()
     }
   }
 

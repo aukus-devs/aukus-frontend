@@ -52,23 +52,22 @@ export default function Closing({ players, sponsors }: Props) {
   playersContent.sort()
 
   const sponsorsContent = sponsors.map((sponsor) => sponsor.name)
-
   const creatorsContent = Creators.map((creator) => creator.name)
 
-  const credits: Credit[] = [
-    {
-      title: 'Участники',
-      content: playersContent,
-    },
-    {
-      title: 'Спонсоры',
-      content: sponsorsContent,
-    },
-    {
-      title: 'Создатели',
-      content: creatorsContent,
-    },
-  ]
+  const playersSection = {
+    title: 'Участники',
+    content: playersContent,
+  }
+
+  const sponsorsSection = {
+    title: 'Спонсоры',
+    content: sponsorsContent,
+  }
+
+  const creatorsSection = {
+    title: 'Создатели',
+    content: creatorsContent,
+  }
 
   const [fadeStyles, fadeApi] = useSpring(() => ({
     opacity: 0,
@@ -86,7 +85,7 @@ export default function Closing({ players, sponsors }: Props) {
   const styles = useSpring({
     from: { transform: `translateY(${startPosition}px)` },
     to: { transform: `translateY(${endPosition}px)` },
-    config: { duration: 60 * 1000 }, // Adjust speed here (in ms)
+    config: { duration: 70 * 1000 }, // Adjust speed here (in ms)
     onRest: () => {
       // show items after 3 seconds
       setTimeout(() => startFading(), 2000)
@@ -121,23 +120,62 @@ export default function Closing({ players, sponsors }: Props) {
             // border: '1px solid white',
           }}
         >
-          {credits.map((credit, index) => (
-            <Box marginBottom="150px" key={index}>
-              <Box fontSize="36px" textAlign="center">
-                {credit.title}
-              </Box>
-              {credit.content.map((content, index) => (
-                <Box
-                  fontSize="24px"
-                  key={index}
-                  textAlign="center"
-                  marginTop="20px"
-                >
-                  {content}
-                </Box>
-              ))}
+          <Box marginBottom="50px">
+            <Box fontSize="36px" textAlign="center">
+              {playersSection.title}
             </Box>
-          ))}
+            {playersSection.content.map((content, index) => (
+              <Box
+                fontSize="24px"
+                key={index}
+                textAlign="center"
+                marginTop="20px"
+              >
+                {content}
+              </Box>
+            ))}
+          </Box>
+
+          <Box fontSize="24px" marginBottom="20px">
+            Зрители
+          </Box>
+          <Box fontSize="24px" marginBottom="20px">
+            Донатеры
+          </Box>
+          <Box fontSize="24px">Модераторы</Box>
+
+          <Box marginBottom="150px" marginTop="150px">
+            <Box fontSize="36px" textAlign="center">
+              {sponsorsSection.title}
+            </Box>
+            {sponsorsSection.content.map((content, index) => (
+              <Box
+                fontSize="24px"
+                key={index}
+                textAlign="center"
+                marginTop="20px"
+              >
+                {content}
+              </Box>
+            ))}
+          </Box>
+
+          <Box marginBottom="150px">
+            <Box fontSize="36px" textAlign="center">
+              {creatorsSection.title}
+            </Box>
+            {creatorsSection.content.map((content, index) => (
+              <Box
+                fontSize="24px"
+                key={index}
+                textAlign="center"
+                marginTop="20px"
+              >
+                {content}
+              </Box>
+            ))}
+          </Box>
+
           <Box fontSize="36px">Основано на идеях</Box>
           <Box fontSize="36px">Богдана «Lasqa» Вавилова</Box>
           <Box marginTop="150px" fontSize="32px">
