@@ -265,7 +265,7 @@ export default function DiceModal({
             >
               <Box display="flex" alignItems="center">
                 <Info style={{ marginRight: '10px' }} />
-                Бросок реализован с помощью библиотеки эмулятора физики кубиков:
+                Бросок реализован с помощью эмулятора физики кубиков:
               </Box>
               <Box marginLeft="35px">
                 <Link
