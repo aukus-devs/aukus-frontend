@@ -280,7 +280,7 @@ export default function DiceModal({
         {showGoogleIframe && (
           <Box>
             <iframe
-              src={`https://www.google.com/search?q=${currentDice}+dice`}
+              src={`https://www.google.com/search?q=${currentDice}+dice&igu=1`}
               style={{ width: '740px', height: '520px' }}
             ></iframe>
           </Box>
