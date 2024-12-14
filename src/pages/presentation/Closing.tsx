@@ -86,10 +86,10 @@ export default function Closing({ players, sponsors }: Props) {
   const styles = useSpring({
     from: { transform: `translateY(${startPosition}px)` },
     to: { transform: `translateY(${endPosition}px)` },
-    config: { duration: 50000 }, // Adjust speed here (in ms)
+    config: { duration: 60 * 1000 }, // Adjust speed here (in ms)
     onRest: () => {
       // show items after 3 seconds
-      setTimeout(() => startFading(), 1000)
+      setTimeout(() => startFading(), 2000)
     },
   })
   // const styles = { top: -2100 }
@@ -104,7 +104,7 @@ export default function Closing({ players, sponsors }: Props) {
         width="100%"
         height={`${window.innerHeight - 20}px`}
         overflow="hidden"
-        // style={{ backgroundColor: 'red' }}
+        style={{ pointerEvents: 'none' }}
       >
         <animated.div
           ref={creditsRef}
@@ -117,6 +117,7 @@ export default function Closing({ players, sponsors }: Props) {
             position: 'absolute',
             width: '100%',
             color: creditsRef.current ? ' white' : 'transparent',
+
             // border: '1px solid white',
           }}
         >
