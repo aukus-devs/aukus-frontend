@@ -83,6 +83,8 @@ export default function PresentationPage() {
   const showBack = pageIdx > 0
   const showNext = pageIdx < PagesList.length - 1
 
+  const showMain = page !== 'end'
+
   return (
     <Box display="flex" justifyContent="center" width="100%">
       <Box width="100%">
@@ -99,14 +101,16 @@ export default function PresentationPage() {
             ) : (
               <Box width="150px" />
             )}
-            <Link to="/">
-              <Button
-                sx={{ width: '150px', height: '40px' }}
-                color="customGreyDark"
-              >
-                На главную
-              </Button>
-            </Link>
+            {showMain && (
+              <Link to="/">
+                <Button
+                  sx={{ width: '150px', height: '40px' }}
+                  color="customGreyDark"
+                >
+                  На главную
+                </Button>
+              </Link>
+            )}
             {showNext ? (
               <Button
                 onClick={handleNext}

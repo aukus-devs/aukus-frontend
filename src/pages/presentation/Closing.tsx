@@ -36,12 +36,12 @@ export default function Closing({ players, sponsors }: Props) {
     if (creditsRef.current) {
       const creditsHeight = creditsRef.current.scrollHeight // Total height of the credits
       const marginTop = 120
-      const viewportHeight = window.innerHeight - 140
+      const viewportHeight = window.innerHeight - 50
 
       console.log('Credits height:', creditsHeight)
       console.log('Viewport height:', window.innerHeight)
-      setStartPosition(viewportHeight - 100) // Start entirely off-screen
-      setEndPosition(-creditsHeight + 600) // End fully above the screen
+      setStartPosition(viewportHeight) // Start entirely off-screen
+      setEndPosition(-creditsHeight + 650) // End fully above the screen
     }
   }, [])
 
@@ -98,11 +98,11 @@ export default function Closing({ players, sponsors }: Props) {
   const animationTopOffset = 50
 
   return (
-    <Box marginTop="120px" width="100%">
+    <Box width="100%">
       <Box
         position="relative"
         width="100%"
-        height={`${window.innerHeight - 140}px`}
+        height={`${window.innerHeight - 20}px`}
         overflow="hidden"
         // style={{ backgroundColor: 'red' }}
       >
