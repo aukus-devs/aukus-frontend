@@ -1,11 +1,25 @@
 import { Box } from '@mui/material'
-import { useSpring, animated } from 'react-spring'
+import { animated, useSpring } from '@react-spring/web'
 import { Sponsor } from 'src/utils/api'
 import { Player } from 'src/utils/types'
 import CinemaImage from 'assets/cinema.png'
 import { playerDisplayName } from '../player/components/utils'
 import { Creators } from '../about/components/AboutContent'
 import { useEffect, useRef, useState } from 'react'
+
+import PlayerRed from 'assets/map/PlayerRed.webp'
+import PlayerBlue from 'assets/map/PlayerBlue.webp'
+import PlayerGreen from 'assets/map/PlayerGreen.webp'
+import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
+import PlayerBlueLight from 'assets/map/PlayerBlueLight.webp'
+import PlayerBlueDark from 'assets/map/PlayerBlueDark.webp'
+import PlayerBrown from 'assets/map/PlayerBrown.webp'
+import PlayerPink from 'assets/map/PlayerPink.webp'
+import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
+import PlayerOrange from 'assets/map/PlayerOrange.webp'
+import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerYellow from 'assets/map/PlayerYellow.webp'
+import PlayerBiege from 'assets/map/PlayerBiege.webp'
 
 type Props = {
   players: Player[]
@@ -26,7 +40,7 @@ export default function Closing({ players, sponsors }: Props) {
 
       console.log('Credits height:', creditsHeight)
       console.log('Viewport height:', window.innerHeight)
-      setStartPosition(viewportHeight + marginTop) // Start entirely off-screen
+      setStartPosition(viewportHeight - 100) // Start entirely off-screen
       setEndPosition(-creditsHeight + 600) // End fully above the screen
     }
   }, [])
@@ -56,14 +70,32 @@ export default function Closing({ players, sponsors }: Props) {
     },
   ]
 
+  const [fadeStyles, fadeApi] = useSpring(() => ({
+    opacity: 0,
+    config: { duration: 3000 },
+  }))
+
+  const startFading = () => {
+    fadeApi.start({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      config: { duration: 3000 },
+    })
+  }
+
   const styles = useSpring({
     from: { transform: `translateY(${startPosition}px)` },
     to: { transform: `translateY(${endPosition}px)` },
     config: { duration: 50000 }, // Adjust speed here (in ms)
     onRest: () => {
-      console.log('Credits animation finished, endPos', endPosition)
+      // show items after 3 seconds
+      setTimeout(() => startFading(), 1000)
     },
   })
+  // const styles = { top: -2100 }
+
+  const animationLeftOffset = 150
+  const animationTopOffset = 50
 
   return (
     <Box marginTop="120px" width="100%">
@@ -110,8 +142,94 @@ export default function Closing({ players, sponsors }: Props) {
           <Box marginTop="150px" fontSize="32px">
             АУКУС 2024
           </Box>
-          <Box marginTop="50px">
+          <Box marginTop="50px" position="relative">
             <img src={CinemaImage} alt="cinema" style={{ height: '420px' }} />
+            <animated.div style={fadeStyles}>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset - 200}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerRed} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset - 100}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerBlue} delay={500} />
+              </Box>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerGreen} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset - 200}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerPinkLight} delay={500} />
+              </Box>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset - 100}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerOrange} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerBlueLight} delay={500} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset - 200}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerGreenLight} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset - 100}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerPink} delay={500} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset}
+                top={animationTopOffset}
+              >
+                <AnimatedIcon image={PlayerBrown} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset - 200}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerBlueDark} delay={500} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset - 100}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerPurple} delay={0} />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset}
+                top={animationTopOffset + 200}
+              >
+                <AnimatedIcon image={PlayerYellow} delay={500} />
+              </Box>
+            </animated.div>
           </Box>
         </animated.div>
       </Box>
@@ -122,4 +240,44 @@ export default function Closing({ players, sponsors }: Props) {
 type Credit = {
   title: string
   content: string[]
+}
+
+type AnimationProps = {
+  image: string
+  delay: number
+}
+
+const AnimatedIcon = ({ image, delay }: AnimationProps) => {
+  const delayRef = useRef(false)
+
+  const [styles, api] = useSpring(() => ({
+    y: 0,
+    scale: 1.0,
+    loop: true,
+    config: { duration: 500 },
+  }))
+
+  useEffect(() => {
+    // Apply initial delay before starting the animation
+    const startAnimation = setTimeout(() => {
+      delayRef.current = true // Mark delay as used
+      api.start({
+        loop: true,
+        from: { y: 0, scale: 1.0 },
+        to: [
+          { y: -15, scale: 0.8 },
+          { y: 0, scale: 1.0 },
+        ],
+        config: { duration: 500 },
+      })
+    }, delay)
+
+    return () => clearTimeout(startAnimation) // Cleanup timeout
+  }, [api, delay])
+
+  return (
+    <animated.div style={styles}>
+      <img src={image} alt="Jumping" style={{ height: '100px' }} />
+    </animated.div>
+  )
 }
