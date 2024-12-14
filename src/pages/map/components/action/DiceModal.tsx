@@ -281,7 +281,7 @@ export default function DiceModal({
           <Box>
             <iframe
               src={`https://www.google.com/search?q=${currentDice}+dice`}
-              style={{ width: '740px', height: '520px' }}
+              style={{ width: '740px', height: '490px' }}
             ></iframe>
           </Box>
         )}
