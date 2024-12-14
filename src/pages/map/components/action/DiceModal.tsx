@@ -14,7 +14,10 @@ import DiceBackground from 'assets/deck-background.png'
 import DiceBackgroundSpecial from 'assets/dice-background-special1.png'
 
 import DiceBox from '@mapcar/dice-box'
-import { DiceOption, Player } from 'utils/types'
+import { Color, DiceOption, Player } from 'utils/types'
+import { Link } from 'react-router-dom'
+import LinkSpan from 'src/components/LinkSpan'
+import { Info } from '@mui/icons-material'
 
 type Props = {
   open: boolean
@@ -253,29 +256,54 @@ export default function DiceModal({
         }}
       >
         {!showGoogleIframe && !showRandomOrgIframe && (
-          <Tooltip
-            title={canTestThrow ? 'Тестовый бросок' : ''}
-            placement="top"
-          >
-            <div
-              id={DiceBoxContainerId}
-              onClick={handleTestThrow}
-              style={{
-                display: 'flex',
-                position: 'relative',
-                justifyContent: 'center',
-                width: '640px',
-                height: '260px',
-                border: '2px solid #414141',
-                borderRadius: '10px',
-                padding: '5px',
-                boxSizing: 'border-box',
-                backgroundImage: `url(${diceBackground})`,
-                cursor: canTestThrow ? 'pointer' : 'default',
-              }}
-              ref={containerRef}
-            ></div>
-          </Tooltip>
+          <>
+            <Box
+              border={`2px solid ${Color.greyLight}`}
+              borderRadius="10px"
+              marginBottom="15px"
+              padding="10px"
+            >
+              <Box display="flex" alignItems="center">
+                <Info style={{ marginRight: '10px' }} />
+                Бросок реализован с помощью библиотеки эмулятора физики кубиков:
+              </Box>
+              <Box marginLeft="35px">
+                <Link
+                  to="https://fantasticdice.games/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkSpan color={Color.blue}>fantasticdice.games</LinkSpan>
+                </Link>
+              </Box>
+              <Box marginLeft="35px">
+                Можно делать тестовые броски нажимая на поле
+              </Box>
+            </Box>
+            <Tooltip
+              title={canTestThrow ? 'Тестовый бросок' : ''}
+              placement="top"
+            >
+              <div
+                id={DiceBoxContainerId}
+                onClick={handleTestThrow}
+                style={{
+                  display: 'flex',
+                  position: 'relative',
+                  justifyContent: 'center',
+                  width: '640px',
+                  height: '260px',
+                  border: '2px solid #414141',
+                  borderRadius: '10px',
+                  padding: '5px',
+                  boxSizing: 'border-box',
+                  backgroundImage: `url(${diceBackground})`,
+                  cursor: canTestThrow ? 'pointer' : 'default',
+                }}
+                ref={containerRef}
+              ></div>
+            </Tooltip>
+          </>
         )}
         {showGoogleIframe && (
           <Box>
@@ -360,10 +388,7 @@ export default function DiceModal({
 
           {diceStatus === 'idle' && (
             <Box marginTop="20px" display="flex">
-              <Button
-                style={{ width: '100%' }}
-                onClick={handleGoogleThrow}
-              >
+              <Button style={{ width: '100%' }} onClick={handleGoogleThrow}>
                 Бросить через google.com
               </Button>
             </Box>
