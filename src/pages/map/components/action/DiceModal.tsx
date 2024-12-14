@@ -5,8 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Input,
-  TextField,
   Tooltip,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
@@ -68,14 +66,7 @@ export default function DiceModal({
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
   const [diceColor, setDiceColor] = useState<string>(getRandomHexColor(player))
 
-  const [showGoogleIframe, setShowGoogleIframe] = useState(false)
-  const [showRandomOrgIframe, setShowRandomOrgIframe] = useState(false)
-
-  const [customRoll, setCustomRoll] = useState<number | null>(null)
-
   const [currentDice, setCurrentDice] = useState<DiceOption>(maxDice)
-
-  const diceAmount = parseInt(currentDice[0])
 
   useEffect(() => {
     if (maxDice !== currentDice) {
@@ -88,8 +79,7 @@ export default function DiceModal({
     : null
 
   const isTurnComplete =
-    diceStatus === 'done' &&
-    ((diceRoll !== null && diceRollSum) || customRoll !== null)
+    diceRoll !== null && diceStatus === 'done' && diceRollSum
 
   const canThrowDice = diceStatus === 'idle'
 
@@ -105,9 +95,6 @@ export default function DiceModal({
     if (!open) {
       setDiceRoll(null)
       setDiceStatus('idle')
-      setShowGoogleIframe(false)
-      setShowRandomOrgIframe(false)
-      setCustomRoll(null)
       if (diceBox) {
         diceBox.clear()
       }
@@ -118,9 +105,6 @@ export default function DiceModal({
     if (canThrowDice) {
       throwDice()
     } else if (isTurnComplete) {
-      if (customRoll !== null) {
-        onDiceRoll(customRoll)
-      }
       onTurnFinish()
     }
   }
@@ -171,16 +155,6 @@ export default function DiceModal({
       setDiceColor(newColor)
       diceBox.config.themeColor = newColor
     }
-  }
-
-  const handleGoogleThrow = () => {
-    setShowGoogleIframe(true)
-    setDiceStatus('done')
-  }
-
-  const handleRandomOrgThrow = () => {
-    setShowRandomOrgIframe(true)
-    setDiceStatus('done')
   }
 
   const showAllDices = diceRoll !== null && diceRoll.length > 1
@@ -252,47 +226,26 @@ export default function DiceModal({
           paddingBottom: '30px',
         }}
       >
-        {!showGoogleIframe && !showRandomOrgIframe && (
-          <Tooltip
-            title={canTestThrow ? 'Тестовый бросок' : ''}
-            placement="top"
-          >
-            <div
-              id={DiceBoxContainerId}
-              onClick={handleTestThrow}
-              style={{
-                display: 'flex',
-                position: 'relative',
-                justifyContent: 'center',
-                width: '640px',
-                height: '260px',
-                border: '2px solid #414141',
-                borderRadius: '10px',
-                padding: '5px',
-                boxSizing: 'border-box',
-                backgroundImage: `url(${diceBackground})`,
-                cursor: canTestThrow ? 'pointer' : 'default',
-              }}
-              ref={containerRef}
-            ></div>
-          </Tooltip>
-        )}
-        {showGoogleIframe && (
-          <Box>
-            <iframe
-              src={`https://www.google.com/search?q=${currentDice}+dice`}
-              style={{ width: '740px', height: '490px' }}
-            ></iframe>
-          </Box>
-        )}
-        {showRandomOrgIframe && (
-          <Box>
-            <iframe
-              src={`https://www.random.org/dice/?num=${diceAmount}`}
-              style={{ width: '740px', height: '560px' }}
-            ></iframe>
-          </Box>
-        )}
+        <Tooltip title={canTestThrow ? 'Тестовый бросок' : ''} placement="top">
+          <div
+            id={DiceBoxContainerId}
+            onClick={handleTestThrow}
+            style={{
+              display: 'flex',
+              position: 'relative',
+              justifyContent: 'center',
+              width: '640px',
+              height: '260px',
+              border: '2px solid #414141',
+              borderRadius: '10px',
+              padding: '5px',
+              boxSizing: 'border-box',
+              backgroundImage: `url(${diceBackground})`,
+              cursor: canTestThrow ? 'pointer' : 'default',
+            }}
+            ref={containerRef}
+          ></div>
+        </Tooltip>
       </DialogContent>
       <DialogActions
         style={{
@@ -302,76 +255,15 @@ export default function DiceModal({
           paddingBottom: '30px',
         }}
       >
-        <Box display="block" width="100%">
-          {diceStatus === 'idle' && (
-            <Box display="flex">
-              <Button
-                fullWidth
-                onClick={handleActionClick}
-                color="secondary"
-                variant="contained"
-                sx={{ width: '100%' }}
-              >
-                Бросить кубик — {currentDice}
-              </Button>
-            </Box>
-          )}
-          <Box width="100%">
-            {diceStatus === 'done' &&
-              (showGoogleIframe || showRandomOrgIframe) && (
-                <TextField
-                  fullWidth
-                  placeholder="Суммарный результат броска"
-                  sx={{ height: '44px', marginBottom: '20px' }}
-                  value={customRoll ?? ''}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value)
-                    if (value >= 1 && value <= 100) {
-                      setCustomRoll(value)
-                    } else {
-                      setCustomRoll(null)
-                    }
-                  }}
-                  InputProps={{
-                    style: {
-                      paddingTop: '10px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                      paddingBottom: '10px',
-                      lineHeight: '1.2',
-                      fontSize: '16px',
-                      fontWeight: 500,
-                    },
-                  }}
-                />
-              )}
-            {diceStatus === 'done' && (
-              <Button
-                fullWidth
-                onClick={handleActionClick}
-                color="secondary"
-                variant="contained"
-                disabled={!isTurnComplete}
-              >
-                Ходить
-              </Button>
-            )}
-          </Box>
-
-          {diceStatus === 'idle' && (
-            <Box marginTop="20px" display="flex">
-              <Button
-                style={{ marginRight: '20px', width: '100%' }}
-                onClick={handleGoogleThrow}
-              >
-                Бросить через google.com
-              </Button>
-              <Button style={{ width: '100%' }} onClick={handleRandomOrgThrow}>
-                Бросить через random.org
-              </Button>
-            </Box>
-          )}
-        </Box>
+        <Button
+          fullWidth
+          onClick={handleActionClick}
+          disabled={!(diceStatus === 'idle' || diceStatus === 'done')}
+          color="secondary"
+          variant="contained"
+        >
+          {diceStatus === 'idle' ? `Бросить кубик — ${currentDice}` : 'Ходить'}
+        </Button>
       </DialogActions>
     </Dialog>
   )
