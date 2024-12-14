@@ -361,13 +361,10 @@ export default function DiceModal({
           {diceStatus === 'idle' && (
             <Box marginTop="20px" display="flex">
               <Button
-                style={{ marginRight: '20px', width: '100%' }}
+                style={{ width: '100%' }}
                 onClick={handleGoogleThrow}
               >
                 Бросить через google.com
-              </Button>
-              <Button style={{ width: '100%' }} onClick={handleRandomOrgThrow}>
-                Бросить через random.org
               </Button>
             </Box>
           )}
