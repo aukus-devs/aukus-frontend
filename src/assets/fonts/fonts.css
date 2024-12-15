@@ -46,21 +46,21 @@
 
 @font-face {
   font-family: 'MursGothicMassive';
-  src: url('./MursGothic-MassiveDemi.otf') format('opentype');
+  src: url('/static/fonts/MursGothic-MassiveDemi.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'MursGothicMassive';
-  src: url('./MursGothic-MassiveBlack.otf') format('opentype');
+  src: url('/static/fonts/MursGothic-MassiveBlack.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'MursGothicWide';
-  src: url('./MursGothic-WideMedium.otf') format('opentype');
+  src: url('/static/fonts/MursGothic-WideMedium.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
 }
