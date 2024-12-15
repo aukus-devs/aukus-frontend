@@ -159,13 +159,13 @@ export default function Closing({ players, sponsors }: Props) {
             </Box>
 
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Поддерживающие Зрители
+              Поддерживающие зрители
             </Box>
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Неунывающие Донатеры
+              Неунывающие донатеры
             </Box>
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Справедливые Модераторы
+              Справедливые модераторы
             </Box>
           </Box>
 
