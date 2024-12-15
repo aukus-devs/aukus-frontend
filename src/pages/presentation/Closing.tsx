@@ -137,7 +137,7 @@ export default function Closing({ players, sponsors }: Props) {
             // border: '1px solid white',
           }}
         >
-          <Box marginBottom="50px">
+          <Box marginBottom="150px">
             <Box fontSize="36px" textAlign="center">
               {playersSection.title}
             </Box>
@@ -153,7 +153,7 @@ export default function Closing({ players, sponsors }: Props) {
             ))}
           </Box>
 
-          <Box marginBottom="50px">
+          <Box marginBottom="150px">
             <Box fontSize="36px" textAlign="center">
               А также
             </Box>
@@ -169,7 +169,7 @@ export default function Closing({ players, sponsors }: Props) {
             </Box>
           </Box>
 
-          <Box marginBottom="150px" marginTop="150px">
+          <Box marginBottom="150px">
             <Box fontSize="36px" textAlign="center">
               {sponsorsSection.title}
             </Box>
