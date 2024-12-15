@@ -30,7 +30,7 @@ const PagesList: PageType[] = [
 ]
 
 export default function PresentationPage() {
-  const [pageIdx, setPageIdx] = useState<number>(PagesList.length - 1)
+  const [pageIdx, setPageIdx] = useState<number>(0)
 
   const handleBack = () => {
     if (pageIdx > 0) {
@@ -91,8 +91,12 @@ export default function PresentationPage() {
   return (
     <Box display="flex" justifyContent="center" width="100%">
       <Box width="100%">
-        <Box position="fixed" padding="40px" width="100%">
-          <Box display="flex" justifyContent="space-between">
+        <Box position="fixed" padding="40px" width="100%" zIndex="10">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            position="relative"
+          >
             {showBack ? (
               <Button
                 onClick={handleBack}
