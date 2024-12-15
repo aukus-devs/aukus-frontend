@@ -197,6 +197,11 @@ export default function DiceModal({
   const diceBackground =
     player.name === 'UselessMouth' ? DiceBackgroundSpecial : DiceBackground
 
+  let rollADieUrl = `https://rolladie.net/roll-${diceAmount}-dice`
+  if (maxDice === '1d4') {
+    rollADieUrl = 'https://rolladie.net/roll-a-d4-die'
+  }
+
   return (
     <Dialog open={open} keepMounted maxWidth="md">
       <DialogTitle
@@ -316,7 +321,7 @@ export default function DiceModal({
         {showRollIframe && (
           <Box>
             <iframe
-              src={`https://rolladie.net/roll-${diceAmount}-dice`}
+              src={rollADieUrl}
               style={{ width: '640px', height: '480px' }}
             ></iframe>
           </Box>
