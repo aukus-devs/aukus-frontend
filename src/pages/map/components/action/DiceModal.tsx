@@ -72,7 +72,7 @@ export default function DiceModal({
   const [diceColor, setDiceColor] = useState<string>(getRandomHexColor(player))
 
   const [showGoogleIframe, setShowGoogleIframe] = useState(false)
-  const [showRandomOrgIframe, setShowRandomOrgIframe] = useState(false)
+  const [showRollIframe, setShowRollIframe] = useState(false)
 
   const [customRoll, setCustomRoll] = useState<number | null>(null)
 
@@ -109,7 +109,7 @@ export default function DiceModal({
       setDiceRoll(null)
       setDiceStatus('idle')
       setShowGoogleIframe(false)
-      setShowRandomOrgIframe(false)
+      setShowRollIframe(false)
       setCustomRoll(null)
       if (diceBox) {
         diceBox.clear()
@@ -181,8 +181,8 @@ export default function DiceModal({
     setDiceStatus('done')
   }
 
-  const handleRandomOrgThrow = () => {
-    setShowRandomOrgIframe(true)
+  const handleRollADieThrow = () => {
+    setShowRollIframe(true)
     setDiceStatus('done')
   }
 
@@ -255,7 +255,7 @@ export default function DiceModal({
           paddingBottom: '30px',
         }}
       >
-        {!showGoogleIframe && !showRandomOrgIframe && (
+        {!showGoogleIframe && !showRollIframe && (
           <>
             <Box
               border={`2px solid ${Color.greyLight}`}
@@ -313,11 +313,11 @@ export default function DiceModal({
             ></iframe>
           </Box>
         )}
-        {showRandomOrgIframe && (
+        {showRollIframe && (
           <Box>
             <iframe
-              src={`https://www.random.org/dice/?num=${diceAmount}`}
-              style={{ width: '740px', height: '560px' }}
+              src={`https://rolladie.net/roll-${diceAmount}-dice`}
+              style={{ width: '640px', height: '480px' }}
             ></iframe>
           </Box>
         )}
@@ -345,34 +345,33 @@ export default function DiceModal({
             </Box>
           )}
           <Box width="100%">
-            {diceStatus === 'done' &&
-              (showGoogleIframe || showRandomOrgIframe) && (
-                <TextField
-                  fullWidth
-                  placeholder="Суммарный результат броска"
-                  sx={{ height: '44px', marginBottom: '20px' }}
-                  value={customRoll ?? ''}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value)
-                    if (value >= 1 && value <= 100) {
-                      setCustomRoll(value)
-                    } else {
-                      setCustomRoll(null)
-                    }
-                  }}
-                  InputProps={{
-                    style: {
-                      paddingTop: '10px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                      paddingBottom: '10px',
-                      lineHeight: '1.2',
-                      fontSize: '16px',
-                      fontWeight: 500,
-                    },
-                  }}
-                />
-              )}
+            {diceStatus === 'done' && (showGoogleIframe || showRollIframe) && (
+              <TextField
+                fullWidth
+                placeholder="Суммарный результат броска"
+                sx={{ height: '44px', marginBottom: '20px' }}
+                value={customRoll ?? ''}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value)
+                  if (value >= 1 && value <= 100) {
+                    setCustomRoll(value)
+                  } else {
+                    setCustomRoll(null)
+                  }
+                }}
+                InputProps={{
+                  style: {
+                    paddingTop: '10px',
+                    paddingLeft: '15px',
+                    paddingRight: '15px',
+                    paddingBottom: '10px',
+                    lineHeight: '1.2',
+                    fontSize: '16px',
+                    fontWeight: 500,
+                  },
+                }}
+              />
+            )}
             {diceStatus === 'done' && (
               <Button
                 fullWidth
@@ -388,8 +387,14 @@ export default function DiceModal({
 
           {diceStatus === 'idle' && (
             <Box marginTop="20px" display="flex">
-              <Button style={{ width: '100%' }} onClick={handleGoogleThrow}>
+              <Button
+                style={{ marginRight: '20px', width: '100%' }}
+                onClick={handleGoogleThrow}
+              >
                 Бросить через google.com
+              </Button>
+              <Button style={{ width: '100%' }} onClick={handleRollADieThrow}>
+                Бросить через rolladie.net
               </Button>
             </Box>
           )}
