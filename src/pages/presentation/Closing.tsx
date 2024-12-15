@@ -7,6 +7,8 @@ import { playerDisplayName } from '../player/components/utils'
 import { Creators } from '../about/components/AboutContent'
 import { useEffect, useRef, useState } from 'react'
 
+import DiceAnimation from 'assets/dice.gif'
+
 import PlayerRed from 'assets/map/PlayerRed.webp'
 import PlayerBlue from 'assets/map/PlayerBlue.webp'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
@@ -55,30 +57,42 @@ export default function Closing({ players, sponsors }: Props) {
   const creatorsContent = Creators.map((creator) => creator.name)
 
   const playersSection = {
-    title: 'Участники',
+    title: 'В главных ролях',
     content: playersContent,
   }
 
   const sponsorsSection = {
-    title: 'Спонсоры',
+    title: 'Спонсоры сайта',
     content: sponsorsContent,
   }
 
   const creatorsSection = {
-    title: 'Создатели',
+    title: 'Создатели сайта',
     content: creatorsContent,
   }
 
-  const [fadeStyles, fadeApi] = useSpring(() => ({
+  const [fadePlayersStyles, fadePlayersApi] = useSpring(() => ({
+    opacity: 0,
+    config: { duration: 3000 },
+  }))
+
+  const [fadeDiceStyles, fadeDiceApi] = useSpring(() => ({
     opacity: 0,
     config: { duration: 3000 },
   }))
 
   const startFading = () => {
-    fadeApi.start({
+    fadeDiceApi.start({
       from: { opacity: 0 },
       to: { opacity: 1 },
       config: { duration: 3000 },
+      onRest: () => {
+        fadePlayersApi.start({
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+          config: { duration: 3000 },
+        })
+      },
     })
   }
 
@@ -94,7 +108,10 @@ export default function Closing({ players, sponsors }: Props) {
   // const styles = { top: -2100 }
 
   const animationLeftOffset = 150
-  const animationTopOffset = 50
+  const animationTopOffset = 20
+
+  const sideOffsetTop = 40
+  const botOffsetTop = 300
 
   return (
     <Box width="100%">
@@ -136,13 +153,21 @@ export default function Closing({ players, sponsors }: Props) {
             ))}
           </Box>
 
-          <Box fontSize="24px" marginBottom="20px">
-            Зрители
+          <Box marginBottom="50px">
+            <Box fontSize="36px" textAlign="center">
+              А также
+            </Box>
+
+            <Box fontSize="24px" textAlign="center" marginTop="20px">
+              Поддерживающие Зрители
+            </Box>
+            <Box fontSize="24px" textAlign="center" marginTop="20px">
+              Неунывающие Донатеры
+            </Box>
+            <Box fontSize="24px" textAlign="center" marginTop="20px">
+              Справедливые Модераторы
+            </Box>
           </Box>
-          <Box fontSize="24px" marginBottom="20px">
-            Донатеры
-          </Box>
-          <Box fontSize="24px">Модераторы</Box>
 
           <Box marginBottom="150px" marginTop="150px">
             <Box fontSize="36px" textAlign="center">
@@ -183,11 +208,35 @@ export default function Closing({ players, sponsors }: Props) {
           </Box>
           <Box marginTop="50px" position="relative">
             <img src={CinemaImage} alt="cinema" style={{ height: '420px' }} />
-            <animated.div style={fadeStyles}>
+            <animated.div style={fadeDiceStyles}>
+              <Box
+                position="absolute"
+                left={-animationLeftOffset - 120}
+                top={animationTopOffset + 150}
+              >
+                <img
+                  src={DiceAnimation}
+                  alt="dice"
+                  style={{ height: '100px' }}
+                />
+              </Box>
+              <Box
+                position="absolute"
+                right={-animationLeftOffset - 120}
+                top={animationTopOffset + 150}
+              >
+                <img
+                  src={DiceAnimation}
+                  alt="dice"
+                  style={{ height: '100px' }}
+                />
+              </Box>
+            </animated.div>
+            <animated.div style={fadePlayersStyles}>
               <Box
                 position="absolute"
                 left={-animationLeftOffset - 200}
-                top={animationTopOffset}
+                top={animationTopOffset + sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerRed} delay={0} />
               </Box>
@@ -201,35 +250,35 @@ export default function Closing({ players, sponsors }: Props) {
               <Box
                 position="absolute"
                 left={-animationLeftOffset}
-                top={animationTopOffset}
+                top={animationTopOffset + sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerGreen} delay={0} />
               </Box>
               <Box
                 position="absolute"
                 left={-animationLeftOffset - 200}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop - sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerPinkLight} delay={500} />
               </Box>
               <Box
                 position="absolute"
                 left={-animationLeftOffset - 100}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop}
               >
                 <AnimatedIcon image={PlayerOrange} delay={0} />
               </Box>
               <Box
                 position="absolute"
                 left={-animationLeftOffset}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop - sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerBlueLight} delay={500} />
               </Box>
               <Box
                 position="absolute"
                 right={-animationLeftOffset - 200}
-                top={animationTopOffset}
+                top={animationTopOffset + sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerGreenLight} delay={0} />
               </Box>
@@ -243,28 +292,28 @@ export default function Closing({ players, sponsors }: Props) {
               <Box
                 position="absolute"
                 right={-animationLeftOffset}
-                top={animationTopOffset}
+                top={animationTopOffset + sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerBrown} delay={0} />
               </Box>
               <Box
                 position="absolute"
                 right={-animationLeftOffset - 200}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop - sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerBlueDark} delay={500} />
               </Box>
               <Box
                 position="absolute"
                 right={-animationLeftOffset - 100}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop}
               >
                 <AnimatedIcon image={PlayerPurple} delay={0} />
               </Box>
               <Box
                 position="absolute"
                 right={-animationLeftOffset}
-                top={animationTopOffset + 200}
+                top={animationTopOffset + botOffsetTop - sideOffsetTop}
               >
                 <AnimatedIcon image={PlayerYellow} delay={500} />
               </Box>
@@ -297,6 +346,7 @@ const AnimatedIcon = ({ image, delay }: AnimationProps) => {
   }))
 
   useEffect(() => {
+    // return
     // Apply initial delay before starting the animation
     const startAnimation = setTimeout(() => {
       delayRef.current = true // Mark delay as used
@@ -311,7 +361,7 @@ const AnimatedIcon = ({ image, delay }: AnimationProps) => {
       })
     }, delay)
 
-    return () => clearTimeout(startAnimation) // Cleanup timeout
+    return () => clearTimeout(startAnimation)
   }, [api, delay])
 
   return (
