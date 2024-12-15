@@ -121,6 +121,7 @@ export default function Closing({ players, sponsors }: Props) {
         height={`${window.innerHeight - 20}px`}
         overflow="hidden"
         style={{ pointerEvents: 'none' }}
+        fontFamily={'MursGothicWide'}
       >
         <animated.div
           ref={creditsRef}
@@ -138,7 +139,11 @@ export default function Closing({ players, sponsors }: Props) {
           }}
         >
           <Box marginBottom="150px">
-            <Box fontSize="36px" textAlign="center">
+            <Box
+              fontSize="36px"
+              textAlign="center"
+              fontFamily="MursGothicMassive"
+            >
               {playersSection.title}
             </Box>
             {playersSection.content.map((content, index) => (
@@ -154,7 +159,11 @@ export default function Closing({ players, sponsors }: Props) {
           </Box>
 
           <Box marginBottom="150px">
-            <Box fontSize="36px" textAlign="center">
+            <Box
+              fontSize="36px"
+              textAlign="center"
+              fontFamily="MursGothicMassive"
+            >
               А также
             </Box>
 
@@ -170,7 +179,11 @@ export default function Closing({ players, sponsors }: Props) {
           </Box>
 
           <Box marginBottom="150px">
-            <Box fontSize="36px" textAlign="center">
+            <Box
+              fontSize="36px"
+              textAlign="center"
+              fontFamily="MursGothicMassive"
+            >
               {sponsorsSection.title}
             </Box>
             {sponsorsSection.content.map((content, index) => (
@@ -186,7 +199,11 @@ export default function Closing({ players, sponsors }: Props) {
           </Box>
 
           <Box marginBottom="150px">
-            <Box fontSize="36px" textAlign="center">
+            <Box
+              fontSize="36px"
+              textAlign="center"
+              fontFamily="MursGothicMassive"
+            >
               {creatorsSection.title}
             </Box>
             {creatorsSection.content.map((content, index) => (
@@ -201,9 +218,13 @@ export default function Closing({ players, sponsors }: Props) {
             ))}
           </Box>
 
-          <Box fontSize="36px">Основано на идеях и сценарии</Box>
-          <Box fontSize="36px">Богдана «Lasqa» Вавилова</Box>
-          <Box marginTop="150px" fontSize="32px">
+          <Box fontSize="36px" fontFamily="MursGothicMassive">
+            Основано на идеях и сценарии
+          </Box>
+          <Box fontSize="36px" fontFamily="MursGothicMassive">
+            Богдана «Lasqa» Вавилова
+          </Box>
+          <Box marginTop="150px" fontSize="32px" fontFamily="MursGothicMassive">
             АУКУС 2024
           </Box>
           <Box marginTop="50px" position="relative">

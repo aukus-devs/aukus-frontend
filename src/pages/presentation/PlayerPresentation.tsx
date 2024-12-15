@@ -1,6 +1,8 @@
 import { Box } from '@mui/material'
 import { getPlayerColor, Player } from 'src/utils/types'
 import FlashIcon from 'assets/icons/flash.svg?react'
+import CrownImage from 'assets/icons/crown.svg?react'
+import MedalImage from 'assets/icons/medal.svg?react'
 
 type Props = {
   player: Player
@@ -11,10 +13,22 @@ export default function PlayerPresentation({ player, place }: Props) {
   const playerColor = getPlayerColor(player.url_handle)
   return (
     <Box textAlign="center" marginTop="150px" lineHeight="1.2">
-      <Box fontSize="24px" color={playerColor}>
+      <Box
+        fontSize="24px"
+        color={playerColor}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CrownImage style={{ marginRight: '5px' }} />
         {place}-ое место
       </Box>
-      <Box fontSize="64px" fontWeight={800} marginTop="20px">
+      <Box
+        fontSize="64px"
+        fontWeight="700"
+        marginTop="20px"
+        fontFamily="MursGothicMassive"
+      >
         {player.first_name} «{player.name}»
       </Box>
       <Box
@@ -27,8 +41,17 @@ export default function PlayerPresentation({ player, place }: Props) {
       >
         Какое-то звание
       </Box>
-      <Box marginTop="200px" fontSize="40px" color={playerColor}>
-        Премия в номинации: Тест года
+      <Box
+        marginTop="200px"
+        fontSize="40px"
+        color={playerColor}
+        maxWidth="830px"
+        display="flex"
+        textAlign="center"
+        alignItems="flex-start"
+      >
+        <MedalImage style={{ marginRight: '0px' }} />
+        <span>Премия в номинации: Самая быстрая рука на твиче</span>
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
         <Box
