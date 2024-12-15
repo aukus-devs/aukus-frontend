@@ -1,62 +1,10 @@
 import { Box } from '@mui/material'
-import { animated, useSpring } from '@react-spring/web'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Color, getPlayerColor, Player } from 'utils/types'
-import PlayerGreen from 'assets/map/PlayerGreen.webp'
-import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
-import PlayerRed from 'assets/map/PlayerRed.webp'
-import PlayerBlue from 'assets/map/PlayerBlue.webp'
-import PlayerBlueLight from 'assets/map/PlayerBlueLight.webp'
-import PlayerBlueDark from 'assets/map/PlayerBlueDark.webp'
-import PlayerBrown from 'assets/map/PlayerBrown.webp'
-import PlayerPink from 'assets/map/PlayerPink.webp'
-import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
-import PlayerOrange from 'assets/map/PlayerOrange.webp'
-import PlayerPurple from 'assets/map/PlayerPurple.webp'
 
-import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
-import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
-import PlayerPinkMoving from 'assets/map/PlayerPinkMoving.gif'
-import PlayerPinkLightMoving from 'assets/map/PlayerPinkLightMoving.gif'
-import PlayerRedMoving from 'assets/map/PlayerRedMoving.gif'
-import PlayerBlueMoving from 'assets/map/PlayerBlueMoving.gif'
-import PlayerBlueLightMoving from 'assets/map/PlayerBlueLightMoving.gif'
-import PlayerBlueDarkMoving from 'assets/map/PlayerBlueDarkMoving.gif'
-import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
-import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
-import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
-
-import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
-import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
-
-const playerIcons: { [key: string]: string } = {
-  lasqa: PlayerBlue,
-  praden: PlayerBrown,
-  predan: PlayerBrown,
-  roadhouse: PlayerPurple,
-  segall: PlayerOrange,
-  artur: PlayerRed,
-  uselessmouth: PlayerPink,
-  unclobjorn: PlayerBlueDark,
-  melharucos: PlayerBlueLight,
-  browjey: PlayerGreen,
-  f1ashko: PlayerPinkLight,
-}
-
-const playerMovingIcons: { [key: string]: string } = {
-  lasqa: PlayerBlueMoving,
-  praden: PlayerBrownMoving,
-  predan: PlayerBrownMoving,
-  roadhouse: PlayerPurpleMoving,
-  segall: PlayerOrangeMoving,
-  artur: PlayerRedMoving,
-  uselessmouth: PlayerPinkMoving,
-  unclobjorn: PlayerBlueDarkMoving,
-  melharucos: PlayerBlueLightMoving,
-  browjey: PlayerGreenMoving,
-  f1ashko: PlayerPinkLightMoving,
-}
+import JumpingIcon from './JumpingIcon'
+import { getPlayerIcon } from './utils'
 
 type Props = {
   player: Player
@@ -73,7 +21,6 @@ export default function PlayerWinnerIcon({
 }: Props) {
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
-  const iconRef = useRef<HTMLImageElement>(null)
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -116,9 +63,7 @@ export default function PlayerWinnerIcon({
 
   const onlineColor = player.is_online ? Color.green : Color.red
   const playerColor = getPlayerColor(player.url_handle)
-  const playerIcon = isMoving
-    ? playerMovingIcons[player.url_handle] || PlayerBlueLightMoving
-    : playerIcons[player.url_handle] || PlayerBlueLight
+  const playerIcon = getPlayerIcon(player.url_handle)
 
   return (
     <Box
@@ -141,12 +86,10 @@ export default function PlayerWinnerIcon({
           style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
           ref={updateContainer}
         >
-          <img
-            ref={iconRef}
-            src={playerIcon}
-            width={`${40 * coords.scale}px`}
-            alt=""
-            style={{ verticalAlign: 'middle' }}
+          <JumpingIcon
+            image={playerIcon}
+            isJumping={isMoving}
+            scale={coords.scale}
           />
           <p
             style={{
