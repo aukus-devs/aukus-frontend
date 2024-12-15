@@ -54,9 +54,9 @@ function getIconContainerWithColor(value?: number | null) {
   }
 
   const color =
-    value <= 4
+    value < 4
       ? Color.red
-      : value <= 7
+      : value < 7
         ? Color.orange
         : value > 9
           ? Color.purple

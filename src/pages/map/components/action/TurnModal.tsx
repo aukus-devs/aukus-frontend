@@ -116,7 +116,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     })
   }
 
-  let formattedGameName = gameName?.replace(/\s\(\d{4}\)$/, "").trim()
+  let formattedGameName = gameName?.replace(/\s\(\d{4}\)$/, '').trim()
   const hltbLink = `https://howlongtobeat.com/?q=${formattedGameName}`
 
   useEffect(() => {
@@ -421,7 +421,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                         variant={
                           gameHours === 'tiny' ? 'contained' : 'outlined'
                         }
-                        color={gameHours === 'tiny' ? 'secondary' : 'info'}
+                        color={gameHours === 'tiny' ? 'primary' : 'info'}
                         style={{
                           width: '230px',
                           height: '44px',
@@ -442,7 +442,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     <Button
                       onClick={() => handleGameHoursChange('short')}
                       variant={gameHours === 'short' ? 'contained' : 'outlined'}
-                      color={gameHours === 'short' ? 'secondary' : 'info'}
+                      color={gameHours === 'short' ? 'primary' : 'info'}
                       style={{
                         width: '230px',
                         height: '44px',
@@ -471,7 +471,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       variant={
                         gameHours === 'medium' ? 'contained' : 'outlined'
                       }
-                      color={gameHours === 'medium' ? 'secondary' : 'info'}
+                      color={gameHours === 'medium' ? 'primary' : 'info'}
                       style={{
                         // marginLeft: 20,
                         width: '230px',
@@ -492,7 +492,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     <Button
                       onClick={() => handleGameHoursChange('long')}
                       variant={gameHours === 'long' ? 'contained' : 'outlined'}
-                      color={gameHours === 'long' ? 'secondary' : 'info'}
+                      color={gameHours === 'long' ? 'primary' : 'info'}
                       style={{
                         marginLeft: 20,
                         width: '230px',
@@ -566,7 +566,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           fullWidth
           onClick={handleConfirmTurn}
           disabled={!canThrowDice}
-          color="secondary"
+          // color="primary"
           variant="contained"
           sx={{ fontSize: '16px', fontWeight: 700 }}
         >
