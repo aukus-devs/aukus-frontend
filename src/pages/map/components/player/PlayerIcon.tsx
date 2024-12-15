@@ -30,6 +30,8 @@ import PlayerYellow2 from 'assets/map/PlayerYellow2.webp'
 import PlayerYellow3 from 'assets/map/PlayerYellow3.webp'
 import PlayerYellowMoving3 from 'assets/map/PlayerYellowMoving3.gif'
 
+import PlayerBlueLight2 from 'assets/map/PlayerBlueLight2.webp'
+
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
 import PlayerPinkMoving from 'assets/map/PlayerPinkMoving.gif'
@@ -58,7 +60,7 @@ const playerIcons: { [key in PlayerUrl]: string } = {
   browjey: PlayerOrange,
   uselessmouth: PlayerPink,
   roadhouse: PlayerPurple2,
-  melharucos: PlayerBlueLight,
+  melharucos: PlayerBlueLight2,
   maddyson: PlayerYellow3,
   vovapain: PlayerRed,
   timofey: PlayerGreenLight,
