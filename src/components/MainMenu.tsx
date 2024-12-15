@@ -11,7 +11,7 @@ import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
 import MultistreamButton from 'src/pages/players/components/MultistreamButton'
-import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
+import WheelButton from 'src/pages/rules/components/WheelButton'
 import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import useLocalStorage from 'src/context/useLocalStorage'
@@ -76,7 +76,7 @@ export default function MainMenu({
   }
 
   if (!leftSlot && currentUser) {
-    leftSlot = <DifficultyButton />
+    leftSlot = <WheelButton />
   }
 
   if (!rightSlot) {

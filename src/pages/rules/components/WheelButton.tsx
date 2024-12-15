@@ -11,9 +11,16 @@ import { useState } from 'react'
 import DifficultyWheel from './DifficultyWheel'
 import WheelIcon from 'assets/icons/wheel.svg?react'
 import { Close } from '@mui/icons-material'
+import SheikhWheel from './SheikhWheel'
+import { Link } from 'react-router-dom'
+import LinkSpan from 'src/components/LinkSpan'
+import { Color } from 'src/utils/types'
 
-export default function DifficultyButton() {
+export default function WheelButton() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [wheelType, setWheelType] = useState<'difficulty' | 'sheikh'>(
+    'difficulty'
+  )
 
   const resetScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement
@@ -29,7 +36,7 @@ export default function DifficultyButton() {
         <WheelIcon
           style={{ marginRight: '8px', width: '19px', height: '19px' }}
         />
-        Колесо сложности
+        Колеса
       </Button>
       <Dialog
         open={modalOpen}
@@ -39,13 +46,30 @@ export default function DifficultyButton() {
         <DialogTitle style={{ padding: 0, margin: 0 }}>
           <Box
             width={'100%'}
-            fontSize={'32px'}
+            // fontSize={'32px'}
             marginBottom={'0px'}
             display={'flex'}
             position={'relative'}
             marginTop={'20px'}
+            justifyContent={'center'}
           >
-            <Box margin={'0 auto'}>Ролл сложности игры</Box>
+            <Box marginRight="50px">
+              <Link to="#" onClick={() => setWheelType('difficulty')}>
+                <LinkSpan
+                  color={Color.blue}
+                  active={wheelType === 'difficulty'}
+                >
+                  Ролл сложности
+                </LinkSpan>
+              </Link>
+            </Box>
+            <Box>
+              <Link to="#" onClick={() => setWheelType('sheikh')}>
+                <LinkSpan color={Color.orange} active={wheelType === 'sheikh'}>
+                  Ролл шейх-момента
+                </LinkSpan>
+              </Link>
+            </Box>
             <Box position={'absolute'} right={'40px'}>
               <IconButton
                 aria-label="close"
@@ -61,7 +85,8 @@ export default function DifficultyButton() {
           </Box>
         </DialogTitle>
         <DialogContent style={{ overflow: 'hidden' }} onScroll={resetScroll}>
-          <DifficultyWheel />
+          {wheelType === 'difficulty' && <DifficultyWheel />}
+          {wheelType === 'sheikh' && <SheikhWheel />}
         </DialogContent>
       </Dialog>
     </>
