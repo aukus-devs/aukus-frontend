@@ -563,7 +563,6 @@ export default function MapComponent() {
                 top: '-130px',
                 width: '300px',
                 height: '500px',
-                zIndex: 20,
                 backgroundImage: `url(${TgaImage})`,
                 backgroundRepeat: 'no-repeat',
                 // backgroundPosition: 'center',

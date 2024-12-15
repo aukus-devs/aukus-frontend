@@ -304,7 +304,7 @@ export default function PlayerIcon({
     api.start({
       from: { x: 0, y: 0 },
       to: async (next) => {
-        await next({ x: deltaX, y: deltaY })
+        await next({ x: deltaX, y: deltaY, scale: 1.5 })
       },
       onRest: () => {
         onAnimationEnd({ player, moveParams: { steps: 1, skipLadders: false } })
