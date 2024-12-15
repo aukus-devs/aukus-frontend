@@ -41,17 +41,19 @@ export default function PlayerPresentation({ player, place }: Props) {
       >
         Какое-то звание
       </Box>
-      <Box
-        marginTop="200px"
-        fontSize="40px"
-        color={playerColor}
-        maxWidth="830px"
-        display="flex"
-        textAlign="center"
-        alignItems="flex-start"
-      >
-        <MedalImage style={{ marginRight: '0px' }} />
-        <span>Премия в номинации: Самая быстрая рука на твиче</span>
+      <Box display="flex" justifyContent="center">
+        <Box
+          marginTop="200px"
+          fontSize="40px"
+          color={playerColor}
+          maxWidth="830px"
+          display="flex"
+          textAlign="center"
+          alignItems="flex-start"
+        >
+          <MedalImage style={{ marginRight: '0px' }} />
+          <span>Премия в номинации: Самая быстрая рука на твиче</span>
+        </Box>
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
         <Box
