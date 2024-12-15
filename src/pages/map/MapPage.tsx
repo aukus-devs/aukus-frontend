@@ -5,7 +5,7 @@ import MapComponent from './components/MapComponent'
 import TimelapseProvider from './hooks/useTimelapse'
 import useScreenSize from 'src/context/useScreenSize'
 import MapComponentMobile from './components/MapComponentMobile'
-import WheelButton from '../rules/components/DifficultyButton'
+import WheelButton from '../rules/components/WheelButton'
 import { useUser } from 'src/context/UserProvider'
 
 export default function MapPage() {
