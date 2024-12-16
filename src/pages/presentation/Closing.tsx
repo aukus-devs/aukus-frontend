@@ -192,7 +192,7 @@ export default function Closing({ players, sponsors }: Props) {
               Справедливым модераторам
             </Box>
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Ютуб каналу Стримушка ТВ
+              Ютуб каналу «Стримушка ТВ»
             </Box>
           </Box>
 
