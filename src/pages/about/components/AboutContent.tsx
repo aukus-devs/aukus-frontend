@@ -57,10 +57,10 @@ export const Creators = [
     name: 'pechenka242',
     text: 'Аналитик-тестировщик',
   },
-  {
-    name: 'ShiroiKumo',
-    text: 'Тестирование, обсуждение',
-  },
+  // {
+  //   name: 'ShiroiKumo',
+  //   text: 'Тестирование, обсуждение',
+  // },
   {
     name: 'Virtuoz',
     text: 'Обсуждение, идеи',
