@@ -8,29 +8,30 @@ import PlayerPresentation from './PlayerPresentation'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPlayers, fetchSponsors } from 'src/utils/api'
 import { resetScroll } from './utils'
+import usePlayersScores from 'src/context/usePlayersScores'
 
 type PageType = PlayerUrl | 'start' | 'end'
 
-const PagesList: PageType[] = [
-  'start',
-  'lasqa',
-  'roadhouse',
-  'browjey',
-  'keliq_q',
-  'krabick',
-  'praden',
-  'segall',
-  'melharucos',
-  'maddyson',
-  'timofey',
-  'unclebjorn',
-  'vovapain',
-  'uselessmouth',
-  'end',
-]
-
 export default function PresentationPage() {
   const [pageIdx, setPageIdx] = useState<number>(0)
+
+  const { players, scoreByPlayerId, winner } = usePlayersScores()
+
+  let playersOrderedByScore = players.sort((a, b) => {
+    const aScore = scoreByPlayerId[a.id]
+    const bScore = scoreByPlayerId[b.id]
+    return aScore - bScore
+  })
+
+  if (winner) {
+    // put winner in the end
+    playersOrderedByScore = playersOrderedByScore.filter(
+      (p) => p.id !== winner.id
+    )
+    playersOrderedByScore.push(winner)
+  }
+
+  const PAGES_COUNT = playersOrderedByScore.length + 2
 
   const handleBack = () => {
     if (pageIdx > 0) {
@@ -40,53 +41,40 @@ export default function PresentationPage() {
   }
 
   const handleNext = () => {
-    if (pageIdx < PagesList.length - 1) {
+    if (pageIdx < PAGES_COUNT - 1) {
       setPageIdx(pageIdx + 1)
       resetScroll()
     }
   }
-
-  const { data: playersData } = useQuery({
-    queryKey: ['playersCredits'],
-    queryFn: () => fetchPlayers(),
-    staleTime: 1000 * 60 * 60 * 3,
-  })
-  const players = playersData?.players
 
   const { data: sponsorsData } = useQuery({
     queryKey: ['sponsorsCredits'],
     queryFn: () => fetchSponsors(),
     staleTime: 1000 * 60 * 60 * 3,
   })
-  const sponsors = sponsorsData?.dons
+  const sponsors = sponsorsData?.dons || []
 
-  if (!players || !sponsors) {
-    return null
-  }
-
-  const page = PagesList[pageIdx]
-
-  const getPageContent = (page: PageType) => {
-    if (page === 'start') {
+  const getPageContent = (pageId: number) => {
+    if (pageId === 0) {
       return <Opening />
     }
-    if (page === 'end') {
+    if (pageId === PAGES_COUNT - 1) {
       return <Closing players={players} sponsors={sponsors} />
     }
-    const player = players?.find((p) => p.url_handle === page)
+    const player = playersOrderedByScore[pageId - 1]
     if (!player) {
       return null
     }
-    const place = 13 - pageIdx + 1
+    const place = players.length - pageId + 1
     return <PlayerPresentation player={player} place={place} />
   }
 
-  const pageContent = getPageContent(page)
+  const pageContent = getPageContent(pageIdx)
 
   const showBack = pageIdx > 0
-  const showNext = pageIdx < PagesList.length - 1
+  const showNext = pageIdx < PAGES_COUNT - 1
 
-  const showMain = page !== 'end'
+  const showMain = pageIdx !== PAGES_COUNT - 1
 
   return (
     <Box display="flex" justifyContent="center" width="100%">

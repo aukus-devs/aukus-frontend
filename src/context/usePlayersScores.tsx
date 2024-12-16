@@ -7,6 +7,7 @@ type ReturnType = {
   players: Player[]
   playersStats: PlayerStats[]
   scoreByPlayerId: Record<number, number>
+  winner?: Player
 }
 
 export default function usePlayersScores(): ReturnType {
@@ -32,9 +33,13 @@ export default function usePlayersScores(): ReturnType {
     {} as Record<number, number>
   )
 
+  // find player with map position > 101
+  const winner = players.find((player) => player.map_position > 101)
+
   return {
     players,
     playersStats,
     scoreByPlayerId,
+    winner,
   }
 }
