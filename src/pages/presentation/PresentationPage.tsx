@@ -118,7 +118,7 @@ export default function PresentationPage() {
                 sx={{ width: '150px', height: '40px' }}
                 color="customGreyDark"
               >
-                Дальше
+                Дальше ({pageIdx + 1}/{PAGES_COUNT})
               </Button>
             ) : (
               <Box width="150px" />
