@@ -29,7 +29,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Тише едешь — дальше будешь',
     nomination_title: 'Больше всего пройдённых игр',
     image: '',
-    video_link: '',
+    video_link: '/uploads/keliQ_Q.mp4',
   },
   krabick: {
     funny_title: 'Any% speedrun aukus',
@@ -90,7 +90,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     nomination_title:
       'Прошел "Jump King" за два часа что бы не слушать шутки о водолазах',
     image: UselessMouthImage,
-    video_link: '',
+    video_link: '/uploads/UselessMouth0.mp4',
   },
   vovapain: {
     funny_title: 'The road will be mastered by the walking',
@@ -216,12 +216,12 @@ function VideoPlayer({ videoLink }: VideoProps) {
     maxHeight: '100%',
     border: '2px solid #ccc',
     borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+    // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
   }
 
   return (
     <Box style={containerStyle}>
-      <video controls style={videoStyle}>
+      <video key={videoLink} controls style={videoStyle}>
         <source src={videoLink} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
