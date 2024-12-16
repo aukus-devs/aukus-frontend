@@ -9,6 +9,8 @@ import MaddysonImage from 'assets/presentation/maddyson.png'
 import UselessMouthImage from 'assets/presentation/uselessmouth.png'
 import SegallImage from 'assets/presentation/segall.png'
 import TimofeyImage from 'assets/presentation/timofey.png'
+import VovapainImage from 'assets/presentation/pain.png'
+import RoadhouseImage from 'assets/presentation/roadhouse.png'
 
 type PlayerContentType = {
   image: string
@@ -64,7 +66,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   roadhouse: {
     funny_title: 'Best drift on the map cells',
     nomination_title: 'НУЖНО ПРОСТО ПОДНЯТНЯТЬСЯ (ход на карте: 23 >> 5)',
-    image: '',
+    image: RoadhouseImage,
     video_link: '/uploads/roadhouse.mp4',
   },
   segall: {
@@ -82,8 +84,8 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
     nomination_title: 'Везунчик наоборот',
-    image: '/uploads/unclebjorn2.mp4',
-    video_link: '',
+    image: '',
+    video_link: '/uploads/unclebjorn2.mp4',
   },
   uselessmouth: {
     funny_title: 'INVISIBLE',
@@ -95,7 +97,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   vovapain: {
     funny_title: 'The road will be mastered by the walking',
     nomination_title: 'Король уличных дорог',
-    image: '',
+    image: VovapainImage,
     video_link: '/uploads/vovapain.mp4',
   },
 }
