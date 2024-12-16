@@ -164,17 +164,20 @@ export default function Closing({ players, sponsors }: Props) {
               textAlign="center"
               fontFamily="MursGothicMassive"
             >
-              А также
+              Отдельная благодарность
             </Box>
 
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Поддерживающие зрители
+              Поддерживающим зрителям
             </Box>
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Неунывающие донатеры
+              Неунывающим донатерам
             </Box>
             <Box fontSize="24px" textAlign="center" marginTop="20px">
-              Справедливые модераторы
+              Справедливым модераторам
+            </Box>
+            <Box fontSize="24px" textAlign="center" marginTop="20px">
+              Ютуб каналу Стримушка ТВ
             </Box>
           </Box>
 
@@ -219,7 +222,7 @@ export default function Closing({ players, sponsors }: Props) {
           </Box>
 
           <Box fontSize="36px" fontFamily="MursGothicMassive">
-            Основано на идеях и сценарии
+            Основано на идеях и сценариях
           </Box>
           <Box fontSize="36px" fontFamily="MursGothicMassive">
             Богдана «Lasqa» Вавилова
