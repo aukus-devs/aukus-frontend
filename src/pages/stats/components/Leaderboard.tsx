@@ -97,11 +97,16 @@ export default function Leaderboard() {
     }
     if (orderBy === 'id') {
       // use orderedByPosition to compare
+      const playerAIndex = orderedByPosition.findIndex(
+        (player) => player.id === a.id
+      )
+      const playerBIndex = orderedByPosition.findIndex(
+        (player) => player.id === b.id
+      )
+
       return order === 'asc'
-        ? orderedByPosition.findIndex((player) => player.id === a.id) -
-            orderedByPosition.findIndex((player) => player.id === b.id)
-        : orderedByPosition.findIndex((player) => player.id === b.id) -
-            orderedByPosition.findIndex((player) => player.id)
+        ? playerAIndex - playerBIndex
+        : playerBIndex - playerAIndex
     }
     if (orderBy === 'games_completed') {
       return order === 'asc'
