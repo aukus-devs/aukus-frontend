@@ -39,10 +39,16 @@ export default function Leaderboard() {
   const { save, load } = useLocalStorage()
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
-  const [order, setOrder] = useState<'asc' | 'desc'>('desc')
   const [orderBy, setOrderBy] = useState<HeaderType>(
     load('leaderboardOrderBy', 'map_position')
   )
+  const [order, setOrder] = useState<'asc' | 'desc'>(() => {
+    if (orderBy === 'id') {
+      return 'asc'
+    } else {
+      return 'desc'
+    }
+  })
 
   const { players, playersStats, winner } = usePlayersScores()
 
