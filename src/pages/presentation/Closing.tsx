@@ -48,7 +48,8 @@ export default function Closing({ players, sponsors }: Props) {
     const music = document.getElementById(
       'credits-music'
     ) as HTMLAudioElement | null
-    if (music) {
+    if (music && music.paused) {
+      music.currentTime = 0
       music.volume = 0.03
       music.play()
     }

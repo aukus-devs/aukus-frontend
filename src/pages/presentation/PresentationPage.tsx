@@ -38,6 +38,12 @@ export default function PresentationPage() {
       setPageIdx(pageIdx - 1)
       resetScroll()
     }
+    const music = document.getElementById(
+      'credits-music'
+    ) as HTMLAudioElement | null
+    if (music) {
+      music.pause()
+    }
   }
 
   const handleNext = () => {
