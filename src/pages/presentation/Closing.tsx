@@ -145,6 +145,13 @@ export default function Closing({ players, sponsors }: Props) {
             // border: '1px solid white',
           }}
         >
+          <Box
+            marginBottom="150px"
+            fontSize="48px"
+            fontFamily="MursGothicMassive"
+          >
+            АУКУС 2024
+          </Box>
           <Box marginBottom="150px">
             <Box
               fontSize="36px"
