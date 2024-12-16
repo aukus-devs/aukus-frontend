@@ -2,11 +2,30 @@ import { Box } from '@mui/material'
 import TodaysMoves from './TodaysMoves'
 import { fetchPlayers } from 'src/utils/api'
 import { useQuery } from '@tanstack/react-query'
-import { getPlayerColor, Player } from 'src/utils/types'
+import { Color, getPlayerColor, Player } from 'src/utils/types'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { getTimeDiffSeconds } from './utils'
+import { formatSecondsToTime } from 'src/pages/player/components/utils'
+import { formatSeconds } from './MapComponent'
+
+const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
+const WINNER_LAST_MOVE_TIME = '2024-12-16 12:02:12'
 
 export default function MapComponentMobile() {
+  const [winnerCountdown, setWinnerCountdown] = useState(WINNER_COUNTDOWN_START)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const timePassed = getTimeDiffSeconds(new Date(), WINNER_LAST_MOVE_TIME)
+      // console.log('time passed', formatSeconds(timePassed))
+      const diff = WINNER_COUNTDOWN_START - timePassed
+      setWinnerCountdown(diff)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: () => fetchPlayers(),
@@ -33,6 +52,27 @@ export default function MapComponentMobile() {
 
   return (
     <Box marginTop={'100px'}>
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        height={'100%'}
+        marginBottom="50px"
+        fontSize="24px"
+        marginLeft="10px"
+        marginRight="10px"
+        padding="10px"
+        borderRadius="10px"
+        textAlign="center"
+        style={{
+          backgroundColor: Color.greyLight,
+        }}
+      >
+        <Box>
+          До конца ивента <br />
+          <span className={'mono'}>{formatSeconds(winnerCountdown)}</span>
+        </Box>
+      </Box>
       <Box
         width={'fit-content'}
         margin={'auto'}

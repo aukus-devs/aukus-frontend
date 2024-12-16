@@ -860,7 +860,7 @@ function getMoveSteps(player: Player, moves: number) {
   return moves
 }
 
-function formatSeconds(timeDiff: number) {
+export function formatSeconds(timeDiff: number) {
   const hours = Math.floor((timeDiff / (60 * 60)) % 24)
   const minutes = Math.floor((timeDiff / 60) % 60)
   const seconds = Math.floor(timeDiff % 60)
