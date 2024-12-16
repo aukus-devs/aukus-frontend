@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react'
 import { getTimeDiffSeconds } from './utils'
 import { formatSecondsToTime } from 'src/pages/player/components/utils'
 import { formatSeconds } from './MapComponent'
+import LinkSpan from 'src/components/LinkSpan'
 
 const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
 const WINNER_LAST_MOVE_TIME = '2024-12-16 12:02:12'
+const Winner = 'krabick'
 
 export default function MapComponentMobile() {
   const [winnerCountdown, setWinnerCountdown] = useState(WINNER_COUNTDOWN_START)
@@ -34,6 +36,8 @@ export default function MapComponentMobile() {
 
   const players = playersData?.players || []
 
+  const winner = players.find((player) => player.url_handle === Winner)
+
   const playersGroupedByMapPosition = players.reduce(
     (acc, player) => {
       const { map_position } = player
@@ -49,6 +53,8 @@ export default function MapComponentMobile() {
   const mapPositionsOrdered = Object.keys(playersGroupedByMapPosition)
     .map(Number)
     .sort((a: number, b: number) => b - a)
+
+  const showWinMessage = winnerCountdown <= 0
 
   return (
     <Box marginTop={'100px'}>
@@ -68,10 +74,22 @@ export default function MapComponentMobile() {
           backgroundColor: Color.greyLight,
         }}
       >
-        <Box>
-          До конца ивента <br />
-          <span className={'mono'}>{formatSeconds(winnerCountdown)}</span>
-        </Box>
+        {showWinMessage && winner ? (
+          <Box>
+            Можете выдыхать, ивент закончен <br />
+            <Link to={`/players/${winner.url_handle}`}>
+              <LinkSpan color={getPlayerColor(winner.url_handle)}>
+                {winner.name}
+              </LinkSpan>
+            </Link>{' '}
+            победил!
+          </Box>
+        ) : (
+          <Box>
+            До конца ивента <br />
+            <span className={'mono'}>{formatSeconds(winnerCountdown)}</span>
+          </Box>
+        )}
       </Box>
       <Box
         width={'fit-content'}
