@@ -16,6 +16,7 @@ import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
 import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import useLocalStorage from 'src/context/useLocalStorage'
+import useEventState from 'src/context/useEventState'
 
 type Props = {
   currentPage: Page
@@ -41,6 +42,9 @@ export default function MainMenu({
   const urlHandle = currentUser?.url_handle
 
   const { save, load } = useLocalStorage()
+
+  const eventState = useEventState()
+  const eventFinished = eventState.state === 'finished'
 
   const [snowState, setSnowState] = React.useState<'off' | 'small' | 'big'>(
     load('snowLevel', 'small')
@@ -76,7 +80,7 @@ export default function MainMenu({
     return <MainMenuMobile currentPage={currentPage} />
   }
 
-  if (!leftSlot && currentUser) {
+  if (!leftSlot && currentUser && !eventFinished) {
     leftSlot = <DifficultyButton />
   }
 
@@ -195,17 +199,19 @@ export default function MainMenu({
                 </Box>
               )}
 
-              <Link to="/presentation" style={{ marginRight: 10 }}>
-                <Button
-                  color={currentPage === 'about' ? 'primary' : 'info'}
-                  sx={{ width: '150px', height: '40px' }}
-                  style={{
-                    backgroundImage: `url(${SpecialBackground})`,
-                  }}
-                >
-                  Итоги
-                </Button>
-              </Link>
+              {eventFinished && (
+                <Link to="/presentation" style={{ marginRight: 10 }}>
+                  <Button
+                    color={currentPage === 'about' ? 'primary' : 'info'}
+                    sx={{ width: '150px', height: '40px' }}
+                    style={{
+                      backgroundImage: `url(${SpecialBackground})`,
+                    }}
+                  >
+                    Итоги
+                  </Button>
+                </Link>
+              )}
 
               <Link to="/" style={{ marginRight: 10 }}>
                 <Button
