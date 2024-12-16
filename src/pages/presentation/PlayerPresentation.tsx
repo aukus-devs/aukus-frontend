@@ -9,82 +9,96 @@ type PlayerContentType = {
   video_link: string
   nomination_title: string
   nomination_description: string
+  funny_title: string
 }
 
 const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   browjey: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   keliq_q: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   krabick: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   lasqa: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   maddyson: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   melharucos: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   praden: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   roadhouse: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   segall: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   timofey: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   unclebjorn: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   uselessmouth: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   vovapain: {
+    funny_title: 'Самый',
     nomination_title: 'Самый',
     nomination_description: 'Самый',
     image: '',
@@ -129,7 +143,7 @@ export default function PlayerPresentation({ player, place }: Props) {
         fontStyle="italic"
         color={playerColor}
       >
-        Какое-то звание
+        {playerContent.funny_title}
       </Box>
       <Box display="flex" justifyContent="center">
         <Box
