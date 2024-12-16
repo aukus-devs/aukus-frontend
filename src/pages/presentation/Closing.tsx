@@ -45,6 +45,12 @@ export default function Closing({ players, sponsors }: Props) {
       setStartPosition(viewportHeight) // Start entirely off-screen
       setEndPosition(-creditsHeight + 650) // End fully above the screen
     }
+    const music = document.getElementById(
+      'credits-music'
+    ) as HTMLAudioElement | null
+    if (music) {
+      music.play()
+    }
   }, [])
 
   const playersContent = players.map(
