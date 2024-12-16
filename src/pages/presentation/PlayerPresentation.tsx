@@ -23,7 +23,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     nomination_title:
       'Превосходство человеческого интеллекта над искусственным',
     image: '',
-    video_link: '',
+    video_link: '/uploads/browjey.mp4',
   },
   keliq_q: {
     funny_title: 'Тише едешь — дальше будешь',
@@ -35,37 +35,37 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Any% speedrun aukus',
     nomination_title: 'Через тернии звёздам, минуя дропы и змейки',
     image: '',
-    video_link: '',
+    video_link: '/uploads/krabick.mp4',
   },
   lasqa: {
     funny_title: 'Nolan will stand aside',
     nomination_title: 'Сценарист года',
     image: LasqaImage,
-    video_link: '',
+    video_link: '/uploads/lasqa.mp4',
   },
   maddyson: {
     funny_title: 'Men made a promise — the man did',
     nomination_title: 'Мужчина честной судьбы',
     image: MaddysonImage,
-    video_link: '',
+    video_link: '/uploads/maddyson.mp4',
   },
   melharucos: {
     funny_title: 'Eternal Tsukuyomi consisting of JRPG',
     nomination_title: 'Преданный фанат восточной культуры',
     image: '',
-    video_link: '',
+    video_link: '/uploads/melharucos.mp4',
   },
   praden: {
     funny_title: 'Тихий прохоДэн',
     nomination_title: 'Там где прошёл он... Там упала звезда',
     image: '',
-    video_link: '',
+    video_link: '/uploads/praden.mp4',
   },
   roadhouse: {
     funny_title: 'Best drift on the map cells',
     nomination_title: 'НУЖНО ПРОСТО ПОДНЯТНЯТЬСЯ (ход на карте: 23 >> 5)',
     image: '',
-    video_link: '',
+    video_link: '/uploads/roadhouse.mp4',
   },
   segall: {
     funny_title: 'Owner of the lucky tickets',
@@ -77,7 +77,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: "The fastest way to get an undertaker's license",
     nomination_title: 'Лучший гробовщик года',
     image: TimofeyImage,
-    video_link: '',
+    video_link: '/uploads/timofey.mp4',
   },
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
@@ -96,7 +96,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'The road will be mastered by the walking',
     nomination_title: 'Король уличных дорог',
     image: '',
-    video_link: '',
+    video_link: '/uploads/vovapain.mp4',
   },
 }
 
@@ -190,8 +190,41 @@ export default function PlayerPresentation({ player, place }: Props) {
           width="900px"
           height="470px"
           marginBottom="300px"
-        ></Box>
+        >
+          <VideoPlayer videoLink={playerContent.video_link} />
+        </Box>
       </Box>
+    </Box>
+  )
+}
+
+type VideoProps = {
+  videoLink: string
+}
+
+function VideoPlayer({ videoLink }: VideoProps) {
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // height: '100vh',
+    backgroundColor: '#f4f4f4',
+  }
+
+  const videoStyle = {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    border: '2px solid #ccc',
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+  }
+
+  return (
+    <Box style={containerStyle}>
+      <video controls style={videoStyle}>
+        <source src={videoLink} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </Box>
   )
 }
