@@ -94,18 +94,18 @@ export default function PresentationPage() {
             {showBack ? (
               <Button
                 onClick={handleBack}
-                sx={{ width: '150px', height: '40px' }}
+                sx={{ width: '170px', height: '40px' }}
                 color="customGreyDark"
               >
                 Назад
               </Button>
             ) : (
-              <Box width="150px" />
+              <Box width="170px" />
             )}
             {showMain && (
               <Link to="/">
                 <Button
-                  sx={{ width: '150px', height: '40px' }}
+                  sx={{ width: '170px', height: '40px' }}
                   color="customGreyDark"
                 >
                   На главную
@@ -115,13 +115,13 @@ export default function PresentationPage() {
             {showNext ? (
               <Button
                 onClick={handleNext}
-                sx={{ width: '150px', height: '40px' }}
+                sx={{ width: '170px', height: '40px' }}
                 color="customGreyDark"
               >
                 Дальше ({pageIdx + 1}/{PAGES_COUNT})
               </Button>
             ) : (
-              <Box width="150px" />
+              <Box width="170px" />
             )}
           </Box>
         </Box>
