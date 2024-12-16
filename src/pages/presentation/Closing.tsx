@@ -49,6 +49,7 @@ export default function Closing({ players, sponsors }: Props) {
       'credits-music'
     ) as HTMLAudioElement | null
     if (music) {
+      music.volume = 0.1
       music.play()
     }
   }, [])

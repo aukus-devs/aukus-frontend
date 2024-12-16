@@ -4,7 +4,7 @@ import StarImage from 'assets/big_star.svg?react'
 export default function Opening() {
   return (
     <Box paddingTop={'250px'} position="relative">
-      <Box position="absolute" top="-50px" left="-30px" zIndex={0}>
+      <Box position="absolute" top="-200px" left="-30px" zIndex={0}>
         <StarImage />
       </Box>
       <Box
