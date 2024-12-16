@@ -145,16 +145,17 @@ export default function PlayerPresentation({ player, place }: Props) {
           fontSize="40px"
           color={playerColor}
           maxWidth="830px"
-          display="flex"
+          // display="flex"
           textAlign="center"
-          alignItems="flex-start"
+          // alignItems="flex-start"
         >
-          <Box display="flex" alignItems="flex-start">
+          <Box display="flex" alignItems="flex-start" justifyContent="center">
             <MedalImage
               style={{ marginRight: '0px', width: '48px', height: '48px' }}
             />
+            Премия в номинации:
           </Box>
-          <span>Премия в номинации: «{playerContent.nomination_title}»</span>
+          <span>«{playerContent.nomination_title}»</span>
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
