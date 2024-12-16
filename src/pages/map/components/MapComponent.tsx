@@ -241,8 +241,11 @@ export default function MapComponent() {
   const showWinScreen = deadlineReached && topPlayers.length > 0
 
   useEffect(() => {
-    if (showWinScreen && !fireworksRef.current?.isRunning) {
-      enableFireworks()
+    if (showWinScreen) {
+      queryClient.invalidateQueries({ queryKey: ['players'] })
+      if (!fireworksRef.current?.isRunning) {
+        enableFireworks()
+      }
     }
     if (!showWinScreen) {
       disableFireworks()

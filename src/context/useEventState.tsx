@@ -13,10 +13,9 @@ type StateResult = {
 }
 
 export default function useEventState(): StateResult {
-  const [refetchOften, setRefetchOften] = useState(false)
   const finalCountdown = getEventSecondsLeft()
 
-  const refetchInterval = refetchOften ? 1000 * 30 : 1000 * 60 * 2
+  const refetchInterval = 1000 * 60 * 2
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -68,23 +67,6 @@ export default function useEventState(): StateResult {
 
   const deadlineReached =
     finalCountdown <= 0 || (winner && winnerCountdown && winnerCountdown <= 0)
-
-  useEffect(() => {
-    if (finalCountdown <= 120 && !refetchOften) {
-      setRefetchOften(true)
-    }
-    if (winnerCountdown && winnerCountdown <= 120 && !refetchOften) {
-      setRefetchOften(true)
-    }
-
-    if (finalCountdown < 0 && refetchOften) {
-      setRefetchOften(false)
-    }
-
-    if (winnerCountdown && winnerCountdown < 0 && refetchOften) {
-      setRefetchOften(false)
-    }
-  }, [finalCountdown, winnerCountdown])
 
   return {
     state: deadlineReached ? 'finished' : 'active',
