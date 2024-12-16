@@ -71,7 +71,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Owner of the lucky tickets',
     nomination_title: 'Лучший профессиональный дубляж',
     image: SegallImage,
-    video_link: '',
+    video_link: '/uploads/segall1.mp4',
   },
   timofey: {
     funny_title: "The fastest way to get an undertaker's license",
@@ -82,7 +82,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
     nomination_title: 'Везунчик наоборот',
-    image: '',
+    image: '/uploads/unclebjorn2.mp4',
     video_link: '',
   },
   uselessmouth: {
