@@ -139,7 +139,7 @@ export type PlayerUrl =
   | 'lasqa'
   | 'segall'
   | 'praden'
-  | 'predan'
+  // | 'predan'
   | 'browjey'
   | 'uselessmouth'
   | 'roadhouse'
@@ -155,7 +155,7 @@ export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   lasqa: Color.blue,
   segall: Color.green,
   praden: Color.brown,
-  predan: Color.brown,
+  // predan: Color.brown,
   browjey: Color.orange,
   uselessmouth: Color.pink,
   roadhouse: Color.purple,
@@ -174,7 +174,7 @@ export const ColorNameByUrlHandle: {
   lasqa: 'customBlue',
   segall: 'customGreen',
   praden: 'customBrown',
-  predan: 'customBrown',
+  // predan: 'customBrown',
   browjey: 'customOrange',
   uselessmouth: 'customPink',
   roadhouse: 'customPurple',
