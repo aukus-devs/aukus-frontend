@@ -4,11 +4,16 @@ import FlashIcon from 'assets/icons/flash.svg?react'
 import CrownImage from 'assets/icons/crown.svg?react'
 import MedalImage from 'assets/icons/medal.svg?react'
 
+import LasqaImage from 'assets/presentation/lasqa.png'
+import MaddysonImage from 'assets/presentation/maddyson.png'
+import UselessMouthImage from 'assets/presentation/uselessmouth.png'
+import SegallImage from 'assets/presentation/segall.png'
+import TimofeyImage from 'assets/presentation/timofey.png'
+
 type PlayerContentType = {
   image: string
   video_link: string
   nomination_title: string
-  nomination_description: string
   funny_title: string
 }
 
@@ -16,91 +21,78 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   browjey: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   keliq_q: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   krabick: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   lasqa: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
-    image: '',
+    image: LasqaImage,
     video_link: '',
   },
   maddyson: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
-    video_link: '',
+    video_link: MaddysonImage,
   },
   melharucos: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   praden: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   roadhouse: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   segall: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
-    image: '',
+    image: SegallImage,
     video_link: '',
   },
   timofey: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
-    image: '',
+    image: TimofeyImage,
     video_link: '',
   },
   unclebjorn: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
   uselessmouth: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
-    image: '',
+    image: UselessMouthImage,
     video_link: '',
   },
   vovapain: {
     funny_title: 'Самый',
     nomination_title: 'Самый',
-    nomination_description: 'Самый',
     image: '',
     video_link: '',
   },
@@ -163,18 +155,12 @@ export default function PlayerPresentation({ player, place }: Props) {
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
         <Box
-          style={{ backgroundColor: playerColor }}
+          // style={{ backgroundColor: playerColor }}
           width="900px"
           height="470px"
         >
-          <img
-            src={playerContent.image}
-            style={{ width: '900px', height: '470px' }}
-          />
+          <img src={playerContent.image} style={{ height: '470px' }} />
         </Box>
-      </Box>
-      <Box marginTop="30px" fontSize="24px">
-        {playerContent.nomination_description}
       </Box>
       <Box
         marginTop="200px"
