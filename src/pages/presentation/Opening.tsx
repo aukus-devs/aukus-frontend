@@ -1,11 +1,12 @@
 import { Box } from '@mui/material'
 import StarImage from 'assets/big_star.svg?react'
+import { Color } from 'src/utils/types'
 
 export default function Opening() {
   return (
     <Box paddingTop={'250px'} position="relative">
       <Box position="absolute" top="-200px" left="-30px" zIndex={0}>
-        <StarImage />
+        <StarImage color={Color.blueLight} />
       </Box>
       <Box
         fontWeight={700}

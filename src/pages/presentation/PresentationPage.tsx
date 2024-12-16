@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { PlayerUrl } from 'src/utils/types'
+import { getPlayerColor, PlayerUrl } from 'src/utils/types'
 import Opening from './Opening'
 import Closing from './Closing'
 import PlayerPresentation from './PlayerPresentation'
@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchPlayers, fetchSponsors } from 'src/utils/api'
 import { resetScroll } from './utils'
 import usePlayersScores from 'src/context/usePlayersScores'
+import StarImage from 'assets/big_star.svg?react'
 
 type PageType = PlayerUrl | 'start' | 'end'
 
@@ -82,6 +83,12 @@ export default function PresentationPage() {
 
   const showMain = pageIdx !== PAGES_COUNT - 1
 
+  let currentPlayerColor = null
+  if (pageIdx > 0 && pageIdx < PAGES_COUNT - 1) {
+    const currentPlayer = playersOrderedByScore[pageIdx - 1]
+    currentPlayerColor = getPlayerColor(currentPlayer.url_handle)
+  }
+
   return (
     <Box display="flex" justifyContent="center" width="100%">
       <Box width="100%">
@@ -113,13 +120,26 @@ export default function PresentationPage() {
               </Link>
             )}
             {showNext ? (
-              <Button
-                onClick={handleNext}
-                sx={{ width: '170px', height: '40px' }}
-                color="customGreyDark"
-              >
-                Дальше ({pageIdx + 1}/{PAGES_COUNT})
-              </Button>
+              <Box position="relative">
+                {currentPlayerColor && (
+                  <Box
+                    position="absolute"
+                    left="-400px"
+                    top="-500px"
+                    zIndex={0}
+                  >
+                    <StarImage color={currentPlayerColor} />
+                  </Box>
+                )}
+
+                <Button
+                  onClick={handleNext}
+                  sx={{ width: '170px', height: '40px' }}
+                  color="customGreyDark"
+                >
+                  Дальше ({pageIdx + 1}/{PAGES_COUNT})
+                </Button>
+              </Box>
             ) : (
               <Box width="170px" />
             )}
