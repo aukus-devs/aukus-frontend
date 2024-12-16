@@ -44,7 +44,7 @@ export default function Leaderboard() {
     load('leaderboardOrderBy', 'map_position')
   )
 
-  const { players, playersStats } = usePlayersScores()
+  const { players, playersStats, winner } = usePlayersScores()
 
   if (!(playersStats.length > 0) || !(players.length > 0)) {
     if (Date.now() - fetchStart > 1000) {
@@ -61,6 +61,24 @@ export default function Leaderboard() {
     {} as Record<number, Player>
   )
 
+  const orderedByScore = [...playersStats].sort((a, b) => {
+    return getPlayerScore(b) - getPlayerScore(a)
+  })
+
+  const orderedByPosition = [...orderedByScore]
+
+  // if there is a winner he should be at the top of the list
+  if (winner) {
+    const winnerIndex = orderedByPosition.findIndex(
+      (player) => player.id === winner.id
+    )
+    if (winnerIndex > 0) {
+      const winnerStats = orderedByPosition[winnerIndex]
+      orderedByPosition.splice(winnerIndex, 1)
+      orderedByPosition.unshift(winnerStats)
+    }
+  }
+
   const playersStatsSorted = playersStats.sort((a, b) => {
     if (orderBy === 'name') {
       return order === 'asc'
@@ -72,10 +90,18 @@ export default function Leaderboard() {
         ? a.map_position - b.map_position
         : b.map_position - a.map_position
     }
-    if (orderBy === 'score' || orderBy === 'id') {
+    if (orderBy === 'score') {
       return order === 'asc'
         ? getPlayerScore(a) - getPlayerScore(b)
         : getPlayerScore(b) - getPlayerScore(a)
+    }
+    if (orderBy === 'id') {
+      // use orderedByPosition to compare
+      return order === 'asc'
+        ? orderedByPosition.findIndex((player) => player.id === a.id) -
+            orderedByPosition.findIndex((player) => player.id === b.id)
+        : orderedByPosition.findIndex((player) => player.id === b.id) -
+            orderedByPosition.findIndex((player) => player.id)
     }
     if (orderBy === 'games_completed') {
       return order === 'asc'
@@ -101,17 +127,13 @@ export default function Leaderboard() {
     return 0
   })
 
-  const orderedByScore = [...playersStats].sort((a, b) => {
-    return getPlayerScore(b) - getPlayerScore(a)
-  })
-
   // maps player ids to position by score, players with same score get the same position
-  const playerIdToPosition = orderedByScore.reduce(
+  const playerIdToPosition = orderedByPosition.reduce(
     (acc, player, index) => {
       if (index === 0) {
         acc[player.id] = 1
       } else {
-        const prevPlayer = orderedByScore[index - 1]
+        const prevPlayer = orderedByPosition[index - 1]
         if (getPlayerScore(player) === getPlayerScore(prevPlayer)) {
           acc[player.id] = acc[prevPlayer.id]
         } else {
