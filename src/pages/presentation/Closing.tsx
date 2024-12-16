@@ -99,7 +99,7 @@ export default function Closing({ players, sponsors }: Props) {
   const styles = useSpring({
     from: { transform: `translateY(${startPosition}px)` },
     to: { transform: `translateY(${endPosition}px)` },
-    config: { duration: 70 * 1000 }, // Adjust speed here (in ms)
+    config: { duration: 80 * 1000 }, // Adjust speed here (in ms)
     onRest: () => {
       // show items after 3 seconds
       setTimeout(() => startFading(), 2000)
