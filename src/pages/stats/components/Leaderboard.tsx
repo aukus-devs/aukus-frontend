@@ -15,6 +15,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'
+import usePlayersScores from 'src/context/usePlayersScores'
 import useScreenSize from 'src/context/useScreenSize'
 import {
   formatSecondsToTime,
@@ -43,21 +44,9 @@ export default function Leaderboard() {
     load('leaderboardOrderBy', 'map_position')
   )
 
-  const { data: playersData } = useQuery({
-    queryKey: ['players'],
-    queryFn: () => fetchPlayers(),
-    staleTime: 1000 * 60 * 1,
-  })
-  const players = playersData?.players
+  const { players, playersStats } = usePlayersScores()
 
-  const { data } = useQuery({
-    queryKey: ['playersStats'],
-    queryFn: fetchStats,
-    staleTime: 1000 * 60 * 1,
-  })
-  const playersStats = data?.players
-
-  if (!playersStats || !players) {
+  if (!(playersStats.length > 0) || !(players.length > 0)) {
     if (Date.now() - fetchStart > 1000) {
       return <div>Loading...</div>
     }

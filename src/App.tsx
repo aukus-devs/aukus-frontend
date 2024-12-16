@@ -19,6 +19,7 @@ import PlayersPage from './pages/players/PlayersPage'
 import { SnackbarProvider } from 'notistack'
 import NotFound from './pages/NotFound'
 import { TimeProvider } from './context/TimeProvider'
+import PresentationPage from './pages/presentation/PresentationPage'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
@@ -60,6 +61,10 @@ const router = createBrowserRouter(
     {
       path: '/stats',
       element: <StatsPage />,
+    },
+    {
+      path: '/presentation',
+      element: <PresentationPage />,
     },
     {
       path: '*',

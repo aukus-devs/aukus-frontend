@@ -113,7 +113,7 @@ export default function MapComponent() {
   }
 
   const { data: playersData } = useQuery({
-    queryKey: ['players'],
+    queryKey: ['MapPlayers'],
     queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 30,
     enabled: !makingTurn,
@@ -241,8 +241,11 @@ export default function MapComponent() {
   const showWinScreen = deadlineReached && topPlayers.length > 0
 
   useEffect(() => {
-    if (showWinScreen && !fireworksRef.current?.isRunning) {
-      enableFireworks()
+    if (showWinScreen) {
+      queryClient.invalidateQueries({ queryKey: ['players'] })
+      if (!fireworksRef.current?.isRunning) {
+        enableFireworks()
+      }
     }
     if (!showWinScreen) {
       disableFireworks()

@@ -206,7 +206,7 @@ export async function updateCurrentGame({
   }).then((res) => res.json())
 }
 
-type Sponsor = {
+export type Sponsor = {
   name: string
   text?: string
   type: 'big' | 'small'

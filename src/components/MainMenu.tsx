@@ -4,6 +4,7 @@ import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import SnowflakeIcon from 'assets/snowflake.svg?react'
+import SpecialBackground from 'assets/button-special.png'
 import { TWallpaper } from '@twallpaper/react'
 import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
@@ -15,6 +16,7 @@ import WheelButton from 'src/pages/rules/components/WheelButton'
 import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import useLocalStorage from 'src/context/useLocalStorage'
+import useEventState from 'src/context/useEventState'
 
 type Props = {
   currentPage: Page
@@ -40,6 +42,9 @@ export default function MainMenu({
   const urlHandle = currentUser?.url_handle
 
   const { save, load } = useLocalStorage()
+
+  const eventState = useEventState()
+  const eventFinished = eventState.state === 'finished'
 
   const [snowState, setSnowState] = React.useState<'off' | 'small' | 'big'>(
     load('snowLevel', 'small')
@@ -75,11 +80,11 @@ export default function MainMenu({
     return <MainMenuMobile currentPage={currentPage} />
   }
 
-  if (!leftSlot && currentUser) {
+  if (!leftSlot && currentUser && !eventFinished) {
     leftSlot = <WheelButton />
   }
 
-  if (!rightSlot) {
+    if (!rightSlot) {
     rightSlot = <MultistreamButton />
   }
 
@@ -193,6 +198,21 @@ export default function MainMenu({
                   {leftSlot}
                 </Box>
               )}
+
+              {eventFinished && (
+                <Link to="/presentation" style={{ marginRight: 10 }}>
+                  <Button
+                    color={currentPage === 'about' ? 'primary' : 'info'}
+                    sx={{ width: '150px', height: '40px' }}
+                    style={{
+                      backgroundImage: `url(${SpecialBackground})`,
+                    }}
+                  >
+                    Итоги
+                  </Button>
+                </Link>
+              )}
+
               <Link to="/" style={{ marginRight: 10 }}>
                 <Button
                   color={currentPage === 'map' ? 'primary' : 'info'}
