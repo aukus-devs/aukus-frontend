@@ -243,7 +243,7 @@ export default function Closing({ players, sponsors }: Props) {
             Богдана «Lasqa» Вавилова
           </Box>
           <Box marginTop="150px" fontSize="32px" fontFamily="MursGothicMassive">
-            АУКУС 2024
+            АУКУС 2024 — ВСЁ
           </Box>
           <Box marginTop="50px" position="relative">
             <img src={CinemaImage} alt="cinema" style={{ height: '420px' }} />
