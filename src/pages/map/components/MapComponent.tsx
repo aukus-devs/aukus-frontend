@@ -113,7 +113,7 @@ export default function MapComponent() {
   }
 
   const { data: playersData } = useQuery({
-    queryKey: ['players'],
+    queryKey: ['MapPlayers'],
     queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 30,
     enabled: !makingTurn,
