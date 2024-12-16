@@ -112,7 +112,7 @@ export default function PlayerPresentation({ player, place }: Props) {
   const playerContent = PlayersContent[player.url_handle]
 
   return (
-    <Box textAlign="center" marginTop="150px" lineHeight="1.2">
+    <Box textAlign="center" marginTop="150px" lineHeight="1.2" zIndex="20">
       <Box
         fontSize="24px"
         color={playerColor}
