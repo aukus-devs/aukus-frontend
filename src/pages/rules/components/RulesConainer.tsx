@@ -52,7 +52,7 @@ export default function RulesContainer() {
             color: Color.greyText,
           }}
         >
-          <Countdown />
+          {/* <Countdown /> */}
         </Box>
 
         <Box marginTop={'50px'} />
