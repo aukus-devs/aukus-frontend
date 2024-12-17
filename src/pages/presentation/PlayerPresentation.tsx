@@ -55,7 +55,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Eternal Tsukuyomi consisting of JRPG',
     nomination_title: 'Преданный фанат восточной культуры',
     image: '',
-    video_link: '/uploads/melharucos.mp4',
+    video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
     funny_title: 'Тихий прохоДэн',
