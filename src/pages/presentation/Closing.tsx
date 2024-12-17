@@ -22,6 +22,7 @@ import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
 import PlayerYellow from 'assets/map/PlayerYellow.webp'
 import PlayerBiege from 'assets/map/PlayerBiege.webp'
+import FlashIcon from 'assets/icons/flash.svg?react'
 
 type Props = {
   players: Player[]
@@ -204,16 +205,33 @@ export default function Closing({ players, sponsors }: Props) {
             >
               {sponsorsSection.title}
             </Box>
-            {sponsorsSection.content.map((content, index) => (
-              <Box
-                fontSize="24px"
-                key={index}
-                textAlign="center"
-                marginTop="20px"
-              >
-                {content}
-              </Box>
-            ))}
+            {sponsorsSection.content.map((content, index) => {
+              if (content.toLowerCase() === 'юзя') {
+                return (
+                  <Box
+                    fontSize="24px"
+                    key={index}
+                    textAlign="center"
+                    marginTop="20px"
+                    display={'block'}
+                  >
+                    <FlashIcon style={{ alignSelf: 'center' }} />
+                    {content}
+                  </Box>
+                )
+              }
+
+              return (
+                <Box
+                  fontSize="24px"
+                  key={index}
+                  textAlign="center"
+                  marginTop="20px"
+                >
+                  {content}
+                </Box>
+              )
+            })}
           </Box>
 
           <Box marginBottom="150px">
