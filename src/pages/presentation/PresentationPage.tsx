@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getPlayerColor, PlayerUrl } from 'src/utils/types'
 import Opening from './Opening'
@@ -15,6 +15,26 @@ type PageType = PlayerUrl | 'start' | 'end'
 
 export default function PresentationPage() {
   const [pageIdx, setPageIdx] = useState<number>(0)
+
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [buttonItem, setButtonItem] = useState<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (buttonRef.current) {
+        setButtonItem(buttonRef.current)
+      }
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [])
+
+  let buttonLeft = null
+  let buttonTop = null
+  if (buttonItem) {
+    const rect = buttonItem.getBoundingClientRect()
+    buttonLeft = rect.left + rect.width / 2
+    buttonTop = rect.top + rect.height / 2
+  }
 
   const { players, scoreByPlayerId, winner } = usePlayersScores()
 
@@ -92,7 +112,17 @@ export default function PresentationPage() {
   return (
     <Box display="flex" justifyContent="center" width="100%">
       <Box width="100%">
-        <Box position="fixed" padding="40px" width="100%" zIndex="10">
+        {currentPlayerColor && buttonTop && buttonLeft && (
+          <Box
+            position="fixed"
+            left={`${buttonLeft - 500}px`}
+            top={`${buttonTop - 500}px`}
+            zIndex={-1}
+          >
+            <StarImage color={currentPlayerColor} />
+          </Box>
+        )}
+        <Box position="fixed" padding="40px" width="100%" zIndex="30">
           <Box
             display="flex"
             justifyContent="space-between"
@@ -120,26 +150,14 @@ export default function PresentationPage() {
               </Link>
             )}
             {showNext ? (
-              <Box position="relative">
-                {currentPlayerColor && (
-                  <Box
-                    position="absolute"
-                    left="-400px"
-                    top="-500px"
-                    zIndex={0}
-                  >
-                    <StarImage color={currentPlayerColor} />
-                  </Box>
-                )}
-
-                <Button
-                  onClick={handleNext}
-                  sx={{ width: '170px', height: '40px' }}
-                  color="customGreyDark"
-                >
-                  Дальше ({pageIdx + 1}/{PAGES_COUNT})
-                </Button>
-              </Box>
+              <Button
+                onClick={handleNext}
+                sx={{ width: '170px', height: '40px' }}
+                color="customGreyDark"
+                ref={buttonRef}
+              >
+                Дальше ({pageIdx + 1}/{PAGES_COUNT})
+              </Button>
             ) : (
               <Box width="170px" />
             )}
