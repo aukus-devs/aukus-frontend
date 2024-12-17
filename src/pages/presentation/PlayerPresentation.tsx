@@ -11,6 +11,7 @@ import SegallImage from 'assets/presentation/segall.png'
 import TimofeyImage from 'assets/presentation/timofey.png'
 import VovapainImage from 'assets/presentation/pain.png'
 import RoadhouseImage from 'assets/presentation/roadhouse.png'
+import MelharucosImage from 'assets/presentation/melharucos.png'
 
 type PlayerContentType = {
   image: string
@@ -54,7 +55,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   melharucos: {
     funny_title: 'Eternal Tsukuyomi consisting of JRPG',
     nomination_title: 'Преданный фанат восточной культуры',
-    image: '',
+    image: MelharucosImage,
     video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
