@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const CANVAS_MAX_SIZE = 15000
+const CANVAS_MAX_SIZE = 10000
 
 export function useRefDimensions(
   containerRef: React.RefObject<HTMLDivElement>
