@@ -393,7 +393,8 @@ export default function MapComponent() {
   const currentPlayerWinner =
     currentPlayer && winner && currentPlayer.id === winner.id
 
-  const stopActions = showWinScreen || animating || currentPlayerWinner
+  // const stopActions = showWinScreen || animating || currentPlayerWinner
+  const stopActions = animating || currentPlayerWinner
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
   const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
 
@@ -460,7 +461,7 @@ export default function MapComponent() {
                 style={{ marginRight: '10px' }}
               />
               <Box>
-                Можете выдыхать, ивент закончен{' — '}
+                Можете выдыхать, ивент "закончен"{' — '}
                 <Link to={`/players/${topPlayers[0].url_handle}`}>
                   <LinkSpan color={'white'}>{topPlayers[0].name}</LinkSpan>{' '}
                 </Link>
@@ -859,7 +860,7 @@ function getMoveSteps(player: Player, moves: number) {
   return moves
 }
 
-function formatSeconds(timeDiff: number) {
+export function formatSeconds(timeDiff: number) {
   const hours = Math.floor((timeDiff / (60 * 60)) % 24)
   const minutes = Math.floor((timeDiff / 60) % 60)
   const seconds = Math.floor(timeDiff % 60)

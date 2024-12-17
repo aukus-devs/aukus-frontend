@@ -9,6 +9,8 @@ import MaddysonImage from 'assets/presentation/maddyson.png'
 import UselessMouthImage from 'assets/presentation/uselessmouth.png'
 import SegallImage from 'assets/presentation/segall.png'
 import TimofeyImage from 'assets/presentation/timofey.png'
+import VovapainImage from 'assets/presentation/pain.png'
+import RoadhouseImage from 'assets/presentation/roadhouse.png'
 
 type PlayerContentType = {
   image: string
@@ -35,7 +37,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Any% speedrun aukus',
     nomination_title: 'Через тернии звёздам, минуя дропы и змейки',
     image: '',
-    video_link: '/uploads/krabick.mp4',
+    video_link: '/uploads/krabick2.mp4',
   },
   lasqa: {
     funny_title: 'Nolan will stand aside',
@@ -47,13 +49,13 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Men made a promise — the man did',
     nomination_title: 'Мужчина честной судьбы',
     image: MaddysonImage,
-    video_link: '/uploads/maddyson.mp4',
+    video_link: '/uploads/maddyson2.mp4',
   },
   melharucos: {
     funny_title: 'Eternal Tsukuyomi consisting of JRPG',
     nomination_title: 'Преданный фанат восточной культуры',
     image: '',
-    video_link: '/uploads/melharucos.mp4',
+    video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
     funny_title: 'Тихий прохоДэн',
@@ -64,26 +66,26 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   roadhouse: {
     funny_title: 'Best drift on the map cells',
     nomination_title: 'НУЖНО ПРОСТО ПОДНЯТНЯТЬСЯ (ход на карте: 23 >> 5)',
-    image: '',
-    video_link: '/uploads/roadhouse.mp4',
+    image: RoadhouseImage,
+    video_link: '/uploads/roadhouse2.mp4',
   },
   segall: {
     funny_title: 'Owner of the lucky tickets',
     nomination_title: 'Лучший профессиональный дубляж',
     image: SegallImage,
-    video_link: '/uploads/segall1.mp4',
+    video_link: '/uploads/segall3.mp4',
   },
   timofey: {
     funny_title: "The fastest way to get an undertaker's license",
     nomination_title: 'Лучший гробовщик года',
     image: TimofeyImage,
-    video_link: '/uploads/timofey.mp4',
+    video_link: '/uploads/timofey_new.mp4',
   },
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
     nomination_title: 'Везунчик наоборот',
-    image: '/uploads/unclebjorn2.mp4',
-    video_link: '',
+    image: '',
+    video_link: '/uploads/unclebjorn3.mp4',
   },
   uselessmouth: {
     funny_title: 'INVISIBLE',
@@ -95,7 +97,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   vovapain: {
     funny_title: 'The road will be mastered by the walking',
     nomination_title: 'Король уличных дорог',
-    image: '',
+    image: VovapainImage,
     video_link: '/uploads/vovapain.mp4',
   },
 }
@@ -110,7 +112,7 @@ export default function PlayerPresentation({ player, place }: Props) {
   const playerContent = PlayersContent[player.url_handle]
 
   return (
-    <Box textAlign="center" marginTop="150px" lineHeight="1.2">
+    <Box textAlign="center" marginTop="150px" lineHeight="1.2" zIndex="20">
       <Box
         fontSize="24px"
         color={playerColor}
