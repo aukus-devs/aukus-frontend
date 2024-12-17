@@ -37,7 +37,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Any% speedrun aukus',
     nomination_title: 'Через тернии звёздам, минуя дропы и змейки',
     image: '',
-    video_link: '/uploads/krabick.mp4',
+    video_link: '/uploads/krabick2.mp4',
   },
   lasqa: {
     funny_title: 'Nolan will stand aside',
@@ -67,25 +67,25 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Best drift on the map cells',
     nomination_title: 'НУЖНО ПРОСТО ПОДНЯТНЯТЬСЯ (ход на карте: 23 >> 5)',
     image: RoadhouseImage,
-    video_link: '/uploads/roadhouse.mp4',
+    video_link: '/uploads/roadhouse2.mp4',
   },
   segall: {
     funny_title: 'Owner of the lucky tickets',
     nomination_title: 'Лучший профессиональный дубляж',
     image: SegallImage,
-    video_link: '/uploads/segall1.mp4',
+    video_link: '/uploads/segall3.mp4',
   },
   timofey: {
     funny_title: "The fastest way to get an undertaker's license",
     nomination_title: 'Лучший гробовщик года',
     image: TimofeyImage,
-    video_link: '/uploads/timofey.mp4',
+    video_link: '/uploads/timofey_new.mp4',
   },
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
     nomination_title: 'Везунчик наоборот',
     image: '',
-    video_link: '/uploads/unclebjorn2.mp4',
+    video_link: '/uploads/unclebjorn3.mp4',
   },
   uselessmouth: {
     funny_title: 'INVISIBLE',
