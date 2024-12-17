@@ -90,7 +90,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   uselessmouth: {
     funny_title: 'INVISIBLE',
     nomination_title:
-      'Прошел "Jump King" за два часа что бы не слушать шутки о водолазах',
+      'Прошел "Jump King" за два часа, чтобы не слушать шутки о водолазах',
     image: UselessMouthImage,
     video_link: '/uploads/UselessMouth0.mp4',
   },
