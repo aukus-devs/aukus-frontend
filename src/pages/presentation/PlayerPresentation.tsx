@@ -22,14 +22,14 @@ type PlayerContentType = {
 
 const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   browjey: {
-    funny_title: 'He took the prize for style, not speed (most points)',
+    funny_title: 'Тише едешь — дальше будешь',
     nomination_title:
       'Превосходство человеческого интеллекта над искусственным',
     image: '',
     video_link: '/uploads/browjey.mp4',
   },
   keliq_q: {
-    funny_title: 'Тише едешь — дальше будешь',
+    funny_title: 'He took the prize for style, not speed (most points)',
     nomination_title: 'Больше всего пройдённых игр',
     image: '',
     video_link: '/uploads/keliQ_Q.mp4',
