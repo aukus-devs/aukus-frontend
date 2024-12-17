@@ -49,7 +49,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Men made a promise — the man did',
     nomination_title: 'Мужчина честной судьбы',
     image: MaddysonImage,
-    video_link: '/uploads/maddyson.mp4',
+    video_link: '/uploads/maddyson2.mp4',
   },
   melharucos: {
     funny_title: 'Eternal Tsukuyomi consisting of JRPG',
