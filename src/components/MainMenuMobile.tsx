@@ -75,7 +75,8 @@ export default function MainMenuMobile({ currentPage }: Props) {
         sx={{ backgroundColor: Color.greyDark }}
         borderRadius="15px"
         height={'60px'}
-        // position="relative"
+        zIndex={20}
+        position="relative"
       >
         <Link to="/" style={{ marginRight: 10 }}>
           <Button
