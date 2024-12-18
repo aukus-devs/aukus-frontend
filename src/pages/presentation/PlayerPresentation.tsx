@@ -59,8 +59,8 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
-    funny_title: 'Тихий прохоДэн',
-    nomination_title: 'Там где прошёл он... Там упала звезда',
+    funny_title: 'Where he passed... A star fell there',
+    nomination_title: 'Тихий проходэн',
     image: '',
     video_link: '/uploads/praden.mp4',
   },
