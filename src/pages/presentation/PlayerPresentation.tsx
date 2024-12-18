@@ -104,7 +104,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'The road will be mastered by the walking',
     nomination_title: 'Король уличных дорог',
     image: VovapainImage,
-    video_link: '/uploads/vovapain.mp4',
+    video_link: '/uploads/vovapain_3.mp4',
   },
 }
 
