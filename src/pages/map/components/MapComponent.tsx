@@ -571,9 +571,9 @@ export default function MapComponent() {
               <Box marginTop={'15px'}>
                 <Tooltip title="Суммарно на всех стримах">
                   <span>
-                    {totalOnline}
+                    До Аукуса 4
                     <br />
-                    зрителей
+                    ??? дней
                   </span>
                 </Tooltip>
               </Box>
