@@ -6,6 +6,7 @@ import { fetchPlayers, fetchStats } from 'utils/api'
 import { Player } from 'utils/types'
 import PlayerStatMobile from './PlayerStatMobile'
 import { Link } from 'react-router-dom'
+import { getPlayerScore } from './Leaderboard'
 
 export default function LeaderboardMobile() {
   const { headerSize } = useScreenSize()
@@ -41,7 +42,7 @@ export default function LeaderboardMobile() {
   )
 
   const playersStatsSorted = playersStats.sort((a, b) => {
-    return b.map_position - a.map_position
+    return getPlayerScore(b) - getPlayerScore(a)
   })
 
   return (
