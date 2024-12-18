@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { getPlayerColor, Player, PlayerUrl } from 'src/utils/types'
+import ImageWithPreloader from 'components/ImageWithPreloader';
 import FlashIcon from 'assets/icons/flash.svg?react'
 import CrownImage from 'assets/icons/crown.svg?react'
 import MedalImage from 'assets/icons/medal.svg?react'
@@ -167,13 +168,7 @@ export default function PlayerPresentation({ player, place }: Props) {
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
-        <Box
-          // style={{ backgroundColor: playerColor }}
-          width="900px"
-          height="470px"
-        >
-          <img src={playerContent.image} style={{ height: '470px' }} />
-        </Box>
+        <ImageContainer imageLink={playerContent.image} />
       </Box>
       <Box
         marginTop="200px"
@@ -233,6 +228,22 @@ function VideoPlayer({ videoLink }: VideoProps) {
         <source src={videoLink} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+    </Box>
+  )
+}
+
+type ImageProps = {
+  imageLink: string
+}
+
+function ImageContainer({ imageLink }: ImageProps) {
+  return (
+    <Box
+      // style={{ backgroundColor: playerColor }}
+      width="900px"
+      height="500px"
+    >
+      <ImageWithPreloader key={imageLink} src={imageLink} imgStyle={{ height: '500px' }} />
     </Box>
   )
 }
