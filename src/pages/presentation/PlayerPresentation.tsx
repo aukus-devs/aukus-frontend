@@ -12,6 +12,11 @@ import TimofeyImage from 'assets/presentation/timofey.png'
 import VovapainImage from 'assets/presentation/pain.png'
 import RoadhouseImage from 'assets/presentation/roadhouse.png'
 import MelharucosImage from 'assets/presentation/melharucos.png'
+import PradenImage from 'assets/presentation/praden.png'
+import BrowjeyImage from 'assets/presentation/browjey.png'
+import Keliq_qImage from 'assets/presentation/keliq_q.png'
+import UncleBjornImage from 'assets/presentation/unclebjorn.png'
+import KrabickImage from 'assets/presentation/krabick.png'
 
 type PlayerContentType = {
   image: string
@@ -25,19 +30,19 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: 'Тише едешь — дальше будешь',
     nomination_title:
       'Превосходство человеческого интеллекта над искусственным',
-    image: '',
+    image: BrowjeyImage,
     video_link: '/uploads/browjey.mp4',
   },
   keliq_q: {
     funny_title: 'He took the prize for style, not speed (most points)',
     nomination_title: 'Больше всего пройдённых игр',
-    image: '',
+    image: Keliq_qImage,
     video_link: '/uploads/keliQ_Q.mp4',
   },
   krabick: {
     funny_title: 'Any% speedrun aukus',
     nomination_title: 'Через тернии звёздам, минуя дропы и змейки',
-    image: '',
+    image: KrabickImage,
     video_link: '/uploads/krabick2.mp4',
   },
   lasqa: {
@@ -61,7 +66,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   praden: {
     funny_title: 'Where he passed... A star fell there',
     nomination_title: 'Тихий проходэн',
-    image: '',
+    image: PradenImage,
     video_link: '/uploads/praden.mp4',
   },
   roadhouse: {
@@ -85,7 +90,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
     nomination_title: 'Везунчик наоборот',
-    image: '',
+    image: UncleBjornImage,
     video_link: '/uploads/unclebjorn3.mp4',
   },
   uselessmouth: {
