@@ -51,7 +51,7 @@ export default function Closing({ players, sponsors }: Props) {
     ) as HTMLAudioElement | null
     if (music && music.paused) {
       music.currentTime = 0
-      music.volume = 0.03
+      music.volume = 0.05
       music.play()
     }
   }, [])
