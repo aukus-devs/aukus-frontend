@@ -74,17 +74,6 @@ export default function Leaderboard() {
   const orderedByPosition = [...orderedByScore]
 
   // if there is a winner he should be at the top of the list
-  if (winner) {
-    const winnerIndex = orderedByPosition.findIndex(
-      (player) => player.id === winner.id
-    )
-    if (winnerIndex > 0) {
-      const winnerStats = orderedByPosition[winnerIndex]
-      orderedByPosition.splice(winnerIndex, 1)
-      orderedByPosition.unshift(winnerStats)
-    }
-  }
-
   if (winner2) {
     const winnerIndex = orderedByPosition.findIndex(
       (player) => player.id === winner2.id
@@ -96,7 +85,16 @@ export default function Leaderboard() {
     }
   }
 
-
+  if (winner) {
+    const winnerIndex = orderedByPosition.findIndex(
+      (player) => player.id === winner.id
+    )
+    if (winnerIndex > 0) {
+      const winnerStats = orderedByPosition[winnerIndex]
+      orderedByPosition.splice(winnerIndex, 1)
+      orderedByPosition.unshift(winnerStats)
+    }
+  }
 
   const playersStatsSorted = playersStats.sort((a, b) => {
     if (orderBy === 'name') {
