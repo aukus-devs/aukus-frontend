@@ -35,7 +35,7 @@ export default function usePlayersScores(): ReturnType {
   )
 
   // find player with map position > 101
-  const winner = players.find((player) => player.map_position > 101 && player.name === 'krabick')
+  const winner = players.find((player) => player.map_position > 101 && player.name.toLowerCase() === 'krabick')
   let winner2
   if (winner) {
     winner2 = players.find((player) => player.map_position > 101 && player.id != winner.id)

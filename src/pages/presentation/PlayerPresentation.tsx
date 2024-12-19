@@ -28,14 +28,14 @@ type PlayerContentType = {
 
 const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   browjey: {
-    funny_title: 'Тише едешь — дальше будешь',
+    funny_title: 'Fell but rose',
     nomination_title:
       'Превосходство человеческого интеллекта над искусственным',
     image: BrowjeyImage,
     video_link: '/uploads/browjey.mp4',
   },
   keliq_q: {
-    funny_title: 'He took the prize for style, not speed (most points)',
+    funny_title: 'True connoisseur of games',
     nomination_title: 'Больше всего пройдённых игр',
     image: Keliq_qImage,
     video_link: '/uploads/keliQ_Q.mp4',
@@ -65,7 +65,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
-    funny_title: 'Where he passed... A star fell there',
+    funny_title: 'He took the prize for style, not speed (most points)',
     nomination_title: 'Тихий проходэн',
     image: PradenImage,
     video_link: '/uploads/praden.mp4',
@@ -97,7 +97,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   uselessmouth: {
     funny_title: 'INVISIBLE',
     nomination_title:
-      'Прошел "Jump King" за два часа, чтобы не слушать шутки о водолазах',
+      'Прошел Jump King за три часа, чтобы не слушать шутки о водолазах',
     image: UselessMouthImage,
     video_link: '/uploads/UselessMouth0.mp4',
   },
