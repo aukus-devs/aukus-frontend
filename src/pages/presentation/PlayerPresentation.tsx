@@ -35,8 +35,8 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     video_link: '/uploads/browjey2.mp4',
   },
   keliq_q: {
-    funny_title: 'True connoisseur of games',
-    nomination_title: 'Больше всего пройдённых игр',
+    funny_title: 'The most completed games',
+    nomination_title: 'Истинный ценитель игр',
     image: Keliq_qImage,
     video_link: '/uploads/keliQ_Q.mp4',
   },
@@ -65,8 +65,8 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     video_link: '/uploads/melharucos2.mp4',
   },
   praden: {
-    funny_title: 'He took the prize for style, not speed (most points)',
-    nomination_title: 'Тихий проходэн',
+    funny_title: 'Тихий проходэн',
+    nomination_title: 'За стиль, а не за скорость (больше всего очков)',
     image: PradenImage,
     video_link: '/uploads/praden.mp4',
   },
