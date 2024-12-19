@@ -34,8 +34,13 @@ export default function useEventState(): StateResult {
       : null
 
   let winner: Player | null = null
+  let winner2: Player | null = null
   if (playerWithMaxPosition && playerWithMaxPosition.map_position > 101) {
-    winner = playerWithMaxPosition
+    if(playerWithMaxPosition.name.toLowerCase() === "krabick") {
+      winner = playerWithMaxPosition
+    } else {
+      winner2 = playerWithMaxPosition
+    } 
   }
 
   const { data: winnerMoves } = useQuery({
