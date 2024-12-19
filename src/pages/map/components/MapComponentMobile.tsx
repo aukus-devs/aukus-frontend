@@ -12,7 +12,7 @@ import { formatSeconds } from './MapComponent'
 import LinkSpan from 'src/components/LinkSpan'
 
 const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
-const WINNER_LAST_MOVE_TIME = new Date('2024-12-16T12:22:12.000Z')
+const WINNER_LAST_MOVE_TIME = new Date('2024-12-16T12:02:12.000Z')
 const Winner = 'krabick'
 
 export default function MapComponentMobile() {
