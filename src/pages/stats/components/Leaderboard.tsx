@@ -40,7 +40,7 @@ export default function Leaderboard() {
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [orderBy, setOrderBy] = useState<HeaderType>(
-    load('leaderboardOrderBy', 'map_position')
+    load('leaderboardOrderBy', 'id')
   )
   const [order, setOrder] = useState<'asc' | 'desc'>(() => {
     if (orderBy === 'id') {

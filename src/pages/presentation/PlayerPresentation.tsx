@@ -32,7 +32,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     nomination_title:
       'Превосходство человеческого интеллекта над искусственным',
     image: BrowjeyImage,
-    video_link: '/uploads/browjey.mp4',
+    video_link: '/uploads/browjey2.mp4',
   },
   keliq_q: {
     funny_title: 'True connoisseur of games',
@@ -86,7 +86,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
     funny_title: "The fastest way to get an undertaker's license",
     nomination_title: 'Лучший гробовщик года',
     image: TimofeyImage,
-    video_link: '/uploads/timofey_new.mp4',
+    video_link: '/uploads/timofey3.mp4',
   },
   unclebjorn: {
     funny_title: 'Unlucky in snakes-ladders — lucky in love',
