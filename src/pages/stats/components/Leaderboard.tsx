@@ -50,7 +50,7 @@ export default function Leaderboard() {
     }
   })
 
-  const { players, playersStats, winner } = usePlayersScores()
+  const { players, playersStats, winner, winner2 } = usePlayersScores()
 
   if (!(playersStats.length > 0) || !(players.length > 0)) {
     if (Date.now() - fetchStart > 1000) {
@@ -84,6 +84,19 @@ export default function Leaderboard() {
       orderedByPosition.unshift(winnerStats)
     }
   }
+
+  if (winner2) {
+    const winnerIndex = orderedByPosition.findIndex(
+      (player) => player.id === winner2.id
+    )
+    if (winnerIndex > 0) {
+      const winnerStats = orderedByPosition[winnerIndex]
+      orderedByPosition.splice(winnerIndex, 1)
+      orderedByPosition.unshift(winnerStats)
+    }
+  }
+
+
 
   const playersStatsSorted = playersStats.sort((a, b) => {
     if (orderBy === 'name') {

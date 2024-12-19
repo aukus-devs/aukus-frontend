@@ -128,8 +128,15 @@ export default function MapComponent() {
 
   const playerWithMaxPosition =
     players.length > 0
-      ? players.reduce((prev, current) =>
-          prev.map_position > current.map_position ? prev : current
+      ? players.find(
+          player => player.name.toLowerCase() === 'krabick'
+        )
+      : null
+
+  const playerWithMaxPosition2 =
+    players.length > 0
+      ? players.find(
+          player => player.name.toLowerCase() === 'praden'
         )
       : null
 
@@ -138,12 +145,24 @@ export default function MapComponent() {
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
 
+  const winner2Found =
+    !timelapseEnabled &&
+    playerWithMaxPosition2 &&
+    playerWithMaxPosition2.map_position > 101
+
   let topPlayers: Player[] = []
   let winner: Player | null = null
+  let winner2: Player | null = null
   if (winnerFound) {
     topPlayers.push(playerWithMaxPosition)
     winner = playerWithMaxPosition
   }
+
+  if (winner2Found) {
+    topPlayers.push(playerWithMaxPosition2)
+    winner2 = playerWithMaxPosition2
+  }
+
 
   const deadlineReached = finalCountdown <= 0 || winnerCountdown <= 0
 
@@ -223,10 +242,7 @@ export default function MapComponent() {
   if (playersStats.length > 0) {
     const statsByScore = playersStats
       .filter((player) => {
-        if (winner) {
-          return player.id !== winner.id
-        }
-        return true
+        return (!winner || player.id !== winner.id) && (!winner2 || player.id !== winner2.id);
       })
       .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
 
@@ -387,11 +403,14 @@ export default function MapComponent() {
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
-  // console.log('winner', winner, topPlayers)
+  console.log('winner', winner, winner2, topPlayers)
   const animating = startWinAnimation || moveParams !== null
 
   const currentPlayerWinner =
     currentPlayer && winner && currentPlayer.id === winner.id
+
+  const currentPlayerWinner2 =
+    currentPlayer && winner2 && currentPlayer.id === winner2.id
 
   const stopActions = showWinScreen || animating || currentPlayerWinner
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
@@ -582,6 +601,15 @@ export default function MapComponent() {
               closePopup={closePopups}
             />
           )}
+          {winner2 && !showWinScreen && (
+            <PlayerWinnerIcon
+              player={winner2}
+              position={2}
+              isMoving
+              closePopup={closePopups}
+            />
+          )}
+
           {showWinScreen && topPlayers.length > 2 && (
             <>
               <PlayerWinnerIcon
