@@ -104,7 +104,14 @@ export type MoveParams = {
   cellFrom?: number
 }
 
-export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
+export type Page =
+  | 'map'
+  | 'players'
+  | 'player'
+  | 'about'
+  | 'rules'
+  | 'stats'
+  | 'tests'
 
 export const Color = {
   greyLight: '#414141',

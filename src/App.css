@@ -275,3 +275,52 @@ div#root {
     background-color: white !important;
   }
 }
+
+.MuiLinearProgress-bar {
+  transition: none !important;
+}
+
+/* cube rotations */
+.cube-container {
+  perspective: 400px;
+}
+
+.cube {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transform-style: preserve-3d;
+  /* animation: rotateCube 5s infinite linear; */
+}
+
+.cube > .face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: #0080f0;
+  border: 1px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cube > .front {
+  transform: rotateY(0deg) translateZ(50px);
+}
+.cube > .back {
+  transform: rotateY(180deg) translateZ(50px);
+}
+.cube > .left {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+.cube > .right {
+  transform: rotateY(90deg) translateZ(50px);
+}
+.cube > .top {
+  transform: rotateX(90deg) translateZ(50px);
+}
+.cube > .bottom {
+  transform: rotateX(-90deg) translateZ(50px);
+}
