@@ -15,7 +15,7 @@ import {
 } from '@mui/icons-material'
 import { Box, Button, ButtonProps, TextField } from '@mui/material'
 import { useCallback, useState } from 'react'
-import { Editor, Transforms } from 'slate'
+import { Descendant, Editor, Transforms } from 'slate'
 import { Color } from 'utils/types'
 
 import { createEditor, Element as ElementClass } from 'slate'
@@ -31,8 +31,9 @@ import {
   SlateBlockFormat,
   SlateElement,
   SlateText,
+  SlateTextAlign,
   SlateTextFormat,
-} from 'src/utils/declaration'
+} from 'src/types/declaration'
 
 const initialValue: SlateElement[] = [
   {
@@ -84,7 +85,7 @@ export function RichEditor() {
   const [showLinkEditor, setShowLinkEditor] = useState(false)
   const isLinkActive = isMarkActive(editor, 'link')
 
-  const handleChange = (value: SlateElement[]) => {
+  const handleChange = (value: Descendant[]) => {
     const isAstChange = editor.operations.some(
       (op) => 'set_selection' !== op.type
     )
@@ -226,7 +227,7 @@ function Element({
   children: React.ReactNode[]
   element: SlateElement
 }) {
-  const style = { textAlign: element.align }
+  const style = { textAlign: element.align ?? 'left' }
   switch (element.type) {
     case 'block-quote':
       return (
@@ -328,8 +329,8 @@ function Toolbar({ children }: ToolbarProps) {
 
 const isBlockActive = (
   editor: Editor,
-  format: SlateBlockFormat,
-  blockType = 'type'
+  format: SlateBlockFormat | SlateTextAlign,
+  blockType: 'align' | 'type' = 'type'
 ) => {
   const { selection } = editor
   if (!selection) return false
@@ -347,7 +348,10 @@ const isBlockActive = (
   return !!match
 }
 
-const toggleBlock = (editor: Editor, format: SlateBlockFormat) => {
+const toggleBlock = (
+  editor: Editor,
+  format: SlateBlockFormat | SlateTextAlign
+) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -366,29 +370,38 @@ const toggleBlock = (editor: Editor, format: SlateBlockFormat) => {
   let newProperties: Partial<SlateElement>
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
-      align: isActive ? undefined : format,
+      align: isActive ? undefined : (format as SlateTextAlign),
     }
   } else {
     newProperties = {
-      type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+      type: isActive
+        ? 'paragraph'
+        : isList
+          ? 'list-item'
+          : (format as SlateBlockFormat),
     }
   }
   Transforms.setNodes<SlateElement>(editor, newProperties)
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] }
+    const block = { type: format as SlateBlockFormat, children: [] }
     Transforms.wrapNodes(editor, block)
   }
 }
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
-const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
+const TEXT_ALIGN_TYPES: (SlateTextAlign | SlateBlockFormat)[] = [
+  'left',
+  'center',
+  'right',
+  'justify',
+]
 
 function BlockButton({
   format,
   icon,
 }: {
-  format: SlateBlockFormat
+  format: SlateBlockFormat | SlateTextAlign
   icon: React.ElementType
 }) {
   const editor = useSlate()
