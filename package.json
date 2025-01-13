@@ -33,6 +33,8 @@
     "react-konva": "^18.2.10",
     "react-router-dom": "^6.26.1",
     "react-spring": "^9.7.4",
+    "slate": "^0.112.0",
+    "slate-react": "^0.112.0",
     "styled-components": "^6.1.12",
     "use-image": "^1.1.1",
     "vite-plugin-svgr": "^4.2.0",

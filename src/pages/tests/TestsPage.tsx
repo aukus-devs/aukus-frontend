@@ -5,6 +5,7 @@ import RollVerifier from './RollVerifier'
 import RotatingCube from './RotatingCube'
 import CubesGroup from './CubesGroup'
 import DiceRollContainer from './DiceRollContainer'
+import { RichEditor } from './RichEditor'
 
 export default function TestsPage() {
   return (
@@ -13,6 +14,9 @@ export default function TestsPage() {
       <DiceRollContainer />
       <Box display="flex" justifyContent="center" marginTop="50px">
         <RollVerifier />
+      </Box>
+      <Box display="flex" justifyContent="center" marginTop="50px">
+        <RichEditor />
       </Box>
     </Box>
   )
