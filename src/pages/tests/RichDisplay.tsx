@@ -1,4 +1,4 @@
-import { SlateElement, SlateText } from 'src/types/declaration'
+import { SlateElement, SlateText } from 'src/types/slate'
 
 type Props = {
   data: SlateElement[]
