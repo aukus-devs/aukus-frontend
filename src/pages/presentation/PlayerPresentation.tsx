@@ -42,7 +42,7 @@ const PlayersContent: { [k in PlayerUrl]: PlayerContentType } = {
   },
   krabick: {
     funny_title: 'Any% speedrun aukus',
-    nomination_title: 'Через тернии звёздам, минуя дропы и змейки',
+    nomination_title: 'Через тернии к звёздам, минуя дропы и змейки',
     image: KrabickImage,
     video_link: '/uploads/krabick2.mp4',
   },
