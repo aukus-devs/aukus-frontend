@@ -13,7 +13,7 @@ import {
   LooksOne,
   LooksTwo,
 } from '@mui/icons-material'
-import { Box, Button, ButtonProps, TextField } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { Descendant, Editor, Transforms } from 'slate'
 import { Color } from 'utils/types'
@@ -33,7 +33,7 @@ import {
   SlateText,
   SlateTextAlign,
   SlateTextFormat,
-} from 'src/types/declaration'
+} from 'src/types/slate'
 
 const initialValue: SlateElement[] = [
   {
