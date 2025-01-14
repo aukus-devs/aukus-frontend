@@ -2,7 +2,7 @@ name: Rollup
 
 on:
   push:
-    branches: ['prod']
+    branches: ['v2024/prod']
 
 jobs:
   build_and_deploy:
@@ -46,34 +46,16 @@ jobs:
         if: success()
         with:
           severity: info
-          details: Aukus prod frontend build and upload success!
+          details: Aukus v2024 prod frontend build and upload success!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Success to telegram
-        if: success()
-        run: |
-          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-          COMMIT_TEXT=$(git log --oneline -n 1)
-          msg_text="✅Aukus prod frontend build and  upload success!%0AAuthor: $COMMIT_AUTHOR %0ACommit: $COMMIT_TEXT"
-          curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-          -d "message_thread_id=20&chat_id=-1002471795184_20&text=${msg_text}&"
-
-      - name: Aukus prod frontend build and upload failure!
+      - name: Aukus v2024 prod frontend build and upload failure!
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
           details: Aukus prod frontend build and upload failure!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-      - name: Failure to telegram
-        if: failure()
-        run: |
-          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-          COMMIT_TEXT=$(git log --oneline -n 1)
-          msg_text="⚠️Aukus prod frontend build and failure!%0AAuthor: $COMMIT_AUTHOR %0ACommit: $COMMIT_TEXT"
-          curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-          -d "message_thread_id=20&chat_id=-1002471795184_20&text=${msg_text}&"
