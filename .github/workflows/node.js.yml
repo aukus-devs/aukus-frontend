@@ -41,7 +41,7 @@ jobs:
           command_timeout: 1m
           script: cd "/home/aukus/deploy/frontend/prod" && rm -rf build && mkdir build && mv deploy_build/dist/* ./build/ && rm -r deploy_build/dist
 
-      - name: Aukus prod frontend build and upload success!
+      - name: Aukus v2024 prod frontend build and upload success!
         uses: rjstone/discord-webhook-notify@v1
         if: success()
         with:
@@ -57,5 +57,5 @@ jobs:
         if: failure()
         with:
           severity: error
-          details: Aukus prod frontend build and upload failure!
+          details: Aukus v2024 prod frontend build and upload failure!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
