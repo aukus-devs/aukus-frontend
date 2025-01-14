@@ -41,21 +41,21 @@ jobs:
           command_timeout: 1m
           script: cd "/home/aukus/deploy/frontend/2025" && rm -rf build && mkdir build && mv deploy_build/dist/* ./build/ && rm -r deploy_build/dist
 
-      - name: Aukus v2025 frontend build and upload success!
+      - name: Aukus v2025 prod frontend build and upload success!
         uses: rjstone/discord-webhook-notify@v1
         if: success()
         with:
           severity: info
-          details: Aukus v2025 frontend build and upload success!
+          details: Aukus v2025 prod frontend build and upload success!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Aukus v2025 frontend build and upload failure!
+      - name: Aukus v2025 prod frontend build and upload failure!
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
-          details: Aukus v2025 frontend build and upload failure!
+          details: Aukus v2025 prod frontend build and upload failure!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
