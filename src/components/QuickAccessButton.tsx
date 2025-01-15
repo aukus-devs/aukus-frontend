@@ -20,9 +20,9 @@ export default function QuickAccessButton() {
   const onPlayerPage = playerHandle
 
   let firstButton = (
-    <Link to="/login">
+    <a href="/login">
       <Button>Логин</Button>
-    </Link>
+    </a>
   )
 
   if (user && user.role === 'player') {
