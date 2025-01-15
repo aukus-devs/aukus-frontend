@@ -11,29 +11,21 @@ import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
-import MultistreamButton from 'src/pages/players/components/MultistreamButton'
-import WheelButton from 'src/pages/rules/components/WheelButton'
 import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import useLocalStorage from 'src/context/useLocalStorage'
 import useEventState from 'src/context/useEventState'
+import QuickAccessButton from './QuickAccessButton'
 
 type Props = {
   currentPage: Page
   replaceMenuButtons?: React.ReactNode
-  rightSlot?: React.ReactNode
-  leftSlot?: React.ReactNode
 }
 
 // interval of 1 hour in ms
 const refreshInterval = 1000 * 60 * 60
 
-export default function MainMenu({
-  currentPage,
-  replaceMenuButtons,
-  rightSlot,
-  leftSlot,
-}: Props) {
+export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
   const currentUser = useUser()
   const { isMobile } = useScreenSize()
   const playerColor = currentUser?.url_handle
@@ -78,14 +70,6 @@ export default function MainMenu({
 
   if (isMobile) {
     return <MainMenuMobile currentPage={currentPage} />
-  }
-
-  if (!leftSlot && currentUser && !eventFinished) {
-    leftSlot = <WheelButton />
-  }
-
-    if (!rightSlot) {
-    rightSlot = <MultistreamButton />
   }
 
   return (
@@ -193,11 +177,9 @@ export default function MainMenu({
         >
           {replaceMenuButtons || (
             <>
-              {leftSlot && (
-                <Box marginRight={'30px'} position="absolute" right="100%">
-                  {leftSlot}
-                </Box>
-              )}
+              <Box marginRight={'30px'} position="absolute" right="100%">
+                <QuickAccessButton />
+              </Box>
 
               {eventFinished && (
                 <Link to="/presentation" style={{ marginRight: 10 }}>
@@ -265,12 +247,6 @@ export default function MainMenu({
                 </Button>
               </Link>
             </>
-          )}
-
-          {rightSlot && (
-            <Box marginLeft={'30px'} position="absolute" left="100%">
-              {rightSlot}
-            </Box>
           )}
         </Box>
       </Box>
