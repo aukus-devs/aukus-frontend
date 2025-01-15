@@ -58,7 +58,12 @@ export default function QuickAccessButton() {
         position="relative"
         onMouseLeave={() => setOpen(false)}
       >
-        <Button onClick={() => setOpen(!open)}>Быстрый доступ</Button>
+        <Button
+          onClick={() => setOpen(!open)}
+          onMouseOver={() => setOpen(true)}
+        >
+          Быстрый доступ
+        </Button>
         {open && (
           <Box
             position="absolute"
