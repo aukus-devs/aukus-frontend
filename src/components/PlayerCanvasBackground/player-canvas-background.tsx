@@ -14,7 +14,7 @@ import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'
 import { useMutation } from '@tanstack/react-query'
 import { resetPointaucToken } from 'utils/api'
-import  AddSquareIcon from 'assets/add-square.svg?react'
+import AddSquareIcon from 'assets/add-square.svg?react'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -42,7 +42,7 @@ function ImageSvg(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-function EditModeButton() {
+export function EditModeButton() {
   const { setIsEditMode } = usePlayerCanvasBackgroundContext()
 
   return (
@@ -145,12 +145,7 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
 
   return (
     <>
-      <MainMenu
-        currentPage="player"
-        replaceMenuButtons={controlButtons}
-        leftSlot={pointAucButton}
-        rightSlot={editButton}
-      />
+      <MainMenu currentPage="player" replaceMenuButtons={controlButtons} />
       {isEditMode ? (
         <CanvasStage
           {...props}
