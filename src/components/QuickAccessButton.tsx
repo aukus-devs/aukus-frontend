@@ -62,9 +62,11 @@ export default function QuickAccessButton() {
           <Box
             position="absolute"
             top="100%"
-            left="0px"
-            width="250px"
+            left="-50px"
+            width="300px"
             paddingTop="30px"
+            paddingBottom="30px"
+            paddingLeft="50px"
           >
             <Box>{firstButton}</Box>
             {user && (
