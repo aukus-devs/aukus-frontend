@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const targetDate = new Date('2024-12-25T20:00:00+03:00')
+const targetDate = new Date('2025-11-01T20:00:00+03:00')
 
 export function getEventSecondsLeft() {
   return Math.floor(
