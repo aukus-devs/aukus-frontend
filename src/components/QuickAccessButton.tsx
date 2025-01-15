@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useUser } from 'src/context/UserProvider'
+import WheelIcon from 'assets/icons/wheel.svg?react'
 import DifficultyWheelModal from './wheels/DifficultyWheelModal'
 import SheikhWheelModal from './wheels/SheikhWheelModal'
 import MultistreamButton from 'src/components/quick_menu/MultistreamButton'
@@ -73,11 +74,25 @@ export default function QuickAccessButton() {
               <>
                 <Box marginTop={buttonsMargin}>
                   <Button onClick={openDifficultyWheel}>
+                    <WheelIcon
+                      style={{
+                        marginRight: '8px',
+                        width: '19px',
+                        height: '19px',
+                      }}
+                    />
                     Колесо сложности
                   </Button>
                 </Box>
                 <Box marginTop={buttonsMargin}>
                   <Button onClick={openSheikhMomentWheel}>
+                    <WheelIcon
+                      style={{
+                        marginRight: '8px',
+                        width: '19px',
+                        height: '19px',
+                      }}
+                    />
                     Колесо шейх-момента
                   </Button>
                 </Box>
