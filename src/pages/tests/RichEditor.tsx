@@ -1,4 +1,6 @@
 import {
+  Close,
+  DeleteForever,
   FormatAlignCenter,
   FormatAlignJustify,
   FormatAlignLeft,
@@ -10,15 +12,17 @@ import {
   FormatQuote,
   FormatUnderlined,
   Link as LinkIcon,
+  Looks3,
   LooksOne,
   LooksTwo,
 } from '@mui/icons-material'
-import { Box, Button, TextField } from '@mui/material'
-import { useCallback, useState } from 'react'
-import { Descendant, Editor, Transforms } from 'slate'
+import { Box, Button, TextField, Tooltip } from '@mui/material'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Descendant, Editor, Path, Transforms } from 'slate'
+import { withHistory } from 'slate-history'
 import { Color } from 'utils/types'
 
-import { createEditor, Element as ElementClass } from 'slate'
+import { createEditor, Element as ElementClass, Range } from 'slate'
 import {
   Slate,
   Editable,
@@ -26,16 +30,23 @@ import {
   useSlate,
   RenderElementProps,
   RenderLeafProps,
+  ReactEditor,
+  useSlateStatic,
+  useSelected,
+  useFocused,
 } from 'slate-react'
 import {
+  LinkElement,
   SlateBlockFormat,
   SlateElement,
   SlateText,
   SlateTextAlign,
   SlateTextFormat,
 } from 'src/types/slate'
+import debounce from 'lodash/debounce'
+import { createPortal } from 'react-dom'
 
-const initialValue: SlateElement[] = [
+const defaultValue: SlateElement[] = [
   {
     type: 'paragraph',
     children: [
@@ -71,8 +82,14 @@ const initialValue: SlateElement[] = [
   },
 ]
 
-export function RichEditor() {
-  const [editor] = useState(() => withReact(createEditor()))
+type Props = {
+  initialValue?: SlateElement[]
+}
+
+export function RichEditor({ initialValue }: Props) {
+  const [editor] = useState(() =>
+    withLinks(withHistory(withReact(createEditor())))
+  )
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -82,9 +99,6 @@ export function RichEditor() {
     []
   )
 
-  const [showLinkEditor, setShowLinkEditor] = useState(false)
-  const isLinkActive = isMarkActive(editor, 'link')
-
   const handleChange = (value: Descendant[]) => {
     const isAstChange = editor.operations.some(
       (op) => 'set_selection' !== op.type
@@ -92,49 +106,89 @@ export function RichEditor() {
     if (isAstChange) {
       // Save the value to Local Storage.
       const content = JSON.stringify(value)
-      localStorage.setItem('content', content)
+      localStorage.setItem('rich_content', content)
       console.log(content)
     }
+  }
+
+  const handleLinkClick = () => {
+    insertLink(editor, 'https://test.com')
   }
 
   return (
     <Box width="700px" height="550px" border="0px solid white">
       <Slate
         editor={editor}
-        initialValue={initialValue}
+        initialValue={initialValue ?? defaultValue}
         onChange={handleChange}
       >
         <Toolbar>
-          <MarkButton format="bold" icon={FormatBold} />
-          <MarkButton format="italic" icon={FormatItalic} />
-          <MarkButton format="underline" icon={FormatUnderlined} />
-          <MarkButton format="code" icon={FormatQuote} />
-          <MarkButton format="link" icon={LinkIcon} />
-          <BlockButton format="heading-one" icon={LooksOne} />
-          <BlockButton format="heading-two" icon={LooksTwo} />
-          <BlockButton format="block-quote" icon={FormatQuote} />
-          <BlockButton format="numbered-list" icon={FormatListNumbered} />
-          <BlockButton format="bulleted-list" icon={FormatListBulleted} />
-          <BlockButton format="left" icon={FormatAlignLeft} />
-          <BlockButton format="center" icon={FormatAlignCenter} />
-          <BlockButton format="right" icon={FormatAlignRight} />
-          <BlockButton format="justify" icon={FormatAlignJustify} />
-
+          <MarkButton format="bold" icon={FormatBold} tooltip="жирный" />
+          <MarkButton format="italic" icon={FormatItalic} tooltip="наклон" />
+          <MarkButton
+            format="underline"
+            icon={FormatUnderlined}
+            tooltip="подчеркивание"
+          />
+          {/* <MarkButton format="code" icon={FormatQuote}  /> */}
+          <ActiveButton onClick={handleLinkClick} tooltip="вставить ссылку">
+            <LinkIcon sx={{ width: '20px' }} />
+          </ActiveButton>
+          <BlockButton
+            format="heading-one"
+            icon={LooksOne}
+            tooltip="большой заголовок"
+          />
+          <BlockButton
+            format="heading-two"
+            icon={LooksTwo}
+            tooltip="средний заголовок"
+          />
+          <BlockButton
+            format="heading-three"
+            icon={Looks3}
+            tooltip="маленький заголовок"
+          />
+          {/* <BlockButton format="block-quote" icon={FormatQuote} /> */}
+          <BlockButton
+            format="numbered-list"
+            icon={FormatListNumbered}
+            tooltip="нумерованный список"
+          />
+          <BlockButton
+            format="bulleted-list"
+            icon={FormatListBulleted}
+            tooltip="список с точками"
+          />
+          <BlockButton
+            format="left"
+            icon={FormatAlignLeft}
+            tooltip="выровнять влево"
+          />
+          <BlockButton
+            format="center"
+            icon={FormatAlignCenter}
+            tooltip="выроврянть по центру"
+          />
+          <BlockButton
+            format="right"
+            icon={FormatAlignRight}
+            tooltip="выровнять вправо"
+          />
+          {/* <BlockButton format="justify" icon={FormatAlignJustify} tooltip="" /> */}
           <Button>Соханить</Button>
           <br />
         </Toolbar>
-        {isLinkActive && (
-          <Toolbar>
-            <TextField />
-          </Toolbar>
-        )}
         <Editable
+          className="editor-container"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           style={{
             height: '500px',
             overflowY: 'auto',
             border: '1px white solid',
+            lineHeight: '1.2',
+            position: 'relative',
           }}
         />
       </Slate>
@@ -163,12 +217,14 @@ function ActiveButton({
   onClick,
   onMouseDown,
   onMouseUp,
+  tooltip,
 }: {
   active?: boolean
   children: React.ReactNode
   onClick?: (event: React.MouseEvent) => void
   onMouseDown?: (event: React.MouseEvent) => void
   onMouseUp?: (event: React.MouseEvent) => void
+  tooltip?: string
 }) {
   let color = Color.greyLight
   if (active) {
@@ -176,32 +232,36 @@ function ActiveButton({
   }
 
   return (
-    <Box
-      onClick={onClick}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      sx={{
-        padding: '0px',
-        backgroundColor: color,
-        height: '30px',
-        width: '30px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
-      }}
-    >
-      {children}
-    </Box>
+    <Tooltip title={tooltip}>
+      <Box
+        onClick={onClick}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        sx={{
+          padding: '0px',
+          backgroundColor: color,
+          height: '30px',
+          width: '30px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          cursor: 'pointer',
+        }}
+      >
+        {children}
+      </Box>
+    </Tooltip>
   )
 }
 
 const MarkButton = ({
   format,
   icon,
+  tooltip,
 }: {
   format: SlateTextFormat
   icon: React.ElementType
+  tooltip: string
 }) => {
   const editor = useSlate()
   const IconElement = icon
@@ -212,6 +272,7 @@ const MarkButton = ({
         event.preventDefault()
         toggleMark(editor, format)
       }}
+      tooltip={tooltip}
     >
       <IconElement sx={{ width: '20px' }} />
     </ActiveButton>
@@ -228,7 +289,18 @@ function Element({
   element: SlateElement
 }) {
   const style = { textAlign: element.align ?? 'left' }
+  const textStyle = {
+    lineHeight: '1.2',
+    marginTop: '0.8em',
+    marginBottom: '0.8em',
+  }
   switch (element.type) {
+    case 'link':
+      return (
+        <Link attributes={attributes} element={element}>
+          {children}
+        </Link>
+      )
     case 'block-quote':
       return (
         <blockquote style={style} {...attributes}>
@@ -243,15 +315,21 @@ function Element({
       )
     case 'heading-one':
       return (
-        <h1 style={style} {...attributes}>
+        <h1 style={{ ...style, ...textStyle }} {...attributes}>
           {children}
         </h1>
       )
     case 'heading-two':
       return (
-        <h2 style={style} {...attributes}>
+        <h2 style={{ ...style, ...textStyle }} {...attributes}>
           {children}
         </h2>
+      )
+    case 'heading-three':
+      return (
+        <h3 style={{ ...style, ...textStyle }} {...attributes}>
+          {children}
+        </h3>
       )
     case 'list-item':
       return (
@@ -267,7 +345,15 @@ function Element({
       )
     default:
       return (
-        <p style={style} {...attributes}>
+        <p
+          style={{
+            ...style,
+            lineHeight: '1.2',
+            marginTop: '1em',
+            marginBottom: '1em',
+          }}
+          {...attributes}
+        >
           {children}
         </p>
       )
@@ -283,27 +369,22 @@ function Leaf({
   children: React.ReactNode
   leaf: Omit<SlateText, 'text'>
 }) {
-  if (leaf.link) {
-    children = <a href={leaf.link}>{children}</a>
-  }
+  const style: React.CSSProperties = { fontWeight: '400' }
   if (leaf.bold) {
-    children = <span style={{ fontWeight: 700 }}>{children}</span>
+    style.fontWeight = '700'
   }
-
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-
   if (leaf.italic) {
-    children = <em>{children}</em>
+    style.fontStyle = 'italic'
   }
-
   if (leaf.underline) {
-    children = <u>{children}</u>
+    style.textDecoration = 'underline'
+  }
+  if (leaf.code) {
+    style.fontFamily = 'monospace'
   }
 
   return (
-    <span {...attributes} style={{ fontWeight: 400 }}>
+    <span {...attributes} style={style}>
       {children}
     </span>
   )
@@ -400,9 +481,11 @@ const TEXT_ALIGN_TYPES: (SlateTextAlign | SlateBlockFormat)[] = [
 function BlockButton({
   format,
   icon,
+  tooltip,
 }: {
   format: SlateBlockFormat | SlateTextAlign
   icon: React.ElementType
+  tooltip: string
 }) {
   const editor = useSlate()
   const IconElement = icon
@@ -417,8 +500,211 @@ function BlockButton({
         event.preventDefault()
         toggleBlock(editor, format)
       }}
+      tooltip={tooltip}
     >
       <IconElement />
     </ActiveButton>
+  )
+}
+
+const createLinkNode = (href: string, text: string) =>
+  ({
+    type: 'link',
+    url: href,
+    children: [{ text }],
+  }) as LinkElement
+
+const removeLink = (editor: Editor, opts = {}) => {
+  Transforms.unwrapNodes(editor, {
+    ...opts,
+    match: (n) =>
+      !Editor.isEditor(n) && ElementClass.isElement(n) && n.type === 'link',
+  })
+}
+
+const insertLink = (editor: Editor, url: string) => {
+  if (!url) return
+
+  const { selection } = editor
+  const link = createLinkNode(url, 'New Link')
+
+  ReactEditor.focus(editor)
+
+  if (!!selection) {
+    const [parentNode, parentPath] = Editor.parent(
+      editor,
+      selection.focus?.path
+    )
+
+    const parentElement = parentNode as SlateElement
+
+    // Remove the Link node if we're inserting a new link node inside of another
+    // link.
+    if (parentElement.type === 'link') {
+      removeLink(editor)
+    }
+
+    if (editor.isVoid(parentElement)) {
+      // Insert the new link after the void node
+      Transforms.insertNodes(editor, createParagraphNode([link]), {
+        at: Path.next(parentPath),
+        select: true,
+      })
+    } else if (Range.isCollapsed(selection)) {
+      // Insert the new link in our last known location
+      Transforms.insertNodes(editor, link, { select: true })
+    } else {
+      // Wrap the currently selected range of text into a Link
+      Transforms.wrapNodes(editor, link, { split: true })
+      // Remove the highlight and move the cursor to the end of the highlight
+      Transforms.collapse(editor, { edge: 'end' })
+    }
+  } else {
+    // Insert the new link node at the bottom of the Editor when selection
+    // is falsey
+    Transforms.insertNodes(editor, createParagraphNode([link]))
+  }
+}
+
+const updateLink = (editor: Editor, newUrl: string) => {
+  if (!newUrl) return
+
+  const { selection } = editor
+
+  if (!selection) return
+
+  // Find the link node in the current selection
+  const [linkNode, linkPath] =
+    Editor.above(editor, {
+      at: selection,
+      match: (n) => ElementClass.isElement(n) && n.type === 'link',
+    }) || []
+
+  if (!linkNode) {
+    console.warn('No link node found in the current selection.')
+    return
+  }
+
+  // Update the URL of the existing link
+  Transforms.setNodes(editor, { url: newUrl }, { at: linkPath })
+}
+
+export const createParagraphNode = (children: SlateElement[]) =>
+  ({
+    type: 'paragraph',
+    children,
+  }) as SlateElement
+
+const withLinks = (editor: Editor) => {
+  const { isInline } = editor
+
+  editor.isInline = (element) =>
+    element.type === 'link' ? true : isInline(element)
+
+  return editor
+}
+
+type LinkParams = {
+  attributes: Record<string, any>
+  element: LinkElement
+  children: React.ReactNode
+}
+
+const Link = ({ attributes, element, children }: LinkParams) => {
+  const editor = useSlateStatic()
+  const selected = useSelected()
+  const focused = useFocused()
+
+  const [linkValue, setLinkValue] = useState(element.url)
+  const [popupPosition, setPopupPosition] = useState<{
+    top: number
+    left: number
+  }>({
+    top: 0,
+    left: 0,
+  })
+  const linkRef = useRef<HTMLAnchorElement | null>(null)
+
+  const debounceLink = useCallback(
+    debounce((value: string) => {
+      updateLink(editor, value)
+    }, 300),
+    []
+  )
+
+  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setLinkValue(value)
+    debounceLink(value)
+  }
+
+  const parentContainer = document.querySelector(
+    '.editor-container'
+  ) as HTMLElement
+
+  useEffect(() => {
+    if (selected && focused && linkRef.current) {
+      const linkRect = linkRef.current.getBoundingClientRect()
+      const parentContainer = document.querySelector(
+        '.editor-container'
+      ) as HTMLElement
+      const parentRect = parentContainer?.getBoundingClientRect()
+
+      if (parentRect) {
+        setPopupPosition({
+          top: linkRect.bottom - parentRect.top, // Offset from the parent container
+          left: linkRect.left - parentRect.left, // Offset from the parent container
+        })
+      }
+    }
+  }, [selected, focused])
+
+  return (
+    <span className="element-link">
+      <a
+        {...attributes}
+        href={element.url}
+        ref={linkRef}
+        target="_blank"
+        rel="noreferrer noopener"
+        style={{
+          color: Color.blueLight,
+          textDecoration: 'underline',
+          textDecorationColor: Color.blueLight,
+        }}
+      >
+        {children}
+      </a>
+      {selected &&
+        // focused &&
+        parentContainer &&
+        createPortal(
+          <Box
+            style={{
+              position: 'absolute',
+
+              top: `${popupPosition.top}px`,
+              left: `${popupPosition.left}px`,
+              backgroundColor: Color.greyLight,
+              // zIndex: 100,
+            }}
+            className="popup"
+            contentEditable={false}
+          >
+            <Box style={{ zIndex: 100, display: 'flex', alignItems: 'center' }}>
+              <TextField
+                fullWidth
+                style={{ width: '250px', border: '1px solid white' }}
+                value={linkValue}
+                onChange={handleLinkChange}
+              />
+              <Button variant="text" onClick={() => removeLink(editor)}>
+                <DeleteForever color="error" />
+              </Button>
+            </Box>
+          </Box>,
+          parentContainer
+        )}
+    </span>
   )
 }

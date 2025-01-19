@@ -8,27 +8,35 @@ export type SlateText = {
   italic?: boolean
   underline?: boolean
   code?: boolean
-  link?: string
 }
 
-export type SlateTextFormat = 'bold' | 'italic' | 'underline' | 'code' | 'link'
-
+export type SlateTextFormat = 'bold' | 'italic' | 'underline' | 'code'
 export type SlateTextAlign = 'left' | 'center' | 'right' | 'justify'
 
 export type SlateBlockFormat =
   | 'heading-one'
   | 'heading-two'
+  | 'heading-three'
   | 'block-quote'
   | 'numbered-list'
   | 'bulleted-list'
   | 'list-item'
   | 'paragraph'
 
-export type SlateElement = {
+type BlockElement = {
   type: SlateBlockFormat
+  children: (SlateText | SlateElement)[]
+  align?: SlateTextAlign
+}
+
+export type LinkElement = {
+  type: 'link'
+  url: string
   children: SlateText[]
   align?: SlateTextAlign
 }
+
+export type SlateElement = BlockElement | LinkElement
 
 declare module 'slate' {
   interface CustomTypes {

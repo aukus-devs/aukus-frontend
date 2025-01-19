@@ -6,8 +6,14 @@ import RotatingCube from './RotatingCube'
 import CubesGroup from './CubesGroup'
 import DiceRollContainer from './DiceRollContainer'
 import { RichEditor } from './RichEditor'
+import RichDisplay from './RichDisplay'
+import useLocalStorage from 'src/context/useLocalStorage'
+import { useState } from 'react'
 
 export default function TestsPage() {
+  const { load } = useLocalStorage()
+  const [richData] = useState(load('rich_content', []))
+
   return (
     <Box>
       <MainMenu currentPage="tests" />
@@ -16,7 +22,11 @@ export default function TestsPage() {
         <RollVerifier />
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
-        <RichEditor />
+        <RichEditor initialValue={richData.length > 0 ? richData : undefined} />
+      </Box>
+
+      <Box display="flex" justifyContent="center" marginTop="50px">
+        <RichDisplay data={richData} />
       </Box>
     </Box>
   )
