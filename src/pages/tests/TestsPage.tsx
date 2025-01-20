@@ -2,8 +2,6 @@ import { Box } from '@mui/material'
 import MainMenu from 'src/components/MainMenu'
 import RollVerifier from './RollVerifier'
 import DiceRollContainer from './DiceRollContainer'
-import { RichEditor } from '../rules/components/RichEditor'
-import RichDisplay from '../rules/components/RichDisplay'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { useState } from 'react'
 
@@ -17,13 +15,6 @@ export default function TestsPage() {
       <DiceRollContainer />
       <Box display="flex" justifyContent="center" marginTop="50px">
         <RollVerifier />
-      </Box>
-      <Box display="flex" justifyContent="center" marginTop="50px">
-        <RichEditor initialValue={richData.length > 0 ? richData : undefined} />
-      </Box>
-
-      <Box display="flex" justifyContent="center" marginTop="50px">
-        <RichDisplay data={richData} />
       </Box>
     </Box>
   )
