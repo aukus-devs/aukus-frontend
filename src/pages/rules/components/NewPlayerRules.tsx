@@ -6,6 +6,14 @@ import { SlateElement } from 'src/types/slate'
 import { useState } from 'react'
 import { RichEditor } from './RichEditor'
 
+const defaultRules: SlateElement[] = [
+  {
+    type: 'paragraph',
+    align: 'center',
+    children: [{ text: 'Загрузка правил...' }],
+  },
+]
+
 export default function PlayerRules() {
   const [mode, setMode] = useState<'view' | 'edit'>('view')
 
@@ -17,13 +25,7 @@ export default function PlayerRules() {
   })
 
   const rules = rulesData?.rules_data
-  let rulesParsed: SlateElement[] = [
-    {
-      type: 'paragraph',
-      align: 'center',
-      children: [{ text: 'Загрузка правил...' }],
-    },
-  ]
+  let rulesParsed: SlateElement[] = defaultRules
 
   if (rules) {
     try {
@@ -31,6 +33,12 @@ export default function PlayerRules() {
     } catch (e) {
       console.error('Error parsing rules:', e)
     }
+  }
+
+  // check if rules parsed into array with at least one element
+  if (!Array.isArray(rulesParsed) || rulesParsed.length === 0) {
+    console.error('Invalid rules data:', rulesParsed)
+    rulesParsed = defaultRules
   }
 
   if (mode === 'view') {
