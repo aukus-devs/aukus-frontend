@@ -75,7 +75,6 @@ export function RichEditor({ initialValue, onClose }: Props) {
   )
 
   const { mutate: saveRules } = useMutation({
-    queryKey: ['save_rules'],
     mutationFn: (rules: string) => updateRules(rules),
   })
 
