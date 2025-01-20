@@ -45,48 +45,23 @@ import {
 } from 'src/types/slate'
 import debounce from 'lodash/debounce'
 import { createPortal } from 'react-dom'
+import { useMutation } from '@tanstack/react-query'
+import { updateRules } from 'src/utils/api'
 
 const defaultValue: SlateElement[] = [
   {
     type: 'paragraph',
-    children: [
-      { text: 'This is editable ' },
-      { text: 'жирный', bold: true },
-      { text: ' text, ' },
-      { text: 'much', italic: true },
-      { text: ' better than a ' },
-      { text: '<textarea>', code: true },
-      { text: '!' },
-    ],
-  },
-  {
-    type: 'paragraph',
-    children: [
-      {
-        text: "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: 'bold', bold: true },
-      {
-        text: ', or add a semantically rendered block quote in the middle of the page, like this:',
-      },
-    ],
-  },
-  {
-    type: 'block-quote',
-    children: [{ text: 'A wise quote.' }],
-  },
-  {
-    type: 'paragraph',
     align: 'center',
-    children: [{ text: 'Try it out for yourself!' }],
+    children: [{ text: 'Загрузка правил...' }],
   },
 ]
 
 type Props = {
   initialValue?: SlateElement[]
+  onClose: () => void
 }
 
-export function RichEditor({ initialValue }: Props) {
+export function RichEditor({ initialValue, onClose }: Props) {
   const [editor] = useState(() =>
     withLinks(withHistory(withReact(createEditor())))
   )
@@ -99,16 +74,15 @@ export function RichEditor({ initialValue }: Props) {
     []
   )
 
-  const handleChange = (value: Descendant[]) => {
-    const isAstChange = editor.operations.some(
-      (op) => 'set_selection' !== op.type
-    )
-    if (isAstChange) {
-      // Save the value to Local Storage.
-      const content = JSON.stringify(value)
-      localStorage.setItem('rich_content', content)
-      console.log(content)
-    }
+  const { mutate: saveRules } = useMutation({
+    queryKey: ['save_rules'],
+    mutationFn: (rules: string) => updateRules(rules),
+  })
+
+  const handleSave = () => {
+    console.log('saving', JSON.stringify(editor.children))
+    saveRules(JSON.stringify(editor.children))
+    onClose()
   }
 
   const handleLinkClick = () => {
@@ -117,11 +91,19 @@ export function RichEditor({ initialValue }: Props) {
 
   return (
     <Box width="700px" height="550px" border="0px solid white">
-      <Slate
-        editor={editor}
-        initialValue={initialValue ?? defaultValue}
-        onChange={handleChange}
-      >
+      <Box display="flex" marginBottom="10px">
+        <Button onClick={onClose} color="customRed">
+          Отмена
+        </Button>
+        <Button
+          onClick={handleSave}
+          color="customBlue"
+          style={{ marginLeft: '20px' }}
+        >
+          Сохранить
+        </Button>
+      </Box>
+      <Slate editor={editor} initialValue={initialValue ?? defaultValue}>
         <Toolbar>
           <MarkButton format="bold" icon={FormatBold} tooltip="жирный" />
           <MarkButton format="italic" icon={FormatItalic} tooltip="наклон" />
@@ -176,8 +158,6 @@ export function RichEditor({ initialValue }: Props) {
             tooltip="выровнять вправо"
           />
           {/* <BlockButton format="justify" icon={FormatAlignJustify} tooltip="" /> */}
-          <Button>Соханить</Button>
-          <br />
         </Toolbar>
         <Editable
           className="editor-container"

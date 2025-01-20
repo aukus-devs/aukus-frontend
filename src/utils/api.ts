@@ -236,3 +236,38 @@ export async function fetchSponsors(): Promise<SponsorsResponse> {
   }
   return fetch('/api/dons').then((res) => res.json())
 }
+
+export type RulesItem = {
+  rules_data: string
+  version: string
+}
+
+export async function fetchRules(): Promise<RulesItem> {
+  if (MOCK_API) {
+    const data = [
+      {
+        type: 'heading-one',
+        align: 'center',
+        children: [{ text: 'Правила ивента' }],
+      },
+    ]
+    return Promise.resolve({
+      rules_data: JSON.stringify(data),
+      version: '2025-01-10 13:14:15',
+    })
+  }
+  return fetch('/api/rules').then((res) => res.json())
+}
+
+export async function updateRules(rules: string): Promise<void> {
+  if (MOCK_API) {
+    return Promise.resolve()
+  }
+  return fetch('/api/rules', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ rule_data: rules }),
+  }).then((res) => res.json())
+}
