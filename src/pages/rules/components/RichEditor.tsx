@@ -89,7 +89,7 @@ export function RichEditor({ initialValue, onClose }: Props) {
   }
 
   return (
-    <Box width="700px" height="550px" border="0px solid white">
+    <Box width="800px" height="600px" border="0px solid white">
       <Box display="flex" marginBottom="10px">
         <Button onClick={onClose} color="customRed">
           Отмена
