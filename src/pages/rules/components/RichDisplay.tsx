@@ -112,5 +112,9 @@ function RichElementText({ item }: { item: SlateText }) {
   if (item.underline) {
     style.textDecoration = 'underline'
   }
+  if (item.text === '') {
+    style.display = 'block'
+    style.height = '1em'
+  }
   return <span style={style}>{item.text}</span>
 }

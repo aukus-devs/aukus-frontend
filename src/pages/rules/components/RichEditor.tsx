@@ -346,7 +346,7 @@ function Leaf({
 }: {
   attributes: Record<string, any>
   children: React.ReactNode
-  leaf: Omit<SlateText, 'text'>
+  leaf: SlateText
 }) {
   const style: React.CSSProperties = { fontWeight: '400' }
   if (leaf.bold) {
@@ -361,7 +361,10 @@ function Leaf({
   if (leaf.code) {
     style.fontFamily = 'monospace'
   }
-
+  if (leaf.text === '') {
+    style.display = 'block'
+    style.minHeight = '1em'
+  }
   return (
     <span {...attributes} style={style}>
       {children}
