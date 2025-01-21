@@ -529,8 +529,8 @@ export default function MapComponent() {
             width: '1715px',
             height: '2146px',
             background: darkMode
-              ? "linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('uploads/aukus_map_compressed.png')"
-              : 'url("uploads/aukus_map_compressed.png")',
+              ? "linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://storage.yandexcloud.net/aukus-2024-prod/aukus_map_compressed.png')"
+              : 'url("https://storage.yandexcloud.net/aukus-2024-prod/aukus_map_compressed.png")',
             backgroundRepeat:
               'no-repeat' /* Prevent the image from repeating */,
             backgroundPosition: 'center' /* Center the image */,
