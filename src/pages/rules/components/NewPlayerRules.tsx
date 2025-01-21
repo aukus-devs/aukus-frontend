@@ -17,7 +17,7 @@ const defaultRules: SlateElement[] = [
 export default function PlayerRules() {
   const [mode, setMode] = useState<'view' | 'edit'>('view')
 
-  const { data: rulesData } = useQuery({
+  const { data: rulesData, refetch: refetchRules } = useQuery({
     queryKey: ['playerRules'],
     queryFn: fetchRules,
     enabled: mode === 'view',
@@ -41,6 +41,11 @@ export default function PlayerRules() {
     rulesParsed = defaultRules
   }
 
+  const handleCloseEditor = () => {
+    setMode('view')
+    refetchRules()
+  }
+
   if (mode === 'view') {
     return (
       <Box>
@@ -52,7 +57,7 @@ export default function PlayerRules() {
 
   return (
     <Box>
-      <RichEditor initialValue={rulesParsed} onClose={() => setMode('view')} />
+      <RichEditor initialValue={rulesParsed} onClose={handleCloseEditor} />
     </Box>
   )
 }
