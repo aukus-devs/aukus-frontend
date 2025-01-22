@@ -15,22 +15,9 @@ on:
         description: "Discord webhook URL"
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install
-      - run: npm run build --if-present
-
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
