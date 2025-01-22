@@ -1,8 +1,18 @@
-name: Rollup
+name: Deploy to aukus.su
 
 on:
-  push:
-    branches: ['v2025-prod']
+  workflow_call:
+    secrets:
+      host:
+        description: "Host for SSH"
+      username:
+        description: "Username for SSH"
+      password:
+        description: "Password for SSH"
+      port:
+        description: "Port for SSH"
+      webhook_url:
+        description: "Discord webhook URL"
 
 jobs:
   build_and_deploy:
@@ -24,20 +34,20 @@ jobs:
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.host }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          port: ${{ secrets.port }}
           source: './dist/'
           target: '/home/aukus/deploy/frontend/2025/deploy_build'
 
       - name: swap build and restart nginx
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.host }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          port: ${{ secrets.port }}
           command_timeout: 1m
           script: cd "/home/aukus/deploy/frontend/2025" && rm -rf build && mkdir build && mv deploy_build/dist/* ./build/ && rm -r deploy_build/dist
 
@@ -46,16 +56,13 @@ jobs:
         if: success()
         with:
           severity: info
-          details: Aukus v2025 prod frontend build and upload success!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
+          details: Aukus v2025 prod frontend deploy to aukus.su success!
+          webhookUrl: ${{ secrets.webhook_url }}
 
       - name: Aukus v2025 prod frontend build and upload failure!
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
-          details: Aukus v2025 prod frontend build and upload failure!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          details: Aukus v2025 prod frontend deploy to aukus.su failure!
+          webhookUrl: ${{ secrets.webhook_url }}
