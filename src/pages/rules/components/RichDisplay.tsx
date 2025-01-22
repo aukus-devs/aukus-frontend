@@ -8,7 +8,15 @@ type Props = {
 
 export default function RichDisplay({ data }: Props) {
   return (
-    <Box style={{ width: '800px' }}>
+    <Box
+      style={{
+        width: '800px',
+        backgroundColor: Color.greyDark,
+        borderRadius: '15px',
+        padding: '10px',
+        paddingTop: '1px',
+      }}
+    >
       <RichChildren items={data} />
     </Box>
   )
