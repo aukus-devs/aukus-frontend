@@ -23,6 +23,17 @@ jobs:
         with:
           name: dist
 
+      - name: Verify dist contents
+        run: ls -l ./dist
+
+      - name: Debug scp-action
+        run: |
+          echo "Contents of dist directory:"
+          ls -la ./dist
+
+      - name: Ensure dist directory exists
+        run: mkdir -p ./dist
+
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
