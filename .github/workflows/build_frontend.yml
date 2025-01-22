@@ -21,6 +21,13 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
 
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+
       - name: Aukus v2025 prod frontend build failure!
         uses: rjstone/discord-webhook-notify@v1
         if: failure()

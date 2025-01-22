@@ -18,6 +18,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
