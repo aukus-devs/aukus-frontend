@@ -361,3 +361,18 @@ div#root {
   color: rebeccapurple;
   cursor: pointer;
 }
+
+/* rich editor toolbar colors */
+
+.rich-editor .ql-toolbar svg .ql-stroke,
+ql-line {
+  stroke: white;
+}
+
+.rich-editor .ql-toolbar svg .ql-fill {
+  fill: white;
+}
+
+.rich-editor .ql-picker-label {
+  color: white;
+}
