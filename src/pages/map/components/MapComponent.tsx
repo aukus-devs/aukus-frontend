@@ -49,6 +49,7 @@ import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { getEventSecondsLeft } from 'src/pages/rules/components/Countdown'
+import LosersList from './LosersList'
 
 const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
 const END_COUNTDOWN_START = 60 * 60 * 24 * 3
@@ -128,16 +129,12 @@ export default function MapComponent() {
 
   const playerWithMaxPosition =
     players.length > 0
-      ? players.find(
-          player => player.name.toLowerCase() === 'krabick'
-        )
+      ? players.find((player) => player.name.toLowerCase() === 'krabick')
       : null
 
   const playerWithMaxPosition2 =
     players.length > 0
-      ? players.find(
-          player => player.name.toLowerCase() === 'praden'
-        )
+      ? players.find((player) => player.name.toLowerCase() === 'praden')
       : null
 
   const winnerFound =
@@ -162,7 +159,6 @@ export default function MapComponent() {
     topPlayers.push(playerWithMaxPosition2)
     winner2 = playerWithMaxPosition2
   }
-
 
   const deadlineReached = finalCountdown <= 0 || winnerCountdown <= 0
 
@@ -242,7 +238,10 @@ export default function MapComponent() {
   if (playersStats.length > 0) {
     const statsByScore = playersStats
       .filter((player) => {
-        return (!winner || player.id !== winner.id) && (!winner2 || player.id !== winner2.id);
+        return (
+          (!winner || player.id !== winner.id) &&
+          (!winner2 || player.id !== winner2.id)
+        )
       })
       .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
 
@@ -446,45 +445,52 @@ export default function MapComponent() {
           top: 0,
           left: 0,
           width: '100%',
-          height: '700px',
+          height: '900px',
           position: 'absolute',
           zIndex: 2,
         }}
       />
 
       {showWinScreen && (
-        <Box display={'flex'} justifyContent={'center'}>
-          <Box
-            fontSize={'20px'}
-            textAlign={'center'}
-            style={{
-              backgroundColor: getPlayerColor(topPlayers[0].url_handle),
-              borderRadius: '10px',
-              zIndex: 10,
-              position: 'relative',
-            }}
-            width={'740px'}
-            height={'44px'}
-            padding={'10px'}
-          >
+        <Box>
+          <Box display={'flex'} justifyContent={'center'}>
             <Box
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              height={'100%'}
+              fontSize={'20px'}
+              textAlign={'center'}
+              style={{
+                backgroundColor: getPlayerColor(topPlayers[0].url_handle),
+                borderRadius: '10px',
+                zIndex: 10,
+                position: 'relative',
+              }}
+              width={'740px'}
+              height={'44px'}
+              padding={'10px'}
             >
-              <CrownIcon
-                width={'24px'}
-                height={'24px'}
-                style={{ marginRight: '10px' }}
-              />
-              <Box>
-                Можете выдыхать, ивент закончен{' — '}
-                <Link to={`/players/${topPlayers[0].url_handle}`}>
-                  <LinkSpan color={'white'}>{topPlayers[0].name}</LinkSpan>{' '}
-                </Link>
-                победил!
+              <Box
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                height={'100%'}
+              >
+                <CrownIcon
+                  width={'24px'}
+                  height={'24px'}
+                  style={{ marginRight: '10px' }}
+                />
+                <Box>
+                  Можете выдыхать, ивент закончен{' — '}
+                  <Link to={`/players/${topPlayers[0].url_handle}`}>
+                    <LinkSpan color={'white'}>{topPlayers[0].name}</LinkSpan>{' '}
+                  </Link>
+                  победил!
+                </Box>
               </Box>
+            </Box>
+          </Box>
+          <Box display={'flex'} justifyContent={'center'}>
+            <Box display="relative" zIndex={10} width="740px">
+              <LosersList players={players} />
             </Box>
           </Box>
         </Box>
@@ -593,43 +599,45 @@ export default function MapComponent() {
               }}
             />
           </Box>
-          {winner && !showWinScreen && (
-            <PlayerWinnerIcon
-              player={winner}
-              position={1}
-              isMoving
-              closePopup={closePopups}
-            />
-          )}
-          {winner2 && !showWinScreen && (
-            <PlayerWinnerIcon
-              player={winner2}
-              position={2}
-              isMoving
-              closePopup={closePopups}
-            />
-          )}
-
-          {showWinScreen && topPlayers.length > 2 && (
-            <>
+          <Box position="relative">
+            {winner && !showWinScreen && (
               <PlayerWinnerIcon
-                player={topPlayers[0]}
+                player={winner}
                 position={1}
                 isMoving
                 closePopup={closePopups}
               />
+            )}
+            {winner2 && !showWinScreen && (
               <PlayerWinnerIcon
-                player={topPlayers[1]}
+                player={winner2}
                 position={2}
+                isMoving
                 closePopup={closePopups}
               />
-              <PlayerWinnerIcon
-                player={topPlayers[2]}
-                position={3}
-                closePopup={closePopups}
-              />
-            </>
-          )}
+            )}
+
+            {showWinScreen && topPlayers.length > 2 && (
+              <>
+                <PlayerWinnerIcon
+                  player={topPlayers[0]}
+                  position={1}
+                  isMoving
+                  closePopup={closePopups}
+                />
+                <PlayerWinnerIcon
+                  player={topPlayers[1]}
+                  position={2}
+                  closePopup={closePopups}
+                />
+                <PlayerWinnerIcon
+                  player={topPlayers[2]}
+                  position={3}
+                  closePopup={closePopups}
+                />
+              </>
+            )}
+          </Box>
 
           <Grid
             container
