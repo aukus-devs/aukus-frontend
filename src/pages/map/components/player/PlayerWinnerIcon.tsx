@@ -34,23 +34,16 @@ export default function PlayerWinnerIcon({
     setContainer(element)
   }
 
-  const mapContainer = document.getElementById('map-container')
-  if (!mapContainer) {
-    return
-  }
-
-  const mapContainerLeft = mapContainer.offsetLeft
-
   const positionToCoordsMap = {
-    1: { top: -10, left: 392, scale: 1.5 },
-    2: { top: 30, left: 582, scale: 1.2 },
-    3: { top: 100, left: 705, scale: 1.1 },
+    1: { top: -10, left: 390, scale: 1.5 },
+    2: { top: 30, left: 580, scale: 1.2 },
+    3: { top: 100, left: 700, scale: 1.1 },
   }
 
   const coords = positionToCoordsMap[position]
 
   const containerWidth = container?.offsetWidth
-  let adjustedLeft = coords.left + mapContainerLeft
+  let adjustedLeft = coords.left
   if (containerWidth) {
     adjustedLeft = adjustedLeft - containerWidth / 2
   }
