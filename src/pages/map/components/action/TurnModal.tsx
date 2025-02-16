@@ -621,7 +621,7 @@ function getDiceType({
   return null
 }
 
-const MenuItemStyled = styled(MenuItem)(({ color }) => ({
+export const MenuItemStyled = styled(MenuItem)(({ color }) => ({
   fontSize: '16px',
   fontWeight: 500,
   ':hover': {

@@ -1,26 +1,24 @@
 import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import Quill, { Delta } from 'quill'
+import Quill, { Delta, QuillOptions } from 'quill'
 
 import 'quill/dist/quill.snow.css'
 import { Box } from '@mui/material'
 import { Color } from 'src/utils/types'
 
-// Define types for the range and lastChange state
-type Range = { index: number; length: number } | null
-type LastChange = { ops: any[] } | null // Replace `any` with a more specific type if you know the structure of `ops`
+type Props = {
+  readOnly?: boolean
+  defaultValue?: any
+  onTextChange?: (data: string) => void
+}
 
-export default function RichEditor() {
-  const [range, setRange] = useState<Range>()
-  const [lastChange, setLastChange] = useState<LastChange>()
-  const [readOnly, setReadOnly] = useState<boolean>(false)
-
+export default function RichEditor({ readOnly, onTextChange }: Props) {
   // Use a ref to access the quill instance directly
   const quillRef = useRef<Quill | null>(null)
 
   const handleTextChange = (delta: Delta, oldDelta: Delta, source: string) => {
-    console.log('Text change:', delta, oldDelta, source)
+    // console.log('Text change:', delta, oldDelta, source)
     const content = quillRef.current?.getContents()
-    console.log('Content:', JSON.stringify(content))
+    onTextChange?.(JSON.stringify(content))
   }
 
   return (
@@ -41,64 +39,8 @@ export default function RichEditor() {
           .insert(' ')
           .insert('content', { underline: true })
           .insert('\n')}
-        onSelectionChange={setRange}
         onTextChange={handleTextChange}
       />
-      <div
-        className="controls"
-        style={{
-          display: 'none',
-          border: '1px solid #ccc',
-          borderTop: 'none',
-          padding: '10px',
-        }}
-      >
-        <label>
-          Read Only:{' '}
-          <input
-            type="checkbox"
-            checked={readOnly}
-            onChange={(e) => setReadOnly(e.target.checked)}
-          />
-        </label>
-        <button
-          className="controls-right"
-          style={{ marginLeft: 'auto' }}
-          type="button"
-          onClick={() => {
-            alert(quillRef.current?.getLength())
-          }}
-        >
-          Get Content Length
-        </button>
-      </div>
-      <Box display="none">
-        <div
-          style={{
-            margin: '10px 0',
-            fontFamily: 'monospace',
-          }}
-        >
-          <div
-            style={{
-              color: '#999',
-              textTransform: 'uppercase',
-            }}
-          >
-            Current Range:
-          </div>
-          {range ? JSON.stringify(range) : 'Empty'}
-        </div>
-        <div
-          style={{
-            margin: '10px 0',
-            fontFamily: 'monospace',
-          }}
-        >
-          <div className="state-title">Last Change:</div>
-          {lastChange ? JSON.stringify(lastChange.ops) : 'Empty'}
-        </div>
-      </Box>
     </Box>
   )
 }
@@ -139,9 +81,18 @@ const Editor = forwardRef<Quill | null, EditorProps>(
       const editorContainer = container.appendChild(
         container.ownerDocument.createElement('div')
       )
-      const quill = new Quill(editorContainer, {
+
+      const params: QuillOptions = {
         theme: 'snow',
-      })
+      }
+      if (readOnly) {
+        params['readOnly'] = true
+        params['modules'] = {
+          toolbar: false,
+        }
+      }
+
+      const quill = new Quill(editorContainer, params)
 
       if (ref && typeof ref === 'object') {
         ref.current = quill
@@ -168,7 +119,7 @@ const Editor = forwardRef<Quill | null, EditorProps>(
     }, [ref])
 
     return (
-      <div ref={containerRef} style={{ width: '700px', height: '700px' }}></div>
+      <Box ref={containerRef} style={{ width: '700px', height: '700px' }} />
     )
   }
 )

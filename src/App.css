@@ -376,3 +376,30 @@ ql-line {
 .rich-editor .ql-picker-label {
   color: white;
 }
+
+div.ql-container {
+  background: #222222;
+}
+
+/* rich editor content styles */
+
+div.ql-editor {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+div.ql-editor h1 {
+  font-size: 36px !important;
+}
+
+div.ql-editor h2 {
+  font-size: 30px !important;
+}
+
+div.ql-editor h3 {
+  font-size: 24px !important;
+}
+
+div.ql-editor strong {
+  font-weight: 700 !important;
+}
