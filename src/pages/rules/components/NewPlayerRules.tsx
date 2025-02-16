@@ -1,12 +1,17 @@
 import { Box, Button } from '@mui/material'
 import RichDisplay from './RichDisplay'
-import { useQuery } from '@tanstack/react-query'
-import { fetchRules } from 'src/utils/api'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { fetchRules, updateRules } from 'src/utils/api'
 import { useState } from 'react'
 import RichEditor from './RichEditor2'
 
 export default function PlayerRules() {
   const [mode, setMode] = useState<'view' | 'edit'>('view')
+  const [editedRules, setEditedRules] = useState<string | null>(null)
+
+  const { mutate: saveRules } = useMutation({
+    mutationFn: updateRules,
+  })
 
   const { data: rulesData, refetch: refetchRules } = useQuery({
     queryKey: ['playerRules'],
@@ -18,27 +23,43 @@ export default function PlayerRules() {
   const rules = rulesData?.rules_data
   console.log('rules', rules)
 
-  const handleCloseEditor = () => {
+  const handleCloseAndSave = () => {
     setMode('view')
-    refetchRules()
-  }
-
-  if (mode === 'view') {
-    return (
-      <Box>
-        <Button onClick={() => setMode('edit')}>Редактировать</Button>
-        <RichDisplay value={rules} />
-      </Box>
-    )
+    if (editedRules) {
+      saveRules(editedRules, { onSuccess: () => refetchRules() })
+    }
   }
 
   const handleTextChange = (value: string) => {
-    console.log('handleTextChange', value)
+    setEditedRules(value)
   }
 
   return (
     <Box>
-      <RichEditor initialValue={rules} onTextChange={handleTextChange} />
+      {mode === 'view' ? (
+        <Box>
+          <Button
+            onClick={() => setMode('edit')}
+            style={{ marginBottom: '10px' }}
+          >
+            Редактировать
+          </Button>
+          <RichDisplay value={rules} />
+        </Box>
+      ) : (
+        <Box>
+          <Box marginBottom="10px">
+            <Button
+              onClick={handleCloseAndSave}
+              style={{ marginRight: '10px' }}
+            >
+              Сохранить
+            </Button>
+            <Button onClick={() => setMode('view')}>Отменить</Button>
+          </Box>
+          <RichEditor initialValue={rules} onTextChange={handleTextChange} />
+        </Box>
+      )}
     </Box>
   )
 }
