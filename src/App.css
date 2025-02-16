@@ -365,8 +365,13 @@ div#root {
 /* rich editor toolbar colors */
 
 .rich-editor .ql-toolbar svg .ql-stroke,
-ql-line {
+.rich-editor .ql-toolbar svg .ql-line {
   stroke: white;
+}
+
+.rich-editor .ql-toolbar .ql-picker-options svg .ql-stroke,
+.rich-editor .ql-toolbar .ql-picker-options svg .ql-line {
+  stroke: #444;
 }
 
 .rich-editor .ql-toolbar svg .ql-fill {
@@ -412,4 +417,9 @@ div.rich-text-display h1,
 div.rich-text-display h2,
 div.rich-text-display h3 {
   margin: 0;
+}
+
+div.rich-text-display a {
+  color: #007aff;
+  border-bottom: 2px solid #007aff;
 }

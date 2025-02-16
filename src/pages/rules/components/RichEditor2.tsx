@@ -86,6 +86,16 @@ const Editor = forwardRef<Quill | null, EditorProps>(
 
       const params: QuillOptions = {
         theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            // ['blockquote', 'code-block'],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['link'],
+            ['clean'],
+          ],
+        },
       }
       if (readOnly) {
         params['readOnly'] = true
