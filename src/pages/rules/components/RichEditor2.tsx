@@ -7,19 +7,28 @@ import { Color } from 'src/utils/types'
 
 type Props = {
   readOnly?: boolean
-  defaultValue?: any
+  initialValue?: string
   onTextChange?: (data: string) => void
 }
 
-export default function RichEditor({ readOnly, onTextChange }: Props) {
+export default function RichEditor({
+  readOnly,
+  onTextChange,
+  initialValue,
+}: Props) {
   // Use a ref to access the quill instance directly
   const quillRef = useRef<Quill | null>(null)
 
   const handleTextChange = (delta: Delta, oldDelta: Delta, source: string) => {
     // console.log('Text change:', delta, oldDelta, source)
     const content = quillRef.current?.getContents()
+    console.log('Content:', JSON.stringify(content))
     onTextChange?.(JSON.stringify(content))
   }
+
+  const initialDecoded = initialValue
+    ? new Delta(JSON.parse(initialValue))
+    : new Delta().insert('No content added yet')
 
   return (
     <Box
@@ -31,14 +40,7 @@ export default function RichEditor({ readOnly, onTextChange }: Props) {
       <Editor
         ref={quillRef}
         readOnly={readOnly}
-        defaultValue={new Delta()
-          .insert('Hello')
-          .insert('\n', { header: 1 })
-          .insert('Some ')
-          .insert('initial', { bold: true })
-          .insert(' ')
-          .insert('content', { underline: true })
-          .insert('\n')}
+        defaultValue={initialDecoded}
         onTextChange={handleTextChange}
       />
     </Box>
@@ -48,7 +50,7 @@ export default function RichEditor({ readOnly, onTextChange }: Props) {
 // Define the types for the props
 type EditorProps = {
   readOnly?: boolean
-  defaultValue?: any // You can replace `any` with a more specific type if you know the structure of the default value
+  defaultValue?: Delta // You can replace `any` with a more specific type if you know the structure of the default value
   onTextChange?: (...args: any[]) => void
   onSelectionChange?: (...args: any[]) => void
 }

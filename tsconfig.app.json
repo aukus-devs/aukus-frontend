@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2021",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -21,24 +21,12 @@
 
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "./src/*"
-      ],
-      "components/*": [
-        "./src/components/*"
-      ],
-      "utils/*": [
-        "./src/utils/*"
-      ],
-      "assets/*": [
-        "./src/assets/*"
-      ],
-      "pages/*": [
-        "./src/pages/*"
-      ],
-      "context/*": [
-        "./src/context/*"
-      ]
+      "src/*": ["./src/*"],
+      "components/*": ["./src/components/*"],
+      "utils/*": ["./src/utils/*"],
+      "assets/*": ["./src/assets/*"],
+      "pages/*": ["./src/pages/*"],
+      "context/*": ["./src/context/*"]
     }
   },
   "include": ["src"]

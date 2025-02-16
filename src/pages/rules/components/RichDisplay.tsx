@@ -1,12 +1,43 @@
 import { Box } from '@mui/material'
+import Quill, { Delta } from 'quill'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { SlateElement, SlateText } from 'src/types/slate'
 import { Color } from 'src/utils/types'
 
 type Props = {
-  data: SlateElement[]
+  value?: string
 }
 
-export default function RichDisplay({ data }: Props) {
+export default function RichDisplay({ value }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const quillRef = useRef<Quill | null>(null)
+  const [htmlContent, setHtmlContent] = useState<string>('empty')
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const parsedVal = value ? JSON.parse(value) : { ops: [] }
+      const delta = new Delta(parsedVal)
+
+      if (!quillRef.current) {
+        const quill = new Quill(containerRef.current, {
+          theme: 'snow', // Use any theme
+          readOnly: true, // Make it read-only
+        })
+        // Load the Delta into the editor
+        quill.setContents(delta)
+        quillRef.current = quill
+      }
+
+      quillRef.current.setContents(delta)
+      const html = quillRef.current.root.innerHTML
+      const fixNewlines = html.replaceAll('\\n', '<br />')
+      console.log('fixNewlines', fixNewlines)
+      setHtmlContent(fixNewlines)
+    }
+  }, [value])
+
+  console.log('htmlContent', htmlContent)
+
   return (
     <Box
       style={{
@@ -17,7 +48,13 @@ export default function RichDisplay({ data }: Props) {
         paddingTop: '1px',
       }}
     >
-      <RichChildren items={data} />
+      <Box display="none">
+        <Box ref={containerRef} />
+      </Box>
+      <Box
+        whiteSpace="pre-line"
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      />
     </Box>
   )
 }

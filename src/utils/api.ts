@@ -244,13 +244,14 @@ export type RulesItem = {
 
 export async function fetchRules(): Promise<RulesItem> {
   if (MOCK_API) {
-    const data = [
-      {
-        type: 'heading-one',
-        align: 'center',
-        children: [{ text: 'Правила ивента' }],
-      },
-    ]
+    const data = {
+      ops: [
+        { insert: 'test ' },
+        { attributes: { underline: true }, insert: 'value' },
+        { insert: '\nline1\nline2\nline3\n\n' },
+      ],
+    }
+
     return Promise.resolve({
       rules_data: JSON.stringify(data),
       version: '2025-01-10 13:14:15',

@@ -13,8 +13,13 @@ export default function TestsPage() {
         <RollVerifier />
       </Box>
       <Box display="flex" justifyContent="center" marginTop="50px">
-        <RichEditor />
+        <RichEditor
+          initialValue={
+            '{"ops":[{"insert":"test "},{"attributes":{"underline":true},"insert":"value"},{"insert":"\\n"}]}'
+          }
+        />
       </Box>
+      <Box marginTop="200px">test</Box>
     </Box>
   )
 }
