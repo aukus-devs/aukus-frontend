@@ -30,9 +30,8 @@ export default function RichDisplay({ value }: Props) {
 
       quillRef.current.setContents(delta)
       const html = quillRef.current.root.innerHTML
-      const fixNewlines = html.replaceAll('\\n', '<br />')
-      console.log('fixNewlines', fixNewlines)
-      setHtmlContent(fixNewlines)
+      console.log('test', html)
+      setHtmlContent(html)
     }
   }, [value])
 
@@ -52,7 +51,13 @@ export default function RichDisplay({ value }: Props) {
         <Box ref={containerRef} />
       </Box>
       <Box
-        whiteSpace="pre-line"
+        className="rich-text-display"
+        style={{
+          color: Color.white,
+          padding: '10px',
+          lineHeight: '1.2',
+          fontWeight: '400',
+        }}
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
     </Box>

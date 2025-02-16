@@ -403,3 +403,13 @@ div.ql-editor h3 {
 div.ql-editor strong {
   font-weight: 700 !important;
 }
+
+div.rich-text-display p {
+  margin: 0;
+}
+
+div.rich-text-display h1,
+div.rich-text-display h2,
+div.rich-text-display h3 {
+  margin: 0;
+}
