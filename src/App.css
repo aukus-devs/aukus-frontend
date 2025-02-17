@@ -423,3 +423,15 @@ div.rich-text-display a {
   color: #007aff;
   border-bottom: 2px solid #007aff;
 }
+
+div.rich-text-display p.ql-align-center {
+  text-align: center;
+}
+
+div.rich-text-display p.ql-align-right {
+  text-align: right;
+}
+
+div.rich-text-display p.ql-align-justify {
+  text-align: justify;
+}
