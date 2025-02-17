@@ -11,11 +11,7 @@ type Props = {
   onTextChange?: (data: string) => void
 }
 
-export default function RichEditor({
-  readOnly,
-  onTextChange,
-  initialValue,
-}: Props) {
+export function RichEditor({ readOnly, onTextChange, initialValue }: Props) {
   // Use a ref to access the quill instance directly
   const quillRef = useRef<Quill | null>(null)
 
@@ -34,6 +30,8 @@ export default function RichEditor({
     <Box
       style={{
         backgroundColor: Color.greyDark,
+        overflow: 'auto',
+        maxHeight: '600px',
       }}
       className="rich-editor"
     >
@@ -89,7 +87,13 @@ const Editor = forwardRef<Quill | null, EditorProps>(
     })
 
     useEffect(() => {
-      if (ref && typeof ref === 'object' && ref.current && defaultValue) {
+      if (
+        ref &&
+        typeof ref === 'object' &&
+        ref.current &&
+        defaultValue &&
+        readOnly
+      ) {
         ref.current.setContents(defaultValue)
       }
     }, [defaultValue])

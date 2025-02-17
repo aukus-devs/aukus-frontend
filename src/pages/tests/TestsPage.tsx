@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import MainMenu from 'src/components/MainMenu'
 import RollVerifier from './RollVerifier'
 import DiceRollContainer from './DiceRollContainer'
-import RichEditor from '../rules/components/RichEditor2'
+import { RichEditor } from '../rules/components/RichText'
 
 export default function TestsPage() {
   return (

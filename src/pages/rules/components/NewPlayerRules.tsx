@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchRules, updateRules } from 'src/utils/api'
 import { useState } from 'react'
-import RichEditor, { RichDisplay } from './RichEditor2'
+import { RichDisplay, RichEditor } from './RichText'
 
 export default function PlayerRules() {
   const [mode, setMode] = useState<'view' | 'edit'>('view')
