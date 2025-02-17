@@ -89,6 +89,12 @@ const Editor = forwardRef<Quill | null, EditorProps>(
     })
 
     useEffect(() => {
+      if (ref && typeof ref === 'object' && ref.current && defaultValue) {
+        ref.current.setContents(defaultValue)
+      }
+    }, [defaultValue])
+
+    useEffect(() => {
       if (ref && typeof ref === 'object' && ref.current) {
         ref.current.enable(!readOnly)
       }
