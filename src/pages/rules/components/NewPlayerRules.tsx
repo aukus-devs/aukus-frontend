@@ -19,8 +19,11 @@ export default function PlayerRules() {
     refetchInterval: 60 * 1000,
   })
 
-  const rules = rulesData?.rules_data || '{ops: []}'
-  console.log('rules', rules)
+  const rules =
+    rulesData?.rules_data ||
+    JSON.stringify({ ops: [{ insert: 'Загрузка...' }] })
+
+  // console.log('rules', rules)
 
   const handleCloseAndSave = () => {
     setMode('view')
