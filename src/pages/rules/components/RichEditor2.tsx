@@ -47,6 +47,26 @@ export default function RichEditor({
   )
 }
 
+type DisplayProps = {
+  value: string
+}
+
+export function RichDisplay({ value }: DisplayProps) {
+  const quillRef = useRef<Quill | null>(null)
+  const delta = new Delta(JSON.parse(value))
+  return (
+    <Box
+      className="rich-display"
+      style={{
+        backgroundColor: Color.greyDark,
+        borderRadius: '15px',
+      }}
+    >
+      <Editor ref={quillRef} readOnly defaultValue={delta} />
+    </Box>
+  )
+}
+
 // Define the types for the props
 type EditorProps = {
   readOnly?: boolean
@@ -131,7 +151,12 @@ const Editor = forwardRef<Quill | null, EditorProps>(
     }, [ref])
 
     return (
-      <Box ref={containerRef} style={{ width: '700px', height: '700px' }} />
+      <Box
+        borderRadius="15px"
+        ref={containerRef}
+        // style={{ width: '700px', height: '700px' }}
+        className={readOnly ? 'read-only' : ''}
+      />
     )
   }
 )

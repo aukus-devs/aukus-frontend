@@ -1,9 +1,8 @@
 import { Box, Button } from '@mui/material'
-import RichDisplay from './RichDisplay'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchRules, updateRules } from 'src/utils/api'
 import { useState } from 'react'
-import RichEditor from './RichEditor2'
+import RichEditor, { RichDisplay } from './RichEditor2'
 
 export default function PlayerRules() {
   const [mode, setMode] = useState<'view' | 'edit'>('view')
@@ -44,6 +43,7 @@ export default function PlayerRules() {
           >
             Редактировать
           </Button>
+          {/* <RichDisplay value={rules} /> */}
           <RichDisplay value={rules} />
         </Box>
       ) : (

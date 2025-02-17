@@ -435,3 +435,15 @@ div.rich-text-display p.ql-align-right {
 div.rich-text-display p.ql-align-justify {
   text-align: justify;
 }
+
+div.rich-editor div.ql-container {
+  border-radius: 15px;
+}
+
+div.rich-display div.ql-container {
+  border-radius: 15px;
+}
+
+div.rich-display div.read-only div.ql-container {
+  border: none !important;
+}
