@@ -19,7 +19,7 @@ export default function PlayerRules() {
     refetchInterval: 60 * 1000,
   })
 
-  const rules = rulesData?.rules_data
+  const rules = rulesData?.rules_data || '{ops: []}'
   console.log('rules', rules)
 
   const handleCloseAndSave = () => {
