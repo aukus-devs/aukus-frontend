@@ -30,8 +30,6 @@ export function RichEditor({ readOnly, onTextChange, initialValue }: Props) {
     <Box
       style={{
         backgroundColor: Color.greyDark,
-        overflow: 'auto',
-        maxHeight: '600px',
       }}
       className="rich-editor"
     >

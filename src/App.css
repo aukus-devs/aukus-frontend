@@ -408,3 +408,20 @@ div.ql-editor h3 {
 div.ql-editor strong {
   font-weight: 700 !important;
 }
+
+div.rich-editor div.ql-container {
+  border-radius: 15px;
+}
+
+div.rich-display div.ql-container {
+  border-radius: 15px;
+}
+
+div.rich-display div.read-only div.ql-container {
+  border: none !important;
+}
+
+div.rich-editor div.ql-container div.ql-editor {
+  overflow-y: auto;
+  max-height: 800px;
+}
