@@ -7,11 +7,18 @@ import DifficultyWheelModal from './wheels/DifficultyWheelModal'
 import SheikhWheelModal from './wheels/SheikhWheelModal'
 import MultistreamButton from 'src/components/quick_menu/MultistreamButton'
 import { EditModeButton } from './PlayerCanvasBackground'
+import useLocalStorage from 'src/context/useLocalStorage'
+import ToggleButton from './ToggleButton'
 
 export default function QuickAccessButton() {
   const [open, setOpen] = useState(false)
   const [showDifficultyWheel, setShowDifficulteWheel] = useState(false)
   const [showSheikhMomentWheel, setShowSheikhMomentWheel] = useState(false)
+
+  const { value: darkMode, save: saveDarkMode } = useLocalStorage({
+    key: 'darkMode',
+    defaultValue: false,
+  })
 
   const buttonsMargin = '15px'
   const user = useUser()
@@ -49,6 +56,10 @@ export default function QuickAccessButton() {
 
   const openSheikhMomentWheel = () => {
     setShowSheikhMomentWheel(true)
+  }
+
+  const switchMapDarkness = () => {
+    saveDarkMode(!darkMode)
   }
 
   return (
@@ -107,7 +118,9 @@ export default function QuickAccessButton() {
               <MultistreamButton />
             </Box>
             <Box marginTop={buttonsMargin}>
-              <Button>Затемнить карту</Button>
+              <ToggleButton toggled={darkMode} onClick={switchMapDarkness}>
+                Затемнить карту
+              </ToggleButton>
             </Box>
             <Box marginTop={buttonsMargin}>
               <Button>Таймлапс</Button>

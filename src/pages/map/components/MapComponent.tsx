@@ -768,24 +768,6 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
-                <Box
-                  position="absolute"
-                  width="200px"
-                  display="inline"
-                  left={'-193px'}
-                >
-                  <Button
-                    sx={{
-                      height: '44px',
-                      backgroundColor: darkMode
-                        ? 'primary.dark'
-                        : 'primary.main',
-                    }}
-                    onClick={() => saveDarkMode(!darkMode)}
-                  >
-                    Затемнить карту
-                  </Button>
-                </Box>
                 <ActionButton
                   handleNextTurn={handleNextTurn}
                   player={currentPlayer}
@@ -808,17 +790,6 @@ export default function MapComponent() {
               display={'inline-block'}
             >
               <TimelapseButton variant="big" />
-              <Box position="absolute" width="200px" display="inline">
-                <Button
-                  sx={{
-                    height: '44px',
-                    backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
-                  }}
-                  onClick={() => saveDarkMode(!darkMode)}
-                >
-                  Затемнить карту
-                </Button>
-              </Box>
             </Box>
           </Box>
         )}
