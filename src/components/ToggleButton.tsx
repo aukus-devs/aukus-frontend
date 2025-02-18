@@ -6,9 +6,9 @@ type Props = {
 
 export default function ToggleButton({ toggled, ...props }: Props) {
   const backgroundColor = toggled ? 'primary.dark' : 'primary.main'
-
+  const sx = props.sx || {}
   return (
-    <Button {...props} sx={{ backgroundColor }}>
+    <Button {...props} sx={{ ...sx, backgroundColor }}>
       {props.children}
     </Button>
   )

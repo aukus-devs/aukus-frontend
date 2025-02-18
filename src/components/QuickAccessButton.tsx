@@ -28,14 +28,14 @@ export default function QuickAccessButton() {
 
   let firstButton = (
     <a href="/login">
-      <Button>Логин</Button>
+      <Button sx={{ width: '100%' }}>Логин</Button>
     </a>
   )
 
   if (user && user.role === 'player') {
     firstButton = (
       <Link to={`/players/${user.url_handle}`}>
-        <Button>Моя страница</Button>
+        <Button sx={{ width: '100%' }}>Моя страница</Button>
       </Link>
     )
   }
@@ -89,7 +89,7 @@ export default function QuickAccessButton() {
             {user && (
               <>
                 <Box marginTop={buttonsMargin}>
-                  <Button onClick={openDifficultyWheel}>
+                  <Button sx={{ width: '100%' }} onClick={openDifficultyWheel}>
                     <WheelIcon
                       style={{
                         marginRight: '8px',
@@ -101,7 +101,10 @@ export default function QuickAccessButton() {
                   </Button>
                 </Box>
                 <Box marginTop={buttonsMargin}>
-                  <Button onClick={openSheikhMomentWheel}>
+                  <Button
+                    onClick={openSheikhMomentWheel}
+                    sx={{ width: '100%' }}
+                  >
                     <WheelIcon
                       style={{
                         marginRight: '8px',
@@ -118,12 +121,16 @@ export default function QuickAccessButton() {
               <MultistreamButton />
             </Box>
             <Box marginTop={buttonsMargin}>
-              <ToggleButton toggled={darkMode} onClick={switchMapDarkness}>
+              <ToggleButton
+                toggled={darkMode}
+                onClick={switchMapDarkness}
+                sx={{ width: '100%' }}
+              >
                 Затемнить карту
               </ToggleButton>
             </Box>
             <Box marginTop={buttonsMargin}>
-              <Button>Таймлапс</Button>
+              <Button sx={{ width: '100%' }}>Таймлапс</Button>
             </Box>
           </Box>
         )}
