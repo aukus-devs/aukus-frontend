@@ -33,25 +33,21 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
     : Color.blueLight
   const urlHandle = currentUser?.url_handle
 
-  const { save, load } = useLocalStorage()
+  const { value: snowState, save: saveSnowState } = useLocalStorage({
+    key: 'snowLevel',
+    defaultValue: 'off',
+  })
 
   const eventState = useEventState()
   const eventFinished = eventState.state === 'finished'
 
-  const [snowState, setSnowState] = React.useState<'off' | 'small' | 'big'>(
-    load('snowLevel', 'small')
-  )
-
   const cycleSnow = () => {
-    if (snowState === 'off') {
-      save('snowLevel', 'small')
-      setSnowState('small')
+    if (snowState === 'off' || !snowState) {
+      saveSnowState('small')
     } else if (snowState === 'small') {
-      save('snowLevel', 'big')
-      setSnowState('big')
+      saveSnowState('big')
     } else {
-      save('snowLevel', 'off')
-      setSnowState('off')
+      saveSnowState('off')
     }
   }
 

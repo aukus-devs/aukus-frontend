@@ -31,11 +31,13 @@ type HeaderType =
 type Props = {}
 
 export default function StatsTable(props: Props) {
-  const { save, load } = useLocalStorage()
+  const { value: savedOrder, save: saveOrder } = useLocalStorage<HeaderType>({
+    key: 'movesStatsOrderBy',
+    defaultValue: 'name',
+  })
+
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
-  const [orderBy, setOrderBy] = useState<HeaderType>(
-    load('movesStatsOrderBy', 'name')
-  )
+  const [orderBy, setOrderBy] = useState<HeaderType>(savedOrder)
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -108,7 +110,7 @@ export default function StatsTable(props: Props) {
       setOrder(order === 'asc' ? 'desc' : 'asc')
     } else {
       setOrderBy(header)
-      save('movesStatsOrderBy', header)
+      saveOrder(header)
       setOrder('desc')
     }
   }

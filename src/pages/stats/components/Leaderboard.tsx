@@ -36,12 +36,14 @@ type HeaderType =
   | 'sheikh_moments'
 
 export default function Leaderboard() {
-  const { save, load } = useLocalStorage()
+  const { value: savedOrder, save: saveOrder } = useLocalStorage<HeaderType>({
+    key: 'leaderboardOrderBy',
+    defaultValue: 'id',
+  })
+
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
-  const [orderBy, setOrderBy] = useState<HeaderType>(
-    load('leaderboardOrderBy', 'id')
-  )
+  const [orderBy, setOrderBy] = useState<HeaderType>(savedOrder)
   const [order, setOrder] = useState<'asc' | 'desc'>(() => {
     if (orderBy === 'id') {
       return 'asc'
@@ -182,7 +184,7 @@ export default function Leaderboard() {
       setOrder(order === 'asc' ? 'desc' : 'asc')
     } else {
       setOrderBy(header)
-      save('leaderboardOrderBy', header)
+      saveOrder(header)
       setOrder('desc')
     }
   }

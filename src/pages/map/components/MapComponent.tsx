@@ -62,8 +62,15 @@ export default function MapComponent() {
   const [makingTurn, setMakingTurn] = useState(false)
   const [startWinAnimation, setStartWinAnimation] = useState(false)
 
-  const { save, load } = useLocalStorage()
-  const showArrows = load('showArrows', true)
+  const { value: showArrows, save: saveShowArrows } = useLocalStorage({
+    key: 'showArrows',
+    defaultValue: true,
+  })
+
+  const { value: darkMode, save: saveDarkMode } = useLocalStorage({
+    key: 'darkMode',
+    defaultValue: false,
+  })
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
@@ -76,8 +83,6 @@ export default function MapComponent() {
     getEventSecondsLeft()
   )
   const [winnerCountdown, setWinnerCountdown] = useState(WINNER_COUNTDOWN_START)
-
-  const darkMode = load('darkMode', false)
 
   useEffect(() => {
     const mapWidth = 1715
@@ -128,16 +133,12 @@ export default function MapComponent() {
 
   const playerWithMaxPosition =
     players.length > 0
-      ? players.find(
-          player => player.name.toLowerCase() === 'krabick'
-        )
+      ? players.find((player) => player.name.toLowerCase() === 'krabick')
       : null
 
   const playerWithMaxPosition2 =
     players.length > 0
-      ? players.find(
-          player => player.name.toLowerCase() === 'praden'
-        )
+      ? players.find((player) => player.name.toLowerCase() === 'praden')
       : null
 
   const winnerFound =
@@ -162,7 +163,6 @@ export default function MapComponent() {
     topPlayers.push(playerWithMaxPosition2)
     winner2 = playerWithMaxPosition2
   }
-
 
   const deadlineReached = finalCountdown <= 0 || winnerCountdown <= 0
 
@@ -242,7 +242,10 @@ export default function MapComponent() {
   if (playersStats.length > 0) {
     const statsByScore = playersStats
       .filter((player) => {
-        return (!winner || player.id !== winner.id) && (!winner2 || player.id !== winner2.id);
+        return (
+          (!winner || player.id !== winner.id) &&
+          (!winner2 || player.id !== winner2.id)
+        )
       })
       .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
 
@@ -288,7 +291,7 @@ export default function MapComponent() {
 
   const handleClick = () => {
     setClosePopups(!closePopups)
-    save('showArrows', !showArrows)
+    saveShowArrows(!showArrows)
   }
 
   const handleMakingTurn = (value: boolean) => {
@@ -778,7 +781,7 @@ export default function MapComponent() {
                         ? 'primary.dark'
                         : 'primary.main',
                     }}
-                    onClick={() => save('darkMode', !darkMode)}
+                    onClick={() => saveDarkMode(!darkMode)}
                   >
                     Затемнить карту
                   </Button>
@@ -811,7 +814,7 @@ export default function MapComponent() {
                     height: '44px',
                     backgroundColor: darkMode ? 'rgb(0, 85, 178)' : 'primary',
                   }}
-                  onClick={() => save('darkMode', !darkMode)}
+                  onClick={() => saveDarkMode(!darkMode)}
                 >
                   Затемнить карту
                 </Button>

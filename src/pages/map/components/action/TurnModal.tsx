@@ -49,13 +49,16 @@ type Props = {
 }
 
 export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
-  const { save, load } = useLocalStorage()
+  const { value: savedReview, save: saveReview } = useLocalStorage({
+    key: 'item_review',
+    defaultValue: '',
+  })
 
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
   const [debouncedGameName, setDebouncedGameName] = useState('')
-  const [review, setReview] = useState<string>(() => load('item_review', ''))
+  const [review, setReview] = useState<string>(savedReview)
   const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
@@ -67,9 +70,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     []
   )
 
-  const saveReview = useCallback(
+  const saveReviewDebounced = useCallback(
     debounce((value: string) => {
-      save('item_review', value)
+      saveReview(value)
     }, 100),
     []
   )
