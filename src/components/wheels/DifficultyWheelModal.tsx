@@ -20,17 +20,19 @@ export default function DifficultyWheelModal({ open, onClose }: Props) {
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md">
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle style={{ padding: 0, margin: 0 }}>
         <Box
           width={'100%'}
           // fontSize={'32px'}
-          marginBottom={'0px'}
+          marginTop="20px"
+          marginBottom="20px"
           display={'flex'}
-          position={'relative'}
-          marginTop={'20px'}
-          justifyContent={'center'}
+          position="relative"
+          justifyContent="center"
+          textAlign="center"
         >
+          Ролл сложности для <br /> *название игры*
           <Box position={'absolute'} right={'40px'}>
             <IconButton
               aria-label="close"

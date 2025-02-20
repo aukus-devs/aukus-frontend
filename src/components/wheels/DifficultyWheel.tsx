@@ -1,7 +1,40 @@
 import { Box } from '@mui/material'
 import { Color } from 'src/utils/types'
+import Wheel from '../wheel/Wheel'
 
 export default function DifficultyWheel() {
+  const options = [
+    {
+      title: 'Нормальная',
+      value: 'normal',
+      color: Color.green,
+    },
+    {
+      title: 'Сложная',
+      value: 'hard',
+      color: Color.red,
+    },
+    {
+      title: 'Очень сложная',
+      value: 'very-hard',
+      color: Color.red,
+    },
+    {
+      title: 'Легкая',
+      value: 'easy',
+      color: Color.green,
+    },
+  ]
+
+  return (
+    <Wheel
+      options={options}
+      onAnimationEnd={(winner) => {
+        console.log('test', winner)
+      }}
+    />
+  )
+
   return (
     <Box display={'flex'} justifyContent={'center'}>
       <Box

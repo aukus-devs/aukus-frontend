@@ -406,7 +406,7 @@ export default function MapComponent() {
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
-  console.log('winner', winner, winner2, topPlayers)
+  // console.log('winner', winner, winner2, topPlayers)
   const animating = startWinAnimation || moveParams !== null
 
   const currentPlayerWinner =
