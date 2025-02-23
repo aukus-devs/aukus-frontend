@@ -14,11 +14,6 @@ type Props = {
 }
 
 export default function DifficultyWheelModal({ open, onClose }: Props) {
-  const resetScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement
-    target.scrollTop = 0
-  }
-
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle style={{ padding: 0, margin: 0 }}>
@@ -47,7 +42,7 @@ export default function DifficultyWheelModal({ open, onClose }: Props) {
           </Box>
         </Box>
       </DialogTitle>
-      <DialogContent style={{ overflow: 'hidden' }} onScroll={resetScroll}>
+      <DialogContent style={{ overflow: 'hidden' }}>
         <DifficultyWheel />
       </DialogContent>
     </Dialog>

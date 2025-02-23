@@ -1,32 +1,39 @@
 import { Box } from '@mui/material'
 import { Color } from 'src/utils/types'
+import Wheel, { WheelOption } from '../wheel/Wheel'
+import { useState } from 'react'
 
-export default function SheikhWheel() {
+export default function DifficultyWheel() {
+  const options = [
+    {
+      title: 'Дроп',
+      value: 'drop',
+      color: Color.red,
+      percentage: 50,
+    },
+    {
+      title: 'Продолжать',
+      value: 'keep',
+      color: Color.blue,
+      percentage: 50,
+    },
+  ]
+
+  const [winner, setWinner] = useState<WheelOption | null>(null)
+
   return (
-    <Box display={'flex'} justifyContent={'center'}>
-      <Box
-        style={{
-          position: 'absolute',
-          width: '700px',
-          backgroundColor: Color.greyDark,
-          height: '10px',
-          // display: 'none',
+    <Box>
+      {winner && (
+        <Box display="flex" justifyContent="center" textAlign="center">
+          {winner.title}
+        </Box>
+      )}
+      <Wheel
+        options={options}
+        onAnimationEnd={(winner) => {
+          setWinner(winner)
         }}
       />
-      <Box>
-        <iframe
-          src="https://wheelofnames.com/ru/th2-utw"
-          title="Колесо шейх-момента"
-          width={'700px'}
-          height={'700px'}
-          style={{
-            border: 'none',
-            padding: 0,
-            margin: 0,
-            overflow: 'hidden',
-          }}
-        />
-      </Box>
     </Box>
   )
 }

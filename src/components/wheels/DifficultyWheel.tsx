@@ -3,8 +3,6 @@ import { Color } from 'src/utils/types'
 import Wheel, { WheelOption } from '../wheel/Wheel'
 import { useState } from 'react'
 
-type DifficultyOption = 'normal' | 'very-hard' | 'easy' | 'hard'
-
 export default function DifficultyWheel() {
   const options = [
     {

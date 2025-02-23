@@ -14,23 +14,20 @@ type Props = {
 }
 
 export default function SheikhWheelModal({ open, onClose }: Props) {
-  const resetScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement
-    target.scrollTop = 0
-  }
-
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md">
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle style={{ padding: 0, margin: 0 }}>
         <Box
-          width={'100%'}
+          width="100%"
           // fontSize={'32px'}
-          marginBottom={'0px'}
-          display={'flex'}
-          position={'relative'}
-          marginTop={'20px'}
-          justifyContent={'center'}
+          marginBottom="20px"
+          display="flex"
+          position="relative"
+          marginTop="20px"
+          justifyContent="center"
+          textAlign="center"
         >
+          Ролл Шейх-момента для <br /> *название игры*
           <Box position={'absolute'} right={'40px'}>
             <IconButton
               aria-label="close"
@@ -45,7 +42,7 @@ export default function SheikhWheelModal({ open, onClose }: Props) {
           </Box>
         </Box>
       </DialogTitle>
-      <DialogContent style={{ overflow: 'hidden' }} onScroll={resetScroll}>
+      <DialogContent style={{ overflow: 'hidden' }}>
         <SheikhWheel />
       </DialogContent>
     </Dialog>
