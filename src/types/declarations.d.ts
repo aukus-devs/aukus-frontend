@@ -16,3 +16,8 @@ declare namespace JSX {
     }
   }
 }
+
+declare module 'twallpaper' {
+  const twallpaper: any
+  export default twallpaper
+}
