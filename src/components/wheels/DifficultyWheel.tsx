@@ -1,65 +1,61 @@
 import { Box } from '@mui/material'
 import { Color } from 'src/utils/types'
-import Wheel from '../wheel/Wheel'
+import Wheel, { WheelOption } from '../wheel/Wheel'
+import { useState } from 'react'
+
+type DifficultyOption = 'normal' | 'very-hard' | 'easy' | 'hard'
 
 export default function DifficultyWheel() {
   const options = [
     {
       title: 'Нормальная',
       value: 'normal',
-      color: Color.green,
-    },
-    {
-      title: 'Сложная',
-      value: 'hard',
-      color: Color.red,
+      color: Color.blue,
+      percentage: 80,
     },
     {
       title: 'Очень сложная',
       value: 'very-hard',
       color: Color.red,
+      percentage: 5,
     },
     {
       title: 'Легкая',
       value: 'easy',
       color: Color.green,
+      percentage: 5,
+    },
+    {
+      title: 'Сложная',
+      value: 'hard',
+      color: Color.orange,
+      percentage: 10,
     },
   ]
 
-  return (
-    <Wheel
-      options={options}
-      onAnimationEnd={(winner) => {
-        console.log('test', winner)
-      }}
-    />
-  )
+  const [winner, setWinner] = useState<WheelOption | null>(null)
+
+  const descriptions: { [k: string]: string } = {
+    normal: 'стандартная сложность для игры',
+    'very-hard': 'вторая сложность выше стандартой',
+    easy: 'сложность перед стандартной',
+    hard: 'сложность выше стандартной',
+  }
 
   return (
-    <Box display={'flex'} justifyContent={'center'}>
-      <Box
-        style={{
-          position: 'absolute',
-          width: '700px',
-          backgroundColor: Color.greyDark,
-          height: '10px',
-          // display: 'none',
+    <Box>
+      {winner && (
+        <Box display="flex" justifyContent="center" textAlign="center">
+          {winner.title}
+          <br />({descriptions[winner.value]})
+        </Box>
+      )}
+      <Wheel
+        options={options}
+        onAnimationEnd={(winner) => {
+          setWinner(winner)
         }}
       />
-      <Box>
-        <iframe
-          src="https://wheelofnames.com/ru/stm-kge"
-          title="Колесо сложности"
-          width={'700px'}
-          height={'700px'}
-          style={{
-            border: 'none',
-            padding: 0,
-            margin: 0,
-            overflow: 'hidden',
-          }}
-        />
-      </Box>
     </Box>
   )
 }
