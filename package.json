@@ -23,7 +23,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@twallpaper/react": "^2.1.2",
-    "@twallpaper/vue": "^2.1.2",
     "@types/jest": "^27.5.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
