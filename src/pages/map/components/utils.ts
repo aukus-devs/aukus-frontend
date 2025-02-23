@@ -34,25 +34,25 @@ function generateMapCells() {
 }
 
 const generatedMapCells = generateMapCells()
-export const mapCellsSorted: Array<MapCell> = generatedMapCells
+export const MapCellsSorted: Array<MapCell> = generatedMapCells
   .flat(1)
   .sort((a, b) => a.id - b.id)
-export const mapCellRows: Array<Array<MapCell>> = generatedMapCells
+export const MapCellRows: Array<Array<MapCell>> = generatedMapCells
 
-export const startCell = { id: 0, direction: 'up' } as MapCell
-export const lastCell = { id: 101, direction: 'right' } as MapCell
+export const MapStartCell = { id: 0, direction: 'up' } as MapCell
+export const MapLastCell = { id: 101, direction: 'right' } as MapCell
 
 export const getMapCellById = (id: number) => {
   if (id === 0) {
-    return startCell
+    return MapStartCell
   }
   if (id === 101) {
-    return lastCell
+    return MapLastCell
   }
-  return mapCellsSorted[id - 1]
+  return MapCellsSorted[id - 1]
 }
 
-export const ladders: Array<Ladder> = [
+export const MapLadders: Array<Ladder> = [
   { cellFrom: 1, cellTo: 20 },
   { cellFrom: 4, cellTo: 25 },
   { cellFrom: 13, cellTo: 46 },
@@ -65,7 +65,7 @@ export const ladders: Array<Ladder> = [
   { cellFrom: 74, cellTo: 92 },
 ]
 
-export const laddersByCell = ladders.reduce(
+export const LaddersByCell = MapLadders.reduce(
   (acc, ladder) => {
     acc[ladder.cellFrom] = ladder
     return acc
@@ -73,7 +73,7 @@ export const laddersByCell = ladders.reduce(
   {} as Record<number, Ladder>
 )
 
-export const snakes: Array<Snake> = [
+export const MapSnakes: Array<Snake> = [
   { cellFrom: 21, cellTo: 3 },
   { cellFrom: 27, cellTo: 5 },
   { cellFrom: 43, cellTo: 18 },
@@ -88,7 +88,7 @@ export const snakes: Array<Snake> = [
   { cellFrom: 99, cellTo: 41 },
 ]
 
-export const snakesByCell = snakes.reduce(
+export const SnakesByCell = MapSnakes.reduce(
   (acc, snake) => {
     acc[snake.cellFrom] = snake
     return acc

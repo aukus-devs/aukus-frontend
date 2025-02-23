@@ -5,7 +5,7 @@ import { Color, getPlayerColor, MoveParams, Player } from 'utils/types'
 
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
-import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
+import { getMapCellById, LaddersByCell, SnakesByCell } from '../utils'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import JumpingIcon from './JumpingIcon'
 import { getPlayerIcon } from './utils'
@@ -93,8 +93,8 @@ export default function PlayerIcon({
 
     const ladder = moveParams.skipLadders
       ? undefined
-      : laddersByCell[player.map_position + moves]
-    const snake = snakesByCell[player.map_position + moves]
+      : LaddersByCell[player.map_position + moves]
+    const snake = SnakesByCell[player.map_position + moves]
 
     const animationsList: Array<{
       x?: number

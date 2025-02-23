@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import { Color, getPlayerColor, Player } from 'utils/types'
+import PlayerPanel from './PlayerPanel'
 
 type Props = {
   player: Player
@@ -61,7 +62,7 @@ export default function PlayerPopup({
         position: 'absolute',
         top: topPosition,
         left: leftPosition,
-        width: '250px',
+        // width: '250px',
         zIndex: 99,
       }}
       onClick={onClick}
@@ -90,6 +91,7 @@ export default function PlayerPopup({
           >
             Игра: {player.current_game}
           </Box>
+          <PlayerPanel player={player} />
           {player.is_online ? (
             <Box fontSize={'14px'} fontWeight={600}>
               <Link

@@ -34,14 +34,14 @@ import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
   getTimeDiffSeconds,
-  ladders,
-  laddersByCell,
-  lastCell,
-  mapCellRows,
-  mapCellsSorted,
-  snakes,
-  snakesByCell,
-  startCell,
+  MapLadders,
+  LaddersByCell,
+  MapLastCell,
+  MapCellRows,
+  MapCellsSorted,
+  MapSnakes,
+  SnakesByCell,
+  MapStartCell,
 } from './utils'
 import LinkSpan from 'src/components/common/LinkSpan'
 import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
@@ -283,10 +283,10 @@ export default function MapComponent() {
   })
 
   const map: MainMap = {
-    cellRows: mapCellRows,
-    cells: mapCellsSorted,
-    startCell,
-    finishCell: lastCell,
+    cellRows: MapCellRows,
+    cells: MapCellsSorted,
+    startCell: MapStartCell,
+    finishCell: MapLastCell,
   }
 
   const handleClick = () => {
@@ -653,7 +653,7 @@ export default function MapComponent() {
             <Grid container columns={10} width={'auto'}>
               <Grid item>
                 <CellItem
-                  cell={lastCell}
+                  cell={MapLastCell}
                   currentPlayer={playAnimationPlayer}
                   moveSteps={moveParams?.steps || playAnimationSteps}
                 />
@@ -685,7 +685,7 @@ export default function MapComponent() {
             ))}
             <Grid container columns={10} width={'auto'}>
               <Grid item>
-                <CellItem cell={startCell} />
+                <CellItem cell={MapStartCell} />
               </Grid>
 
               <Grid item>
@@ -700,7 +700,7 @@ export default function MapComponent() {
         </Box>
       </Box>
 
-      {ladders.map((ladder) => (
+      {MapLadders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
           <MapArrow
             from={ladder.cellFrom}
@@ -709,7 +709,7 @@ export default function MapComponent() {
           />
         </Fragment>
       ))}
-      {snakes.map((snake) => (
+      {MapSnakes.map((snake) => (
         <Fragment key={snake.cellFrom}>
           <MapArrow
             from={snake.cellFrom}
@@ -815,8 +815,8 @@ function getNextPlayerPosition({ player, moves, skipLadders }: PositionParams) {
   const steps = getMoveSteps(player, moves)
   const newPosition = player.map_position + steps
 
-  const ladder = laddersByCell[newPosition]
-  const snake = snakesByCell[newPosition]
+  const ladder = LaddersByCell[newPosition]
+  const snake = SnakesByCell[newPosition]
 
   if (ladder && !skipLadders) {
     return {
