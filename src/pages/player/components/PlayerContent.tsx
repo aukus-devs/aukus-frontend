@@ -1,7 +1,7 @@
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import SearchIcon from 'assets/search-normal.svg?react'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'

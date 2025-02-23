@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import BottomSection from 'components/BottomSection'
+import BottomSection from 'src/components/common/BottomSection'
 import PlayerContent from './components/PlayerContent'
 
 export default function PlayerPage() {

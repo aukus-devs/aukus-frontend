@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { Link } from 'react-router-dom'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { Color, Player } from 'src/utils/types'
 
 type Props = {

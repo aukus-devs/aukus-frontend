@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'

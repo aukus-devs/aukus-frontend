@@ -1,6 +1,6 @@
 import { Paper, Popper, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { playerDisplayName } from 'src/pages/player/components/utils'

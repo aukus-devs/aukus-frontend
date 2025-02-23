@@ -1,9 +1,9 @@
 import { Box, Button } from '@mui/material'
-import BottomSection from 'components/BottomSection'
+import BottomSection from 'src/components/common/BottomSection'
 import MainMenu from 'components/MainMenu'
 import PlayerList from './components/PlayerList'
 import useScreenSize from 'src/context/useScreenSize'
-import MultistreamButton from '../../components/quick_menu/MultistreamButton'
+import MultistreamButton from '../../components/QuickMenu/MultistreamButton'
 import PlayerListTiles from './components/PlayerListTiles'
 
 type Params = {

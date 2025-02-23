@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { formatDate, formatSecondsToTime } from './utils'
 import { useState } from 'react'
 import EditCurrentGameModal from './EditCurrentGameModal'

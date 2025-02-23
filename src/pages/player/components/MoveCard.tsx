@@ -1,6 +1,6 @@
 import { Box, Divider, Tooltip } from '@mui/material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { updateVodLink } from 'utils/api'

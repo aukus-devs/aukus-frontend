@@ -1,6 +1,6 @@
 import { Link } from '@mui/material'
 import { Fragment } from 'react/jsx-runtime'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 
 type Props = {
   text: string

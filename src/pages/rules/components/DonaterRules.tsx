@@ -6,7 +6,7 @@ import {
   Link,
   Typography,
 } from '@mui/material'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { Color } from 'utils/types'
 
 type TextContent = string | string[]

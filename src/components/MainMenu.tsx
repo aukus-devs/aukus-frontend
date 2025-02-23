@@ -7,7 +7,7 @@ import SnowflakeIcon from 'assets/snowflake.svg?react'
 import SpecialBackground from 'assets/button-special.png'
 import { TWallpaper } from '@twallpaper/react'
 import '@twallpaper/react/css'
-import LinkSpan from './LinkSpan'
+import LinkSpan from './common/LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
@@ -15,7 +15,7 @@ import { useTime } from 'src/context/TimeProvider'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import useLocalStorage from 'src/context/useLocalStorage'
 import useEventState from 'src/context/useEventState'
-import QuickAccessButton from './QuickAccessButton'
+import QuickAccessButton from './QuickMenu/QuickAccessButton'
 
 type Props = {
   currentPage: Page

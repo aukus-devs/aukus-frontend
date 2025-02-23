@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import LinkSpan from 'components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { useState } from 'react'
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Color } from 'utils/types'

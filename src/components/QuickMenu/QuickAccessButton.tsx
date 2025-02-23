@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useUser } from 'src/context/UserProvider'
 import WheelIcon from 'assets/icons/wheel.svg?react'
-import DifficultyWheelModal from './wheels/DifficultyWheelModal'
-import SheikhWheelModal from './wheels/SheikhWheelModal'
-import MultistreamButton from 'src/components/quick_menu/MultistreamButton'
-import { EditModeButton } from './PlayerCanvasBackground'
+import DifficultyWheelModal from '../wheels/DifficultyWheelModal'
+import SheikhWheelModal from '../wheels/SheikhWheelModal'
+import MultistreamButton from 'src/components/QuickMenu/MultistreamButton'
+import { EditModeButton } from '../PlayerCanvasBackground'
 import useLocalStorage from 'src/context/useLocalStorage'
-import ToggleButton from './ToggleButton'
+import ToggleButton from '../common/ToggleButton'
 
 export default function QuickAccessButton() {
   const [open, setOpen] = useState(false)

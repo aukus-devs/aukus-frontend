@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import { getPlayerColor, Player } from 'src/utils/types'
 import { Link } from 'react-router-dom'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { PlayerPhotoMap } from './utils'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 

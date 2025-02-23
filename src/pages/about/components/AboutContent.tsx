@@ -4,7 +4,7 @@ import useScreenSize from 'src/context/useScreenSize'
 import { fetchSponsors } from 'src/utils/api'
 import { Color } from 'utils/types'
 import FlashIcon from 'assets/icons/flash.svg?react'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { Link } from 'react-router-dom'
 
 export const Creators = [

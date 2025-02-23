@@ -43,7 +43,7 @@ import {
   snakesByCell,
   startCell,
 } from './utils'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
 import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'

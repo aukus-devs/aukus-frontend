@@ -12,7 +12,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { playerDisplayName } from 'src/pages/player/components/utils'
 import { fetchPlayers, fetchStats } from 'src/utils/api'

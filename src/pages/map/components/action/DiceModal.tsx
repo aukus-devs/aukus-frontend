@@ -16,7 +16,7 @@ import DiceBackgroundSpecial from 'assets/dice-background-special1.png'
 import DiceBox from '@mapcar/dice-box'
 import { Color, DiceOption, Player } from 'utils/types'
 import { Link } from 'react-router-dom'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 import { Info } from '@mui/icons-material'
 
 type Props = {
