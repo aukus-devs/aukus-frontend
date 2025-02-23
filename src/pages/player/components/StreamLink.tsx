@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
 import OpenIcon from 'assets/open_icon.svg'
-import LinkSpan from 'src/components/LinkSpan'
+import LinkSpan from 'src/components/common/LinkSpan'
 
 type Props = {
   player: Player
