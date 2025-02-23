@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { Color } from 'src/utils/types'
-import Wheel, { WheelOption } from '../wheel/Wheel'
+import Wheel, { WheelOption } from './Wheel'
 import { useState } from 'react'
 
 export default function DifficultyWheel() {
