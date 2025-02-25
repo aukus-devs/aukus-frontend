@@ -9,6 +9,9 @@ import { Color, Player, PlayerMove } from 'utils/types'
 const StartDate = new Date('2024-12-01')
 StartDate.setHours(0, 0, 0, 0)
 
+const EndDate = new Date('2024-12-22')
+EndDate.setHours(0, 0, 0, 0)
+
 const daysBetween = (date1: Date, date2: Date) => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime())
   return Math.abs(diffTime / (1000 * 60 * 60 * 24))
@@ -26,10 +29,13 @@ export default function TimelapseButton({ variant }: Props) {
 
   const Today = new Date()
   Today.setHours(0, 0, 0, 0)
-  const AmountOfDays = daysBetween(StartDate, Today)
+
+  // min of Today & EndDate
+  const finalDate = EndDate < Today ? EndDate : Today
+  const AmountOfDays = daysBetween(StartDate, finalDate)
 
   const [dateDiff, setDateDiff] = useState<number>(
-    daysBetween(StartDate, Today)
+    daysBetween(StartDate, finalDate)
   )
 
   const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
@@ -350,7 +356,7 @@ export default function TimelapseButton({ variant }: Props) {
         >
           Вернуться
         </Button>
-        {!datesEqual(currentDate, Today) ? (
+        {!datesEqual(currentDate, finalDate) ? (
           <Button
             onClick={() => handleDateDiffChange(dateDiff + 1)}
             sx={{
