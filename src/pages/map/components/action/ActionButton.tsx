@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { DiceOption, DiceOrSkip, NextTurnParams, Player } from 'utils/types'
 import DiceModal from './DiceModal'
 import TurnModal from './TurnModal'
+import BottomPanel from '../panel/BottomPanel'
 
 type Props = {
   handleNextTurn: (params: NextTurnParams) => void
@@ -83,7 +84,10 @@ export default function ActionButton({
       >
         <strong>Сделать ход</strong>
       </Button>
-      <TurnModal
+      {turnModalOpen && (
+        <BottomPanel player={player} onClose={() => setTurnModalOpen(false)} />
+      )}
+      {/* <TurnModal
         open={turnModalOpen}
         onClose={handleClose}
         onConfirm={handleConfirm}
@@ -95,7 +99,7 @@ export default function ActionButton({
         onTurnFinish={handleTurnFinish}
         onDiceRoll={handleDiceRoll}
         player={player}
-      />
+      /> */}
     </Box>
   )
 }

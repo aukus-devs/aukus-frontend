@@ -35,6 +35,7 @@ export default function RotatingCube({ result, onFinish, animate }: Props) {
   const rotationStepTimeRef = useRef(stepTime)
   const rotationTotalTimeRef = useRef(rotatingTotalTime)
   const endingTimeRef = useRef(endingTime)
+  const finalRotationRef = useRef<RotationState>()
 
   const resetState = () => {
     rotationTotalTimeRef.current = rotatingTotalTime
@@ -46,6 +47,10 @@ export default function RotatingCube({ result, onFinish, animate }: Props) {
     result && result >= 1 && result <= 6
       ? FaceRotationTargets[result - 1]
       : undefined
+
+  useEffect(() => {
+    finalRotationRef.current = finalRotation
+  }, [finalRotation])
 
   // Function to animate rotation to a target state
   const rotateTo = (target: RotationState) => {
@@ -116,8 +121,8 @@ export default function RotatingCube({ result, onFinish, animate }: Props) {
       ) {
         animationStateRef.current = 'ending'
         endingTimeRef.current = endingTime
-        if (finalRotation) {
-          rotateTo(finalRotation)
+        if (finalRotationRef.current) {
+          rotateTo(finalRotationRef.current)
         }
         return
       }
@@ -146,36 +151,31 @@ export default function RotatingCube({ result, onFinish, animate }: Props) {
   }
 
   useEffect(() => {
-    if (animate && finalRotation && animationStateRef.current === 'idle') {
+    if (animate && animationStateRef.current === 'idle') {
       startRotation()
     }
-  }, [animate, finalRotation])
+  }, [animate])
 
   return (
-    <Box>
-      {/* {animationStateRef.current} */}
-      <Box padding="50px" onClick={startRotation}>
-        <div className="cube-container">
-          <div
-            className="cube"
-            style={{
-              transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`,
-            }}
-          >
-            <div className="face front">
-              1
-              <Image />
-            </div>
-            <div className="face bottom">2</div>
-            <div className="face right">3</div>
-            <div className="face left">4</div>
-            <div className="face top">5</div>
-            <div className="face back">
-              6 <img src="/static/favicon.svg" width="20px" />
-            </div>
-          </div>
+    <Box className="cube-container" padding="50px">
+      <div
+        className="cube"
+        style={{
+          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`,
+        }}
+      >
+        <div className="face front">
+          1
+          <Image />
         </div>
-      </Box>
+        <div className="face bottom">2</div>
+        <div className="face right">3</div>
+        <div className="face left">4</div>
+        <div className="face top">5</div>
+        <div className="face back">
+          6 <img src="/static/favicon.svg" width="20px" />
+        </div>
+      </div>
     </Box>
   )
 }

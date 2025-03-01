@@ -49,6 +49,7 @@ import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'
 import { getEventSecondsLeft } from 'src/pages/rules/components/Countdown'
+import BottomPanel from './panel/BottomPanel'
 
 const WINNER_COUNTDOWN_START = 60 * 60 * 24 * 3
 const END_COUNTDOWN_START = 60 * 60 * 24 * 3
