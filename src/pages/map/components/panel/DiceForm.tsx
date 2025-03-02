@@ -43,6 +43,7 @@ export default function DiceForm({ onTurnFinished, dice }: Props) {
       num: diceAmount,
       min: 1,
       max: 6,
+      is_test: false,
     }).then((response) => {
       setThrowResults(response.data)
     })

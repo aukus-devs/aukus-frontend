@@ -277,6 +277,7 @@ type DiceRollParams = {
   num: number
   min: number
   max: number
+  is_test: boolean
 }
 
 type DiceRollResponse = {
