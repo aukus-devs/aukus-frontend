@@ -1,6 +1,8 @@
 import { Box, Button } from '@mui/material'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import CubesGroup from 'src/pages/map/components/panel/dice/CubesGroup'
+import { makeDiceRoll } from 'src/utils/api'
 import { DiceOption } from 'src/utils/types'
 
 const DiceChangeMaps: { [k: string]: { [k: string]: DiceOption } } = {
@@ -27,19 +29,23 @@ export default function DiceForm({ onTurnFinished, dice }: Props) {
 
   const diceAmount = parseInt(dice[0])
 
+  const { mutateAsync: doDiceRoll } = useMutation({
+    mutationFn: makeDiceRoll,
+  })
+
   const onAnimationEnd = () => {
     setTurnFinished(true)
   }
 
   const handleStartThrow = () => {
     setAnimateDice(true)
-    setTimeout(() => {
-      const results = Array.from(
-        { length: diceAmount },
-        () => Math.floor(Math.random() * 6) + 1
-      )
-      setThrowResults(results)
-    }, 10)
+    doDiceRoll({
+      num: diceAmount,
+      min: 1,
+      max: 6,
+    }).then((response) => {
+      setThrowResults(response.data)
+    })
   }
 
   return (

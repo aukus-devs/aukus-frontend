@@ -272,3 +272,37 @@ export async function updateRules(rules: string): Promise<void> {
     body: JSON.stringify({ rule_data: rules }),
   }).then((res) => res.json())
 }
+
+type DiceRollParams = {
+  num: number
+  min: number
+  max: number
+}
+
+type DiceRollResponse = {
+  data: number[]
+  isRandomOrgResult: boolean
+  randomOrgCheckForm: string
+}
+
+export async function makeDiceRoll(
+  params: DiceRollParams
+): Promise<DiceRollResponse> {
+  if (MOCK_API) {
+    return Promise.resolve({
+      data: times(
+        params.num,
+        () => Math.floor(Math.random() * params.max) + params.min
+      ),
+      isRandomOrgResult: true,
+      randomOrgCheckForm: 'https://api.random.org',
+    })
+  }
+  return fetch('/api/random', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then((res) => res.json())
+}
