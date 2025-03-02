@@ -219,6 +219,13 @@ export default function GameReviewForm({ player, onFinished, onClose }: Props) {
       break
   }
 
+  const timeSelectOptions: { [k in ItemLength]: string } = {
+    tiny: '0-3 часов',
+    short: '3-15 часов',
+    medium: '15-30 часов',
+    long: '30+ часов',
+  }
+
   return (
     <Box>
       <Box display="flex" justifyContent="center">
@@ -326,35 +333,42 @@ export default function GameReviewForm({ player, onFinished, onClose }: Props) {
                       </InputLabel>
                     )}
                     <Select
+                      displayEmpty
                       onChange={(e) =>
                         handleGameHoursChange(e.target.value as ItemLength)
                       }
-                      value={gameHours}
+                      value={gameHours ?? ''}
                       IconComponent={KeyboardArrowDownSharp}
                       style={{ fontSize: '16px', fontWeight: 500 }}
                       MenuProps={{
                         sx: {
-                          '&& .Mui-selected': {
-                            backgroundColor: selectedItemColor,
-                          },
+                          // '&& .Mui-selected': {
+                          //   backgroundColor: selectedItemColor,
+                          // },
                           fontSize: '16px',
                         },
                         transitionDuration: 0,
                         disableScrollLock: true,
                       }}
                       className="CustomSelect"
+                      renderValue={(value: ItemLength | '') => {
+                        if (value === '') {
+                          return 'Выбери время'
+                        }
+                        return timeSelectOptions[value]
+                      }}
                     >
-                      <MenuItemStyled value="tiny" color={Color.green}>
-                        0-3 часов
+                      <MenuItemStyled value="tiny">
+                        {timeSelectOptions.tiny}
                       </MenuItemStyled>
-                      <MenuItemStyled value="short" color={Color.red}>
-                        3-15 часов
+                      <MenuItemStyled value="short">
+                        {timeSelectOptions.short}
                       </MenuItemStyled>
-                      <MenuItemStyled value="medium" color={Color.blue}>
-                        15-30 часов
+                      <MenuItemStyled value="medium">
+                        {timeSelectOptions.medium}
                       </MenuItemStyled>
-                      <MenuItemStyled value="long" color={Color.orange}>
-                        30+ часов
+                      <MenuItemStyled value="long">
+                        {timeSelectOptions.long}
                       </MenuItemStyled>
                     </Select>
                   </FormControl>
