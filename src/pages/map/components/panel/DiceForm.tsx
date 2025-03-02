@@ -38,7 +38,7 @@ export default function DiceForm({ onTurnFinished, dice }: Props) {
         { length: diceAmount },
         () => Math.floor(Math.random() * 6) + 1
       )
-      setThrowResults([3, 5, 6])
+      setThrowResults(results)
     }, 10)
   }
 

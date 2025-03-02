@@ -1,21 +1,12 @@
-import { Box, Button, IconButton, SelectChangeEvent } from '@mui/material'
-import { Color, ItemLength, MoveType, Player } from 'src/utils/types'
-import { useCallback, useEffect, useState } from 'react'
-import useLocalStorage from 'src/context/useLocalStorage'
-import { checkImageValid } from '../utils'
-import { useQuery } from '@tanstack/react-query'
-import { fetchGameNames } from 'src/utils/api'
-import debounce from 'lodash/debounce'
-import TurnForm from './GameReviewForm'
-import { Close } from '@mui/icons-material'
+import { Box } from '@mui/material'
+import { Color, Player } from 'src/utils/types'
 import FormControl from './FormControl'
 
 type Props = {
-  player: Player
-  onClose: () => void
+  children?: React.ReactNode
 }
 
-export default function BottomPanel({ player, onClose }: Props) {
+export default function BottomPanel({ children }: Props) {
   return (
     <Box
       position="fixed"
@@ -40,11 +31,7 @@ export default function BottomPanel({ player, onClose }: Props) {
           borderRadius: '10px',
         }}
       >
-        <FormControl
-          player={player}
-          onClose={onClose}
-          onTurnFinished={() => onClose()}
-        />
+        {children}
       </Box>
     </Box>
   )

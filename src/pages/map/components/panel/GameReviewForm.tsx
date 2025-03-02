@@ -3,21 +3,27 @@ import {
   Box,
   Button,
   FormControl,
-  IconButton,
   InputLabel,
   Select,
   SelectChangeEvent,
   TextField,
-  Tooltip,
 } from '@mui/material'
-import { Color, ItemLength, MoveType, Player } from 'src/utils/types'
+import {
+  Color,
+  DiceOption,
+  DiceOrSkip,
+  ItemLength,
+  MoveType,
+  NextTurnParams,
+  Player,
+} from 'src/utils/types'
 import { CustomPopper, MenuItemStyled } from '../action/TurnModal'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import NumRating from '../action/NumRating'
 import { useCallback, useEffect, useState } from 'react'
 import useLocalStorage from 'src/context/useLocalStorage'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
-import { Close, KeyboardArrowDownSharp } from '@mui/icons-material'
+import { KeyboardArrowDownSharp } from '@mui/icons-material'
 import { checkImageValid } from '../utils'
 import { useQuery } from '@tanstack/react-query'
 import { fetchGameNames } from 'src/utils/api'
@@ -25,7 +31,7 @@ import debounce from 'lodash/debounce'
 
 type Props = {
   player: Player
-  onFinished: () => void
+  onFinished: (params: NextTurnParams, dice: DiceOrSkip) => void
   onClose: () => void
 }
 
@@ -160,6 +166,30 @@ export default function GameReviewForm({ player, onFinished, onClose }: Props) {
 
   const handleMoveTypeChange = (event: SelectChangeEvent) => {
     setMoveType(event.target.value as MoveType)
+  }
+
+  const handleFinished = () => {
+    const dice: DiceOrSkip | null = getDiceType({
+      moveType,
+      gameHours,
+      playerPosition: player.map_position,
+    })
+
+    if (dice && moveType) {
+      const params: NextTurnParams = {
+        type: moveType,
+        itemLength: gameHours,
+        itemRating: rating || 0,
+        itemReview: review,
+        itemTitle: gameName,
+        snakeFrom: null,
+        snakeTo: null,
+        stairFrom: null,
+        stairTo: null,
+        diceRoll: 0,
+      }
+      onFinished(params, dice)
+    }
   }
 
   let displayRating = rating || 0
@@ -376,10 +406,54 @@ export default function GameReviewForm({ player, onFinished, onClose }: Props) {
             Закрыть
           </Button>
         </Box>
-        <Button sx={{ width: '320px' }} onClick={onFinished}>
+        <Button sx={{ width: '320px' }} onClick={handleFinished}>
           Перейти к броску
         </Button>
       </Box>
     </Box>
   )
+}
+
+type GetDiceTypeProps = {
+  moveType: MoveType | null
+  gameHours: ItemLength | null
+  playerPosition: number
+}
+
+function getDiceType({
+  moveType,
+  gameHours,
+  playerPosition,
+}: GetDiceTypeProps) {
+  if (!moveType) {
+    return null
+  }
+  if (moveType === 'drop' || moveType === 'sheikh') {
+    if (playerPosition >= 81) {
+      return '2d6'
+    }
+    return '1d6'
+  }
+  if (moveType === 'completed' && gameHours) {
+    if (playerPosition >= 81) {
+      return '1d6'
+    }
+    switch (gameHours) {
+      case 'tiny':
+        return '1d6'
+      case 'short':
+        return '1d6'
+      case 'medium':
+        return '2d6'
+      case 'long':
+        return '3d6'
+    }
+  }
+  if (moveType === 'movie') {
+    return '1d4'
+  }
+  if (moveType === 'reroll') {
+    return 'skip'
+  }
+  return null
 }

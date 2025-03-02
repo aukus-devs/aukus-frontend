@@ -4,6 +4,7 @@ import { DiceOption, DiceOrSkip, NextTurnParams, Player } from 'utils/types'
 import DiceModal from './DiceModal'
 import TurnModal from './TurnModal'
 import BottomPanel from '../panel/BottomPanel'
+import FormControl from '../panel/FormControl'
 
 type Props = {
   handleNextTurn: (params: NextTurnParams) => void
@@ -37,9 +38,10 @@ export default function ActionButton({
   const handleConfirm = (params: NextTurnParams, dice: DiceOption | 'skip') => {
     setTurnParams(params)
     setDice(dice)
-    setTurnModalOpen(false)
+    // setTurnModalOpen(false)
 
     if (params.type === 'completed' && player.map_position === 101) {
+      setTurnModalOpen(false)
       handleNextTurn(params)
       return
     }
@@ -47,8 +49,7 @@ export default function ActionButton({
     if (dice === 'skip') {
       params.diceRoll = 0
       onDiceRoll(params)
-    } else {
-      setDiceModalOpen(true)
+      setTurnModalOpen(false)
     }
   }
 
@@ -60,14 +61,15 @@ export default function ActionButton({
     handleNextTurn(turnParams)
   }
 
-  const handleDiceRoll = (roll: number) => {
+  const handleDiceRoll = (roll: number[]) => {
     if (!turnParams) {
       return
     }
+    const rollSum = roll.reduce((acc, val) => acc + val, 0)
     if (turnParams.type === 'drop' || turnParams.type === 'sheikh') {
-      turnParams.diceRoll = -roll
+      turnParams.diceRoll = -rollSum
     } else {
-      turnParams.diceRoll = roll
+      turnParams.diceRoll = rollSum
     }
     setTurnParams({ ...turnParams })
     onDiceRoll(turnParams)
@@ -85,7 +87,17 @@ export default function ActionButton({
         <strong>Сделать ход</strong>
       </Button>
       {turnModalOpen && (
-        <BottomPanel player={player} onClose={() => setTurnModalOpen(false)} />
+        <BottomPanel>
+          <FormControl
+            player={player}
+            onClose={handleClose}
+            onTurnFinished={(result) => {
+              handleDiceRoll(result)
+              handleTurnFinish()
+            }}
+            onFormFinished={handleConfirm}
+          />
+        </BottomPanel>
       )}
       {/* <TurnModal
         open={turnModalOpen}
