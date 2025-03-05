@@ -30,7 +30,7 @@ export default function QuickAccessButton() {
 
   let firstButton = (
     <a href="/login">
-      <Button sx={{ width: '100%' }} color="info">
+      <Button className="left" sx={{ width: '100%' }} color="info">
         Логин
       </Button>
     </a>
@@ -39,7 +39,7 @@ export default function QuickAccessButton() {
   if (user && user.role === 'player') {
     firstButton = (
       <Link to={`/players/${user.url_handle}`}>
-        <Button sx={{ width: '100%' }} color="info">
+        <Button className="left" sx={{ width: '100%' }} color="info">
           Моя страница
         </Button>
       </Link>
@@ -98,16 +98,18 @@ export default function QuickAccessButton() {
             position="absolute"
             top="100%"
             left="-50px"
-            width="300px"
+            width="290px"
             paddingTop="30px"
             paddingBottom="30px"
             paddingLeft="50px"
+            textAlign="left"
           >
             <Box>{firstButton}</Box>
             {user && (
               <>
                 <Box marginTop={buttonsMargin}>
                   <Button
+                    className="left"
                     sx={{ width: '100%' }}
                     onClick={openDifficultyWheel}
                     color="info"
@@ -124,6 +126,7 @@ export default function QuickAccessButton() {
                 </Box>
                 <Box marginTop={buttonsMargin}>
                   <Button
+                    className="left"
                     onClick={openSheikhMomentWheel}
                     sx={{ width: '100%' }}
                     color="info"
@@ -145,6 +148,7 @@ export default function QuickAccessButton() {
             </Box>
             <Box marginTop={buttonsMargin}>
               <ToggleButton
+                className="left"
                 color="info"
                 toggled={darkMode}
                 onClick={switchMapDarkness}
@@ -154,7 +158,7 @@ export default function QuickAccessButton() {
               </ToggleButton>
             </Box>
             <Box marginTop={buttonsMargin}>
-              <Button color="info" sx={{ width: '100%' }}>
+              <Button className="left" color="info" sx={{ width: '100%' }}>
                 Таймлапс
               </Button>
             </Box>

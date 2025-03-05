@@ -30,6 +30,10 @@ button.MuiButton-root p {
   display: inline;
 }
 
+button.MuiButton-root.left {
+  justify-content: flex-start;
+}
+
 .MuiDialogTitle-root {
   background-color: #222222;
   border-top-left-radius: 20px;
