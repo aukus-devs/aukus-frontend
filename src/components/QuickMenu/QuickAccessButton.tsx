@@ -71,7 +71,7 @@ export default function QuickAccessButton() {
   return (
     <>
       <Box
-        width="140px"
+        width="131px"
         position="relative"
         onMouseLeave={() => setOpen(false)}
       >
@@ -81,7 +81,6 @@ export default function QuickAccessButton() {
             paddingTop: '5px',
             paddingBottom: '5px',
             paddingLeft: '8px',
-            paddingRight: '8px',
             borderRadius: '5px',
             display: 'flex',
             fontSize: '12px',

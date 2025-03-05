@@ -122,22 +122,18 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
               onClick={cycleSnow}
             />
 
-            <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
-              <LinkSpan
-                color={playerColor}
-                style={{
-                  fontWeight: 600,
-                  paddingBottom: 0,
-                  lineHeight: '1.2',
-                  display: 'inline-flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                АУКУС 2024{' '}
-                {currentUser && `// ${playerDisplayName(currentUser)}`}
-              </LinkSpan>
-            </Link>
+            <span
+              style={{
+                fontWeight: 600,
+                paddingBottom: 0,
+                lineHeight: '1.2',
+                display: 'inline-flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              АУКУС 2024
+            </span>
           </span>
         </Box>
       </Box>
