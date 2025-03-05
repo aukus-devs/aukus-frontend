@@ -68,6 +68,8 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
     return <MainMenuMobile currentPage={currentPage} />
   }
 
+  const userTitle = currentUser ? playerDisplayName(currentUser) : 'Зритель'
+
   return (
     <Box>
       {enableScrollRestoration && <ScrollRestoration />}
@@ -137,21 +139,6 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
               </LinkSpan>
             </Link>
           </span>
-
-          <Box
-            fontWeight={600}
-            position="absolute"
-            display="inline"
-            marginLeft={'15px'}
-            top={'1px'}
-            style={{
-              lineHeight: '23px',
-              width: 'max-content',
-            }}
-            color={Color.greyText}
-          >
-            <Clock />
-          </Box>
         </Box>
       </Box>
       <Box
@@ -173,7 +160,18 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
         >
           {replaceMenuButtons || (
             <>
-              <Box marginRight={'30px'} position="absolute" right="100%">
+              <Box
+                marginRight="30px"
+                top="0px"
+                position="absolute"
+                right="100%"
+              >
+                <Box color={Color.greyText2} fontSize="14px" fontWeight="600">
+                  <Clock />
+                </Box>
+                <Box fontSize="24px" fontWeight="700" marginBottom="20px">
+                  {userTitle}
+                </Box>
                 <QuickAccessButton />
               </Box>
 

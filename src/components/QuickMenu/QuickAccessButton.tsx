@@ -9,6 +9,8 @@ import MultistreamButton from 'src/components/QuickMenu/MultistreamButton'
 import { EditModeButton } from '../PlayerCanvasBackground'
 import useLocalStorage from 'src/context/useLocalStorage'
 import ToggleButton from '../common/ToggleButton'
+import { Color } from 'src/utils/types'
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 
 export default function QuickAccessButton() {
   const [open, setOpen] = useState(false)
@@ -28,14 +30,18 @@ export default function QuickAccessButton() {
 
   let firstButton = (
     <a href="/login">
-      <Button sx={{ width: '100%' }}>Логин</Button>
+      <Button sx={{ width: '100%' }} color="info">
+        Логин
+      </Button>
     </a>
   )
 
   if (user && user.role === 'player') {
     firstButton = (
       <Link to={`/players/${user.url_handle}`}>
-        <Button sx={{ width: '100%' }}>Моя страница</Button>
+        <Button sx={{ width: '100%' }} color="info">
+          Моя страница
+        </Button>
       </Link>
     )
   }
@@ -65,16 +71,29 @@ export default function QuickAccessButton() {
   return (
     <>
       <Box
-        width="170px"
+        width="140px"
         position="relative"
         onMouseLeave={() => setOpen(false)}
       >
-        <Button
-          onClick={() => setOpen(!open)}
+        <Box
+          sx={{
+            backgroundColor: Color.greyDark,
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            borderRadius: '5px',
+            display: 'flex',
+            fontSize: '12px',
+            fontWeight: '600',
+            alignItems: 'center',
+            color: Color.greyText2,
+          }}
           onMouseOver={() => setOpen(true)}
         >
           Быстрый доступ
-        </Button>
+          {open ? <ArrowDropUp width="14px" /> : <ArrowDropDown width="14px" />}
+        </Box>
         {open && (
           <Box
             position="absolute"
@@ -89,7 +108,11 @@ export default function QuickAccessButton() {
             {user && (
               <>
                 <Box marginTop={buttonsMargin}>
-                  <Button sx={{ width: '100%' }} onClick={openDifficultyWheel}>
+                  <Button
+                    sx={{ width: '100%' }}
+                    onClick={openDifficultyWheel}
+                    color="info"
+                  >
                     <WheelIcon
                       style={{
                         marginRight: '8px',
@@ -104,6 +127,7 @@ export default function QuickAccessButton() {
                   <Button
                     onClick={openSheikhMomentWheel}
                     sx={{ width: '100%' }}
+                    color="info"
                   >
                     <WheelIcon
                       style={{
@@ -122,6 +146,7 @@ export default function QuickAccessButton() {
             </Box>
             <Box marginTop={buttonsMargin}>
               <ToggleButton
+                color="info"
                 toggled={darkMode}
                 onClick={switchMapDarkness}
                 sx={{ width: '100%' }}
@@ -130,7 +155,9 @@ export default function QuickAccessButton() {
               </ToggleButton>
             </Box>
             <Box marginTop={buttonsMargin}>
-              <Button sx={{ width: '100%' }}>Таймлапс</Button>
+              <Button color="info" sx={{ width: '100%' }}>
+                Таймлапс
+              </Button>
             </Box>
           </Box>
         )}

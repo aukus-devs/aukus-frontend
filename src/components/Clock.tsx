@@ -23,7 +23,7 @@ export default function Clock() {
   }, [])
 
   return (
-    <Box style={{ fontStyle: 'italic' }}>
+    <Box>
       <span className={'mono'}>{time}</span> МСК
     </Box>
   )

@@ -119,6 +119,7 @@ export const Color = {
   greyDarkest: '#121212',
   greyNew: '#CECECE',
   greyText: '#656565',
+  greyText2: '#9F9F9F',
   red: '#ff3b30',
   green: '#34C759',
   greenLight: '#00B88C',

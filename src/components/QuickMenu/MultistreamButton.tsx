@@ -8,7 +8,7 @@ export default function MultistreamButton() {
       target={'_blank'}
       rel="noopener nereferrer"
     >
-      <Button sx={{ width: '100%' }}>
+      <Button sx={{ width: '100%' }} color="info">
         <VideoIcon style={{ marginRight: '8px' }} />
         Мультитрансляция
       </Button>
