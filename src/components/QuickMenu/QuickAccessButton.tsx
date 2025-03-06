@@ -71,12 +71,14 @@ export default function QuickAccessButton() {
   return (
     <>
       <Box
-        width="131px"
+        width="200px"
         position="relative"
         onMouseLeave={() => setOpen(false)}
       >
         <Box
           sx={{
+            cursor: 'pointer',
+            width: '131px',
             backgroundColor: Color.greyDark,
             paddingTop: '5px',
             paddingBottom: '5px',
