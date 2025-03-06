@@ -71,7 +71,7 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
   const userTitle = currentUser ? playerDisplayName(currentUser) : 'Зритель'
 
   return (
-    <Box>
+    <>
       {enableScrollRestoration && <ScrollRestoration />}
       <TWallpaper
         options={{
@@ -140,10 +140,11 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
       <Box
         display="flex"
         justifyContent={'start'}
-        zIndex={20}
-        position="relative"
-        margin={'auto'}
-        width={'fit-content'}
+        zIndex={200}
+        position="sticky"
+        top="0"
+        margin="auto"
+        width="fit-content"
       >
         <Box
           padding={'10px'}
@@ -240,6 +241,6 @@ export default function MainMenu({ currentPage, replaceMenuButtons }: Props) {
           )}
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
