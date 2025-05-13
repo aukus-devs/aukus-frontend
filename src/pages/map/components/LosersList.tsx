@@ -84,7 +84,8 @@ function LoserItem({ player, loser }: LoserProps) {
       >
         <Box
           style={{
-            backgroundColor: Color.white,
+            backgroundColor:
+              loser.status === 'done' ? Color.brown : Color.white,
             borderRadius: '5px',
             color: 'black',
             paddingLeft: '12px',
@@ -127,7 +128,7 @@ function LoserItem({ player, loser }: LoserProps) {
         <Box>
           <LinkSpan>
             <a href={loser.link} target="_blank" rel="noopener noreferrer">
-              <span style={{ fontSize: '12px' }}>Ссылка на выполнение</span>
+              <span style={{ fontSize: '14px' }}>Ссылка на выполнение</span>
             </a>
           </LinkSpan>
         </Box>
