@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import LinkSpan from 'src/components/LinkSpan'
 import { Color, getPlayerColor, Player, PlayerUrl } from 'src/utils/types'
 
 type LosersListProps = {
@@ -10,6 +11,7 @@ type LoserItem = {
   place: number
   text: string
   status: 'in-process' | 'done'
+  link?: string
 }
 
 export default function LosersList({ players }: LosersListProps) {
@@ -24,7 +26,8 @@ export default function LosersList({ players }: LosersListProps) {
       url_handle: 'unclebjorn',
       place: 11,
       text: 'Пройти за раз со стримом 45000 шагов (ИРЛ стрим на улице). Отдыхать разрешается. В процессе делиться философскими рассуждениями на любые темы',
-      status: 'in-process',
+      status: 'done',
+      link: 'https://www.twitch.tv/videos/2457349306',
     },
     {
       url_handle: 'segall',
@@ -120,6 +123,15 @@ function LoserItem({ player, loser }: LoserProps) {
         </Box>
       </Box>
       <span style={{ fontSize: '20px', fontWeight: 700 }}>{loser.text}</span>
+      {loser.link && (
+        <Box>
+          <LinkSpan>
+            <a href={loser.link} target="_blank" rel="noopener noreferrer">
+              <span style={{ fontSize: '12px' }}>Ссылка на выполнение</span>
+            </a>
+          </LinkSpan>
+        </Box>
+      )}
     </Box>
   )
 }
