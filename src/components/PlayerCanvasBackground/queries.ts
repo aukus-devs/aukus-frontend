@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CanvasImage } from './context';
 
-const MOCK_API = process.env.NODE_ENV === 'development';
+// Store mock images per user ID
+const MOCK_IMAGES_BY_USER: Record<number, CanvasImage[]> = {};
 
-let MOCK_IMAGES: CanvasImage[] = [
+const DEFAULT_IMAGES: CanvasImage[] = [
   {
     id: 1,
     x: 0,
@@ -62,29 +63,33 @@ let MOCK_IMAGES: CanvasImage[] = [
   // },
 ];
 
-async function request(url: RequestInfo, opt: RequestInit) {
-  const res = await fetch(url, opt);
-
-  if (!res.ok) {
-    return Promise.reject(new Error());
-  }
-
-  return res.json();
-}
-
 async function fetchImages(playerId: number): Promise<CanvasImage[]> {
-  if (MOCK_API) {
-    return Promise.resolve(MOCK_IMAGES);
+  console.log('fetching canvas images from local JSON for user', playerId)
+
+  try {
+    // Try to fetch user-specific canvas file first
+    const response = await fetch(`/api/canvas-${playerId}.json`)
+    if (response.ok) {
+      const data = await response.json()
+      return data.objects || []
+    }
+  } catch (error) {
+    console.log(`No specific canvas file for user ${playerId}, falling back to default`)
   }
 
-  const { objects } = await request(`/api/canvas/${playerId}`, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+  try {
+    // Fall back to default canvas.json
+    const response = await fetch('/api/canvas.json')
+    if (response.ok) {
+      const data = await response.json()
+      return data.objects || []
+    }
+  } catch (error) {
+    console.log('No default canvas file found, using empty array')
+  }
 
-  return objects;
+  // Return empty array if no files found
+  return []
 }
 
 export function useGetCanvasImages(playerId: number) {
@@ -100,19 +105,10 @@ export function useGetCanvasImages(playerId: number) {
 }
 
 function saveCanvasImages(playerId: number, imageList: CanvasImage[]) {
-  if (MOCK_API) {
-    MOCK_IMAGES = imageList;
-    console.log('MOCK_IMAGES', MOCK_IMAGES);
-    return Promise.resolve(new Response());
-  }
-
-  return request(`/api/canvas/${playerId}/update`, {
-    method: 'PUT',
-    body: JSON.stringify(imageList),
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+  // Store images per user ID in mock storage
+  MOCK_IMAGES_BY_USER[playerId] = imageList;
+  console.log(`saving canvas images for user ${playerId} (local mock)`, imageList);
+  return Promise.resolve(new Response());
 }
 
 export function useSaveCanvasImages(playerId: number) {
@@ -127,31 +123,31 @@ export function useSaveCanvasImages(playerId: number) {
 }
 
 function uploadCanvasImage(playerId: number, file: File, width: number, height: number) {
-  if (MOCK_API) {
-    MOCK_IMAGES.push({
-      id: MOCK_IMAGES.length + 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      url: URL.createObjectURL(file),
-      width,
-      height,
-      zIndex: 0,
-      scaleX: 1,
-      scaleY: 1,
-    });
-    return Promise.resolve(new Response());
+  console.log(`uploading canvas image for user ${playerId} (local mock)`);
+
+  // Initialize user's images if they don't exist
+  if (!MOCK_IMAGES_BY_USER[playerId]) {
+    MOCK_IMAGES_BY_USER[playerId] = [];
   }
 
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('width', width.toString());
-  formData.append('height', height.toString());
+  // Generate new ID based on existing images for this user
+  const existingIds = MOCK_IMAGES_BY_USER[playerId].map(img => img.id);
+  const newId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
 
-  return request(`/api/canvas/${playerId}/upload`, {
-    method: 'POST',
-    body: formData
+  MOCK_IMAGES_BY_USER[playerId].push({
+    id: newId,
+    x: 0,
+    y: 0,
+    rotation: 0,
+    url: URL.createObjectURL(file),
+    width,
+    height,
+    zIndex: 0,
+    scaleX: 1,
+    scaleY: 1,
   });
+
+  return Promise.resolve(new Response());
 }
 
 export function useUploadCanvasImage(playerId: number) {

@@ -1,0 +1,41 @@
+{
+    "objects": [
+      {
+        "height": 213.89622553348613,
+        "id": 314,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/29-1.webp",
+        "width": 284.87948621937755,
+        "x": 237.79574695378415,
+        "y": 44.00000000000006,
+        "zIndex": 0
+      },
+      {
+        "height": 282.01341310060116,
+        "id": 325,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/29-315.png",
+        "width": 256.985281351578,
+        "x": -615.0,
+        "y": 2.000000000000057,
+        "zIndex": 1
+      },
+      {
+        "height": 309.8454976112442,
+        "id": 745,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/29-326.png",
+        "width": 550.6580605215375,
+        "x": -1001.0032216551131,
+        "y": 401.9999999999998,
+        "zIndex": 2
+      }
+    ]
+  }
+  

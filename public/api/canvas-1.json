@@ -1,0 +1,28 @@
+{
+  "objects": [
+    {
+      "id": 1,
+      "x": -100,
+      "y": -50,
+      "rotation": 15,
+      "url": "https://ttv.madf12.com/mge/static/rofls/canny.webp",
+      "width": 180,
+      "height": 180,
+      "zIndex": 0,
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    {
+      "id": 2,
+      "x": 120,
+      "y": 80,
+      "rotation": -10,
+      "url": "https://ttv.madf12.com/mge/static/rofls/cat1.webp",
+      "width": 150,
+      "height": 150,
+      "zIndex": 1,
+      "scaleX": -1,
+      "scaleY": 1
+    }
+  ]
+} 

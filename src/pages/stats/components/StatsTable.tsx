@@ -65,9 +65,15 @@ export default function StatsTable(props: Props) {
 
   const playersStatsSorted = playersStats.sort((a, b) => {
     if (orderBy === 'name') {
+      const playerA = playersById[a.id]
+      const playerB = playersById[b.id]
+
+      // Safety check: skip sorting if players don't exist
+      if (!playerA || !playerB) return 0
+
       return order === 'asc'
-        ? playersById[a.id].name.localeCompare(playersById[b.id].name)
-        : playersById[b.id].name.localeCompare(playersById[a.id].name)
+        ? playerA.name.localeCompare(playerB.name)
+        : playerB.name.localeCompare(playerA.name)
     }
     if (orderBy === 'dice_average') {
       return order === 'asc'
@@ -239,6 +245,10 @@ export default function StatsTable(props: Props) {
             <TableBody>
               {playersStatsSorted.map((playerStat, index) => {
                 const player = playersById[playerStat.id]
+
+                // Skip rendering if player doesn't exist
+                if (!player) return null
+
                 const displayName = playerDisplayName(player)
 
                 return (

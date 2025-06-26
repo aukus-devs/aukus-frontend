@@ -1,0 +1,89 @@
+{
+    "objects": [
+      {
+        "height": 364.17646821287076,
+        "id": 478,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-1.jpg",
+        "width": 364.1764682128709,
+        "x": 428.82353178712947,
+        "y": 843.8235317871295,
+        "zIndex": 1
+      },
+      {
+        "height": 366.5511751003981,
+        "id": 479,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-479.jpg",
+        "width": 801.2081425533249,
+        "x": -402.72834535018546,
+        "y": 1.9539188898119733,
+        "zIndex": 0
+      },
+      {
+        "height": 347.88594801567234,
+        "id": 480,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-480.jpg",
+        "width": 368.6208720695865,
+        "x": -791.620872069587,
+        "y": 72.81962266029917,
+        "zIndex": 3
+      },
+      {
+        "height": 368.723981802529,
+        "id": 481,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-481.jpg",
+        "width": 441.05739450063277,
+        "x": 430.0000000000018,
+        "y": 44.000000000000014,
+        "zIndex": 4
+      },
+      {
+        "height": 484.45799816248007,
+        "id": 556,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-482.jpg",
+        "width": 366.74984392143983,
+        "x": -790.7498439214415,
+        "y": 990.5420018375191,
+        "zIndex": 2
+      },
+      {
+        "height": 332.1533222898688,
+        "id": 602,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-602.png",
+        "width": 759.2075938054144,
+        "x": 418.79240619458824,
+        "y": 458.84667771013164,
+        "zIndex": 5
+      },
+      {
+        "height": 499.71794945801923,
+        "id": 688,
+        "rotation": 0.0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "url": "https://storage.yandexcloud.net/aukus-2024-prod/26-688.jpg",
+        "width": 583.1669429710283,
+        "x": -971.1669429710274,
+        "y": 438.28205054198014,
+        "zIndex": 6
+      }
+    ]
+  }
+  
