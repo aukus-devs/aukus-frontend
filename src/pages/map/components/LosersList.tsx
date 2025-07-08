@@ -20,7 +20,8 @@ export default function LosersList({ players }: LosersListProps) {
       url_handle: 'lasqa',
       place: 10,
       text: 'Розыграть пень',
-      status: 'in-process',
+      status: 'done',
+      link: 'https://t.me/lasqastreams/808',
     },
     {
       url_handle: 'unclebjorn',
