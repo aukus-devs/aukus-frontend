@@ -34,7 +34,8 @@ export default function LosersList({ players }: LosersListProps) {
       url_handle: 'segall',
       place: 12,
       text: 'Заспидранить Майнкрафт за 60 минут. При неудаче — обязан выпить шот алкоголя (не менее 35°)',
-      status: 'in-process',
+      status: 'done',
+      link: 'https://www.twitch.tv/videos/2536398117?t=63m',
     },
     {
       url_handle: 'vovapain',
