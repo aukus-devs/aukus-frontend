@@ -1,0 +1,49 @@
+name: Docker pull to server
+
+on:
+  workflow_call:
+    secrets:
+      host:
+        description: "Host for SSH"
+      username:
+        description: "Username for SSH"
+      password:
+        description: "Password for SSH"
+      port:
+        description: "Port for SSH"
+      server_name:
+        description: "Server name"
+      tg_token:
+        description: "TG token"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.host }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          port: ${{ secrets.port }}
+          command_timeout: 10m
+          script: |
+            cd /root/eventlab
+            docker compose pull aukus3-local-frontend
+            docker compose up -d --no-deps aukus3-local-frontend
+            sleep 5
+            docker ps --filter "name=aukus3-local-frontend" --format "{{.Status}}" | grep -q "Up" || (echo "Container is not running" && exit 1)
+            docker image prune -af
+      # - name: Success to telegram
+      #   if: success()
+      #   run: |
+      #     msg_text='✅ Aukus frontend upload success on server: ${{ secrets.server_name }}!'
+      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
+      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
+      # - name: Failure to telegram
+      #   if: failure()
+      #   run: |
+      #     msg_text='⚠️ Aukus frontend upload failure on server: ${{ secrets.server_name }}!'
+      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
+      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
