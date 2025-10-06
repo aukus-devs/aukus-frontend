@@ -31,18 +31,6 @@ jobs:
           tags: olegsvs/aukus3-local-frontend
           build-args: |
             GIT_COMMIT_SHA=${{ github.sha }}
-      # - name: Success build to telegram
-      #   if: success()
-      #   run: |
-      #     msg_text='✅ Aukus frontend build success!'
-      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
-      # - name: Failure build to telegram
-      #   if: failure()
-      #   run: |
-      #     msg_text='⚠️ Aukus frontend build failed!'
-      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
 
   call-deploy-to-server1:
     needs: build

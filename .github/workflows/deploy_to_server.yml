@@ -35,15 +35,3 @@ jobs:
             sleep 5
             docker ps --filter "name=aukus3-local-frontend" --format "{{.Status}}" | grep -q "Up" || (echo "Container is not running" && exit 1)
             docker image prune -af
-      # - name: Success to telegram
-      #   if: success()
-      #   run: |
-      #     msg_text='✅ Aukus frontend upload success on server: ${{ secrets.server_name }}!'
-      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
-      # - name: Failure to telegram
-      #   if: failure()
-      #   run: |
-      #     msg_text='⚠️ Aukus frontend upload failure on server: ${{ secrets.server_name }}!'
-      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage' \
-      #     -d "message_thread_id=4632&chat_id=-1002576065779_4632&text=${msg_text}&"
